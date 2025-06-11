@@ -1,16 +1,22 @@
 {
-	"references": [
-		{ "path": "./tsconfig.app.json" },
-		{ "path": "./tsconfig.node.json" }
-	],
-	"include": ["src/**/*"],
 	"compilerOptions": {
+		"target": "ESNext",
+		"useDefineForClassFields": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"strict": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"],
-			"@views/*": ["src/views/*"],
-			"@assets/*": ["src/assets/*"],
-			"@components/*": ["src/components/*"]
-		}
-	}
+		"@/*": ["src/*"],
+		"@views/*": ["src/views/*"],
+		"@assets/*": ["src/assets/*"],
+		"@components/*": ["src/components/*"]
+		},
+		"jsx": "react-jsx",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"lib": ["DOM", "ESNext"]
+	},
+	"include": ["src"]
 }

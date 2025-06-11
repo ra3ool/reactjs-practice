@@ -1,17 +1,23 @@
-import Home from "@views/Home.tsx";
-import About from "@views/About.tsx";
+import { Navigate } from "react-router";
 
-import AuthLayout from "@views/Auth/AuthLayout.tsx";
-import Login from "@views/Auth/Login.tsx";
-import Register from "@views/Auth/Register.tsx";
+import Layout from "@views/Layout";
+import Home from "@views/Home";
+import About from "@views/About";
 
-import ComponentsLayout from "@views/Components/ComponentsLayout.tsx";
-import CustomInput from "@views/Components/CustomInput.tsx";
-import CustomTable from "@views/Components/CustomTable.tsx";
+import AuthLayout from "@views/Auth/AuthLayout";
+import Login from "@views/Auth/Login";
+import Register from "@views/Auth/Register";
+
+import ComponentsLayout from "@views/Components/ComponentsLayout";
+import CustomInput from "@views/Components/CustomInput";
+import CustomTable from "@views/Components/CustomTable";
+
+const redirect = (path: string) => <Navigate to={path} replace />
 
 const routes = [
     {
         path: "/",
+        Component: Layout,
         children: [
             { index: true, Component: Home },
             { path: "about", Component: About },
@@ -19,6 +25,7 @@ const routes = [
                 path: "auth",
                 Component: AuthLayout,
                 children: [
+                    { index: true, Component: () =>  redirect('login')},
                     { path: "login", Component: Login },
                     { path: "register", Component: Register },
                 ],
@@ -27,7 +34,7 @@ const routes = [
                 path: "components",
                 Component: ComponentsLayout,
                 children: [
-                    { index: true, Component: CustomInput },
+                    { index: true, Component: () =>  redirect('input')},
                     { path: "input", Component: CustomInput },
                     { path: "table", Component: CustomTable },
                 ],
