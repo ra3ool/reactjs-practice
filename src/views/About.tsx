@@ -10,6 +10,9 @@ export default function About() {
         You can explore different sections of the application using the
         navigation bar.
       </p>
+      <h1 className="text-3xl font-bold underline">
+        Hello world!
+      </h1>
     </div>
   );
 }
