@@ -1,7 +1,7 @@
-import SideBar from "@/components/SideBar";
-import { componentsRoutes } from "@/constants/routes";
-import { SidebarProps } from "@/types/sidebar";
 import { Outlet } from "react-router";
+import { Sidebar } from "@/components";
+import { componentsRoutes } from "@/constants/routes";
+import { SidebarProps } from "@/types/sidebar.type";
 
 const SideBarConfig : SidebarProps = {
     title: "Components",
@@ -14,7 +14,7 @@ const SideBarConfig : SidebarProps = {
 export default function ComponentsLayout() {
     return (
         <div className="component-layout flex h-full w-full gap-4">
-            <SideBar config={SideBarConfig} />
+            <Sidebar config={SideBarConfig} />
             <div className="grow-1"><Outlet /></div>
         </div>
     );

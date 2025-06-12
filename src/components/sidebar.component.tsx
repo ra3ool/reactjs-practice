@@ -1,8 +1,8 @@
-import { SidebarProps } from "@/types/sidebar";
+import { SidebarProps } from "@/types/sidebar.type";
 import { NavLink } from "react-router";
 
 
-export default function SideBar({ config }: {config: SidebarProps}) {
+export default function Sidebar({ config }: {config: SidebarProps}) {
     const {title, items} = config
 
     return (

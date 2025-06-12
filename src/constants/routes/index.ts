@@ -1,5 +1,5 @@
-import authRoutes from "./auth.routes";
-import componentsRoutes from "./components.routes";
+import authRoutes from "./auth-routes.constant";
+import componentsRoutes from "./components-routes.constant";
 
 export { authRoutes }
 export { componentsRoutes }

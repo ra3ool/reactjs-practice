@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
-import SideBar from "@/components/SideBar";
+import { Sidebar } from "@/components";
 import routes from '@/constants/routes'
-import { SidebarProps } from "@/types/sidebar";
+import { SidebarProps } from "@/types/sidebar.type";
 
 const SideBarConfig: SidebarProps = {
     title: "React Practice",
@@ -16,7 +16,7 @@ const SideBarConfig: SidebarProps = {
 export default function Layout() {
     return (
         <main className="mail-layout h-full flex p-6 gap-6">
-            <SideBar config={SideBarConfig} />
+            <Sidebar config={SideBarConfig} />
             <div className="grow-1"><Outlet /></div>
         </main>
     );

@@ -1,4 +1,4 @@
-export default function About() {
+export default function AboutView() {
   return (
     <div className="about">
       <h1>About Us</h1>

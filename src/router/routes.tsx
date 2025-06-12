@@ -1,17 +1,17 @@
 import { Navigate } from "react-router";
 import routesConstants from '@/constants/routes';
 
-import MainLayout from "@/layouts/MainLayout";
-import Home from "@views/Home";
-import About from "@views/About";
+import MainLayout from "@/layouts/Main.layout";
+import Home from "@/views/Home.view";
+import About from "@/views/About.view";
 
-import AuthLayout from "@/layouts/AuthLayout";
-import Login from "@views/Auth/Login";
-import Register from "@views/Auth/Register";
+import AuthLayout from "@/layouts/Auth.layout";
+import Login from "@/views/Auth/Login.view";
+import Register from "@/views/Auth/Register.view";
 
-import ComponentsLayout from "@/layouts/ComponentsLayout";
-import CustomInput from "@views/Components/CustomInput";
-import CustomTable from "@views/Components/CustomTable";
+import ComponentsLayout from "@/layouts/Components.layout";
+import CustomInput from "@/views/Components/Input.view";
+import CustomTable from "@/views/Components/Table.view";
 
 const redirect = (to: string) => () => <Navigate to={to} replace />;
 

@@ -1,4 +1,4 @@
-export default function CustomTable() {
+export default function TableView() {
 	return (
 		<div className="custom-table">
 			<h1>Custom Table Component</h1>

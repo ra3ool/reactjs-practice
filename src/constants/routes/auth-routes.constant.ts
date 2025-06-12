@@ -1,4 +1,4 @@
-import createRoutesGroup from "@/helpers/createRoutesGroup"
+import { createRoutesGroup } from "@/helpers"
 
 const authRoutes = Object.freeze({
     root: '/',
