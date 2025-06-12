@@ -1,7 +1,8 @@
 type Routes = Record<string, string>;
 
 const createRoutesGroup = (prefix: string, routes: Routes) => {
-    const normalizedPrefix = prefix.replaceAll('/', '')
+    const trimmed = prefix.replace(/^\/+|\/+$/g, "");
+    const normalizedPrefix =  `/${trimmed}`;
     const newRoutes = Object.fromEntries(
         Object.entries(routes).map(([key, value]) => [
             key,
@@ -10,7 +11,6 @@ const createRoutesGroup = (prefix: string, routes: Routes) => {
                 : `${normalizedPrefix}${value.startsWith("/") ? "" : "/"}${value}`,
         ])
     );
-    console.log('newRoutes :', newRoutes);
     return newRoutes
 };
 
