@@ -1,7 +1,8 @@
 import createRoutesGroup from "@/helpers/createRoutesGroup"
 
-export default createRoutesGroup('components', {
+const componentsRoutes = Object.freeze({
     root: '/',
     input: 'input',
     table: 'table',
 })
+export default createRoutesGroup('components', componentsRoutes)
