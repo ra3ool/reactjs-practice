@@ -1,4 +1,4 @@
-import { SidebarProps } from "@/types/sidebar.type";
+import { SidebarProps } from "@/types";
 import { NavLink } from "react-router";
 
 

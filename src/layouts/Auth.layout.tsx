@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import { Sidebar } from "@/components";
 import { authRoutes } from "@/constants/routes";
-import { SidebarProps } from "@/types/sidebar.type";
+import { SidebarProps } from "@/types";
 
 const SideBarConfig : SidebarProps = {
     title: "Auth Forms",

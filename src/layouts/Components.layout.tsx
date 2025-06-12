@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import { Sidebar } from "@/components";
 import { componentsRoutes } from "@/constants/routes";
-import { SidebarProps } from "@/types/sidebar.type";
+import { SidebarProps } from "@/types";
 
 const SideBarConfig : SidebarProps = {
     title: "Components",
