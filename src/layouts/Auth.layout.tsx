@@ -15,7 +15,7 @@ export default function AuthLayout() {
     return (
         <div className="auth-layout flex h-full w-full gap-4">
             <Sidebar config={SideBarConfig} />
-            <div className="grow-1"><Outlet /></div>
+            <div className="grow-1 overflow-auto"><Outlet /></div>
         </div>
     );
 }

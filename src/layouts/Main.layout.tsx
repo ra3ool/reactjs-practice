@@ -17,7 +17,7 @@ export default function Layout() {
     return (
         <main className="mail-layout h-full flex p-6 gap-6">
             <Sidebar config={SideBarConfig} />
-            <div className="grow-1"><Outlet /></div>
+            <div className="grow-1 overflow-auto"><Outlet /></div>
         </main>
     );
 }

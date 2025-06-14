@@ -16,7 +16,6 @@ export default function InputView() {
         />
         {value}
       </div>
-
       <div className="mb-12">
         <h1 className="mb-2">Custom Input Component with border style</h1>
         <CustomInput

@@ -6,7 +6,7 @@ export default function Sidebar({ config }: {config: SidebarProps}) {
     const {title, items} = config
 
     return (
-        <aside className="h-full w-56 bg-gray-900 text-white flex flex-col gap-6 py-6 px-2 shrink-0 select-none rounded-3xl">
+        <aside className="h-full w-56 bg-gray-900 text-white flex flex-col gap-6 py-6 px-2 shrink-0 select-none rounded-3xl overflow-auto">
             {title && <h2 className="text-xl font-bold text-blue-400 px-4">{title}</h2>}
             <nav className="flex flex-col gap-2">
                 {items.map((item) => (
