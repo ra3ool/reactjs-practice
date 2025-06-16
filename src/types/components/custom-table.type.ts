@@ -3,40 +3,32 @@ export type TableHeader = {
     value: string;
 }
 export type TableRow = { id: string | number; [key: string]: unknown };
+export type TableCell = string | number;
 
 export interface CustomTableProps {
     headers: TableHeader[];
     data: TableRow[];
     className?: string;
-    tableClassName?: string;
-    tableStyle?: 'striped' | 'bordered' | 'hover' | 'responsive';
+    rowClassName?: string;
+    cellClassName?: string;
     onRowClick?: (row: TableRow) => void;
-    onCellClick?: (cell: string, row: TableRow) => void;
-    rowClassName?: (row: TableRow) => string;
-    cellClassName?: (cell: string, row: TableRow) => string;
+    onCellClick?: (cell: TableCell, row: TableRow) => void;
+    loading?: boolean;
+    loadingText?: string;
+    emptyText?: string;
+    sort?: boolean;
+
     headerClassName?: string;
     headerStyle?: 'default' | 'bold' | 'italic';
     footer?: React.ReactNode;
     footerClassName?: string;
     footerStyle?: 'default' | 'bold' | 'italic';
-    loading?: boolean;
-    loadingText?: string;
-    emptyText?: string;
     emptyClassName?: string;
     emptyStyle?: 'default' | 'italic' | 'bold';
     pagination?: {
         currentPage: number;
         totalPages: number;
         onPageChange: (page: number) => void;
-    };
-    sort?: {
-        column: string;
-        direction: 'asc' | 'desc';
-        onSortChange: (column: string, direction: 'asc' | 'desc') => void;
-    };
-    filter?: {
-        query: string;
-        onFilterChange: (query: string) => void;
     };
     selectable?: boolean;
     selectedRows?: TableRow[];

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import CustomTable from '@/components/custom-table.component';
-import { TableHeader, TableRow } from '@/types/components';
+import { TableHeader, TableRow, TableCell } from '@/types/components';
 
 const getTableData = (): Promise<TableRow[]> => {
   return new Promise((resolve) => {
@@ -26,6 +26,19 @@ const getTableData = (): Promise<TableRow[]> => {
         { id: 18, name: 'Frances Allen', email: 'frances.allen@example.com' },
         { id: 19, name: 'Radia Perlman', email: 'radia.perlman@example.com' },
         { id: 20, name: 'Yukihiro Matsumoto', email: 'yukihiro.matsumoto@example.com' },
+        { id: 21, name: 'Brendan Eich', email: 'brendan.eich@example.com' },
+        { id: 22, name: 'Anders Hejlsberg', email: 'anders.hejlsberg@example.com' },
+        { id: 23, name: 'Guido van Rossum', email: 'guido.vanrossum@example.com' },
+        { id: 24, name: 'Larry Wall', email: 'larry.wall@example.com' },
+        { id: 25, name: 'John Backus', email: 'john.backus@example.com' },
+        { id: 26, name: 'Robert Griesemer', email: 'robert.griesemer@example.com' },
+        { id: 27, name: 'Rob Pike', email: 'rob.pike@example.com' },
+        { id: 28, name: 'Ken Arnold', email: 'ken.arnold@example.com' },
+        { id: 29, name: 'Martin Odersky', email: 'martin.odersky@example.com' },
+        { id: 30, name: 'Yehuda Katz', email: 'yehuda.katz@example.com' },
+        { id: 31, name: 'Adele Goldberg', email: 'adele.goldberg@example.com' },
+        { id: 32, name: 'John Carmack', email: 'john.carmack@example.com' },
+        { id: 33, name: 'Sophie Wilson', email: 'sophie.wilson@example.com' },
       ]);
     }, 1000);
   });
@@ -36,6 +49,13 @@ const tableHeaders: TableHeader[] = [
   { key: 'name', value: 'Name' },
   { key: 'email', value: 'Email' },
 ];
+
+const onRowClick = (row: TableRow) => {
+  console.log(row);
+};
+const onCellClick = (cell: TableCell, row: TableRow) => {
+  console.log(cell, row);
+};
 
 export default function TableView() {
   const [tableData, setTableData] = useState<TableRow[]>([]);
@@ -53,6 +73,9 @@ export default function TableView() {
           headers={tableHeaders}
           data={tableData}
           loading={loading}
+          sort
+          onRowClick={onRowClick}
+          onCellClick={onCellClick}
         />
       </div>
     </>
