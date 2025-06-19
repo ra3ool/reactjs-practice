@@ -1,8 +1,8 @@
 import { CustomTableProps, TableHeader, TableRow } from '@/types/components';
-import { Loading, NothingFound } from '@/components';
+import { Loading, NothingFound, Pagination } from '@/components';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { sortData } from '@/helpers';
+import { sortData, paginateData } from '@/helpers';
 
 export default function CustomTable(props: CustomTableProps) {
   const {
@@ -17,10 +17,12 @@ export default function CustomTable(props: CustomTableProps) {
     sort,
     onRowClick,
     onCellClick,
+    pagination,
   } = props;
 
   const [sortColumn, setSortColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [currentPage, setCurrentPage] = useState(pagination?.currentPage || 1);
 
   const handleSort = (columnKey: string) => {
     if (sortColumn === columnKey) {
@@ -31,9 +33,12 @@ export default function CustomTable(props: CustomTableProps) {
     }
   };
 
-  const sortedData: TableRow[] = sortColumn
-    ? sortData(data, sortColumn, sortDirection)
+  const paginatedData: TableRow[] = pagination
+    ? paginateData(data, currentPage, pagination.itemsPerPage)
     : data;
+  const sortedData: TableRow[] = sortColumn
+    ? sortData(paginatedData, sortColumn, sortDirection)
+    : paginatedData;
   const isEmpty = !data || !data.length;
 
   return (
@@ -91,7 +96,8 @@ export default function CustomTable(props: CustomTableProps) {
                     key={header.key}
                     className={`text-nowrap border border-gray-600 p-2 ${cellClassName}`}
                     {...(onCellClick && {
-                      onClick: () => onCellClick(row[header.key] as string, row),
+                      onClick: () =>
+                        onCellClick(row[header.key] as string, row),
                     })}
                   >
                     {row[header.key] as React.ReactNode}
@@ -102,6 +108,14 @@ export default function CustomTable(props: CustomTableProps) {
           )}
         </tbody>
       </table>
+      {pagination && (
+        <Pagination
+          totalItems={data.length}
+          itemsPerPage={pagination.itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={(page: number) => setCurrentPage(page)}
+        />
+      )}
     </div>
   );
 }

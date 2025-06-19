@@ -2,7 +2,7 @@ export type TableHeader = {
     key: string;
     value: string;
 }
-export type TableRow = { id: string | number; [key: string]: unknown };
+export type TableRow = { id: string | number;[key: string]: unknown };
 export type TableCell = string | number;
 
 export interface CustomTableProps {
@@ -17,7 +17,12 @@ export interface CustomTableProps {
     loadingText?: string;
     emptyText?: string;
     sort?: boolean;
+    pagination?: {
+        itemsPerPage: number;
+        currentPage: number;
+    };
 
+    //for later
     headerClassName?: string;
     headerStyle?: 'default' | 'bold' | 'italic';
     footer?: React.ReactNode;
@@ -25,11 +30,6 @@ export interface CustomTableProps {
     footerStyle?: 'default' | 'bold' | 'italic';
     emptyClassName?: string;
     emptyStyle?: 'default' | 'italic' | 'bold';
-    pagination?: {
-        currentPage: number;
-        totalPages: number;
-        onPageChange: (page: number) => void;
-    };
     selectable?: boolean;
     selectedRows?: TableRow[];
     onRowSelect?: (row: TableRow) => void;
