@@ -1,6 +1,7 @@
 export interface SidebarItem {
     title: string,
-    path: string
+    path?: string
+    component?: React.ReactNode
 }
 
 export interface SidebarProps {
