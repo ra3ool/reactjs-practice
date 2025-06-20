@@ -1,5 +1,5 @@
 import { PaginationButtonProps, PaginationProps } from '@/types/components';
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 
 export default memo(function Pagination({
   totalItems,
@@ -14,7 +14,7 @@ export default memo(function Pagination({
   return (
     <div className="w-full">
       <nav className="flex justify-between items-center p-4">
-        <div className="flex space-x-2">
+        <div className="flex gap-2">
           {pages.length > 0 && (
             <>
               <PaginateButton
@@ -25,17 +25,32 @@ export default memo(function Pagination({
               </PaginateButton>
 
               {pages.map((page) => {
-                const isItemActive = currentPage === page;
-                return (
-                  <PaginateButton
-                    key={page}
-                    onClick={() => goToPage(page)}
-                    isActive={isItemActive}
-                    activeClasses="bg-blue-500 text-white"
-                  >
-                    {page}
-                  </PaginateButton>
-                );
+                const isFirstPage = page === 1;
+                const isPreviousPage = currentPage === page + 1;
+                const isCurrentPage = currentPage === page;
+                const isNextPage = currentPage === page - 1;
+                const isLastPage = page === totalPages;
+
+                if (
+                  isFirstPage ||
+                  isLastPage ||
+                  isPreviousPage ||
+                  isCurrentPage ||
+                  isNextPage
+                )
+                  return (
+                    <Fragment key={page}>
+                      {isPreviousPage && page > 2 && <span>...</span>}
+                      <PaginateButton
+                        onClick={() => goToPage(page)}
+                        isActive={isCurrentPage}
+                        activeClasses="bg-blue-500 text-white"
+                      >
+                        {page}
+                      </PaginateButton>
+                      {isNextPage && page < totalPages - 1 && <span>...</span>}
+                    </Fragment>
+                  );
               })}
 
               <PaginateButton
