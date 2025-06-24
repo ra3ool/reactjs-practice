@@ -1,8 +1,24 @@
-import { CustomTableProps, TableHeader, TableRow } from '@/types/components';
+import {
+  CustomTableProps,
+  TableHeader,
+  TableRow,
+  TableCell,
+} from '@/types/components';
 import { Loading, NothingFound, Pagination } from '@/components';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { sortData, paginateData } from '@/helpers';
+
+const TableCellRender = ({
+  header,
+  row,
+}: {
+  header: TableHeader;
+  row: TableRow;
+}): ReactNode | TableCell => {
+  const { key, render } = header;
+  return render ? (render(row) as ReactNode) : (row[key] as TableCell);
+};
 
 export default function CustomTable(props: CustomTableProps) {
   const {
@@ -100,7 +116,7 @@ export default function CustomTable(props: CustomTableProps) {
                         onCellClick(row[header.key] as string, row),
                     })}
                   >
-                    {row[header.key] as React.ReactNode}
+                    <TableCellRender header={header} row={row} />
                   </td>
                 ))}
               </tr>

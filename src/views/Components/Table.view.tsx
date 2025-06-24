@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { CustomTable, Pagination } from '@/components';
 import { TableHeader, TableRow, TableCell } from '@/types/components';
 import { paginateData } from '@/helpers';
@@ -85,7 +85,17 @@ const getTableData = (
 const tableHeaders: TableHeader[] = [
   { key: 'id', value: 'ID' },
   { key: 'name', value: 'Name' },
-  { key: 'email', value: 'Email' },
+  {
+    key: 'email',
+    value: 'Email',
+    render: (row) => (
+      <i>
+        <b>
+          <span className="text-emerald-400">{row?.email as ReactNode}</span>
+        </b>
+      </i>
+    ),
+  },
 ];
 
 const onRowClick = (row: TableRow) => {
@@ -135,7 +145,6 @@ export default function TableView() {
           data={tableData1.result}
           loading={loadingTable1}
           sort
-          onRowClick={onRowClick}
           onCellClick={onCellClick}
           pagination={{ itemsPerPage: ITEMS_PER_PAGE, currentPage }}
         />
@@ -147,7 +156,6 @@ export default function TableView() {
           headers={tableHeaders}
           data={tableData2.result}
           loading={loadingTable2}
-          sort
           onRowClick={onRowClick}
           onCellClick={onCellClick}
         />

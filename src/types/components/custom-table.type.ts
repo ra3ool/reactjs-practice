@@ -1,6 +1,9 @@
+import { ReactNode } from 'react'
+
 export type TableHeader = {
     key: string;
     value: string;
+    render?: (row: TableRow) => ReactNode
 }
 export type TableRow = { id: string | number;[key: string]: unknown };
 export type TableCell = string | number;
@@ -25,7 +28,7 @@ export interface CustomTableProps {
     //for later
     headerClassName?: string;
     headerStyle?: 'default' | 'bold' | 'italic';
-    footer?: React.ReactNode;
+    footer?: ReactNode;
     footerClassName?: string;
     footerStyle?: 'default' | 'bold' | 'italic';
     emptyClassName?: string;
