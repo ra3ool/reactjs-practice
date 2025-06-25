@@ -2,12 +2,14 @@ import { useState } from 'react';
 
 export default function Toggle({
   toggle,
+  isActive: isActiveProp,
   hasBiggerBubble = false,
 }: {
   toggle: (arg0: boolean) => void;
+  isActive: boolean;
   hasBiggerBubble?: boolean;
 }) {
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(isActiveProp);
   const toggleActivity = () => {
     setIsActive(!isActive);
     toggle(!isActive);
