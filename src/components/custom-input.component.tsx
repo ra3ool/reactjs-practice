@@ -1,5 +1,5 @@
 import { useState, useId } from 'react';
-import { CustomInputProps } from '@/types/components';
+import { CustomInputProps } from '@/types';
 
 export default function CustomInput(props: CustomInputProps) {
   const randomId = useId();

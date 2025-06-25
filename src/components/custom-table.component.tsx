@@ -3,10 +3,10 @@ import {
   TableHeader,
   TableRow,
   TableCell,
-} from '@/types/components';
+} from '@/types';
 import { Loading, NothingFound, Pagination } from '@/components';
 import PropTypes from 'prop-types';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useCallback } from 'react';
 import { sortData, paginateData } from '@/helpers';
 
 const TableCellRender = ({
@@ -48,6 +48,10 @@ export default function CustomTable(props: CustomTableProps) {
       setSortDirection('asc');
     }
   };
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+  }, []);
 
   const paginatedData: TableRow[] = pagination
     ? paginateData(data, currentPage, pagination.itemsPerPage)
@@ -129,7 +133,7 @@ export default function CustomTable(props: CustomTableProps) {
           totalItems={data.length}
           itemsPerPage={pagination.itemsPerPage}
           currentPage={currentPage}
-          onPageChange={(page: number) => setCurrentPage(page)}
+          onPageChange={handlePageChange}
         />
       )}
     </div>

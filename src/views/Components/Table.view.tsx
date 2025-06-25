@@ -1,10 +1,10 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { CustomTable, Pagination } from '@/components';
-import { TableHeader, TableRow, TableCell } from '@/types/components';
+import { TableHeader, TableRow, TableCell } from '@/types';
 import { paginateData } from '@/helpers';
+import { useTable } from '@/hooks';
 
 const ITEMS_PER_PAGE = 4;
-const CURRENT_PAGE = 1;
 const getTableData = (
   currentPage?: number,
   itemsPerPage?: number,
@@ -106,61 +106,59 @@ const onCellClick = (cell: TableCell, row: TableRow) => {
 };
 
 export default function TableView() {
-  const [tableData1, setTableData1] = useState<{
-    result: TableRow[];
-    totalLength: number;
-  }>({
-    result: [],
-    totalLength: 0,
+  const fetchAllData = useCallback(() => getTableData(), []);
+  const { data: allData, loading: loadingAllData } = useTable({
+    fetchData: fetchAllData,
+    itemsPerPage: ITEMS_PER_PAGE,
   });
-  const [tableData2, setTableData2] = useState<{
-    result: TableRow[];
-    totalLength: number;
-  }>({
-    result: [],
-    totalLength: 0,
+
+  const fetchPaginatedData = useCallback(
+    (page: number, itemsPerPage: number) => getTableData(page, itemsPerPage),
+    [],
+  );
+  const {
+    data: paginatedData,
+    loading: loadingPaginatedData,
+    totalLength,
+    currentPage,
+    setCurrentPage,
+  } = useTable({
+    fetchData: fetchPaginatedData,
+    itemsPerPage: ITEMS_PER_PAGE,
+    isServerSide: true,
   });
-  const [loadingTable1, setLoadingTable1] = useState(false);
-  const [loadingTable2, setLoadingTable2] = useState(false);
-  const [currentPage, setCurrentPage] = useState(CURRENT_PAGE);
-  useEffect(() => {
-    setLoadingTable1(true);
-    getTableData()
-      .then((data) => setTableData1(data))
-      .finally(() => setLoadingTable1(false));
-  }, []);
-  useEffect(() => {
-    setLoadingTable2(true);
-    getTableData(currentPage, ITEMS_PER_PAGE)
-      .then((data) => setTableData2(data))
-      .finally(() => setLoadingTable2(false));
-  }, [currentPage]);
 
   return (
     <div className="w-full">
       <div className="mb-4">
-        <p className="mb-4">paginate whole data</p>
+        <p className="mb-4">
+          Client-side pagination and sorting. The component fetches all data,
+          and the CustomTable handles the rest.
+        </p>
         <CustomTable
           headers={tableHeaders}
-          data={tableData1.result}
-          loading={loadingTable1}
+          data={allData}
+          loading={loadingAllData}
           sort
           onCellClick={onCellClick}
-          pagination={{ itemsPerPage: ITEMS_PER_PAGE, currentPage }}
+          pagination={{ itemsPerPage: ITEMS_PER_PAGE }}
         />
       </div>
 
       <div className="mb-4">
-        <p className="mb-4">send request on page changes</p>
+        <p className="mb-4">
+          Server-side pagination. The component fetches only the data for the
+          current page.
+        </p>
         <CustomTable
           headers={tableHeaders}
-          data={tableData2.result}
-          loading={loadingTable2}
+          data={paginatedData}
+          loading={loadingPaginatedData}
           onRowClick={onRowClick}
           onCellClick={onCellClick}
         />
         <Pagination
-          totalItems={tableData2.totalLength}
+          totalItems={totalLength}
           itemsPerPage={ITEMS_PER_PAGE}
           currentPage={currentPage}
           onPageChange={(page) => setCurrentPage(page)}

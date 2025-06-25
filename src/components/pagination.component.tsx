@@ -1,5 +1,6 @@
-import { PaginationButtonProps, PaginationProps } from '@/types/components';
-import { Fragment, memo } from 'react';
+import { PaginationButtonProps, PaginationProps } from '@/types';
+import { memo } from 'react';
+import { usePagination, DOTS } from '@/hooks';
 
 export default memo(function Pagination({
   totalItems,
@@ -8,14 +9,21 @@ export default memo(function Pagination({
   onPageChange: goToPage,
 }: PaginationProps) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  //FIXME fix pagination rerender! React.memo
-  // const pages = [...Array(totalPages).keys()];
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const paginationRange = usePagination({
+    currentPage,
+    totalItems,
+    itemsPerPage,
+  });
+
+  if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
+    return null;
+  }
+
   return (
     <div className="w-full">
       <nav className="flex justify-between items-center p-4">
         <div className="flex gap-2">
-          {pages.length > 0 && (
+          {totalItems > 0 && (
             <>
               <PaginateButton
                 onClick={() => goToPage(currentPage - 1)}
@@ -24,33 +32,25 @@ export default memo(function Pagination({
                 {'<'}
               </PaginateButton>
 
-              {pages.map((page) => {
-                const isFirstPage = page === 1;
-                const isPreviousPage = currentPage === page + 1;
-                const isCurrentPage = currentPage === page;
-                const isNextPage = currentPage === page - 1;
-                const isLastPage = page === totalPages;
-
-                if (
-                  isFirstPage ||
-                  isLastPage ||
-                  isPreviousPage ||
-                  isCurrentPage ||
-                  isNextPage
-                )
+              {paginationRange?.map((pageNumber, index) => {
+                if (pageNumber === DOTS) {
                   return (
-                    <Fragment key={page}>
-                      {isPreviousPage && page > 2 && <span>...</span>}
-                      <PaginateButton
-                        onClick={() => goToPage(page)}
-                        isActive={isCurrentPage}
-                        activeClasses="bg-blue-500 text-white"
-                      >
-                        {page}
-                      </PaginateButton>
-                      {isNextPage && page < totalPages - 1 && <span>...</span>}
-                    </Fragment>
+                    <span key={DOTS + index} className="px-3 py-1">
+                      ...
+                    </span>
                   );
+                }
+
+                return (
+                  <PaginateButton
+                    key={pageNumber}
+                    onClick={() => goToPage(pageNumber as number)}
+                    isActive={currentPage === pageNumber}
+                    activeClasses="bg-blue-500 text-white"
+                  >
+                    {pageNumber}
+                  </PaginateButton>
+                );
               })}
 
               <PaginateButton
