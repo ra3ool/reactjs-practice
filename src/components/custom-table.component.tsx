@@ -91,13 +91,13 @@ export default function CustomTable(props: CustomTableProps) {
         <tbody>
           {loading ? (
             <tr role="row">
-              <td className="text-center" colSpan={headers.length}>
+              <td className="text-center p-2" colSpan={headers.length}>
                 <Loading loadingText={loadingText} />
               </td>
             </tr>
           ) : isEmpty ? (
             <tr role="row">
-              <td className="text-center" colSpan={headers.length}>
+              <td className="text-center p-2" colSpan={headers.length}>
                 <NothingFound emptyText={emptyText} />
               </td>
             </tr>

@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 import { Sidebar, Toggle } from '@/components';
-import routes from '@/constants/routes';
+import { routes } from '@/constants';
 import { SidebarProps } from '@/types';
 import { useTheme } from '@/hooks';
 import { useMemo } from 'react';
@@ -17,7 +17,7 @@ export default function Layout() {
         { title: 'Auth', path: routes.auth.root },
         { title: 'Components', path: routes.components.root },
         {
-          title: 'Theme',
+          title: 'Dark Mode',
           component: <Toggle toggle={toggleTheme} isActive={isDarkMode} />,
         },
       ],

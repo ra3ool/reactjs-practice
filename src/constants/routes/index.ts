@@ -4,7 +4,7 @@ import componentsRoutes from "./components-routes.constant";
 export { authRoutes }
 export { componentsRoutes }
 
-const routes = Object.freeze({
+export const routes = Object.freeze({
     home: '/',
     about: 'about',
 
@@ -14,5 +14,3 @@ const routes = Object.freeze({
     //components
     components: componentsRoutes,
 });
-
-export default routes;
