@@ -6,7 +6,7 @@ export default function InputView() {
   return (
     <>
       <div className="mb-12">
-        <h1 className="mb-2">Custom Input Component with floatingLabel</h1>
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">Custom Input Component with floatingLabel</h3>
         <CustomInput
           label="Username"
           value={value}
@@ -14,10 +14,10 @@ export default function InputView() {
           placeholder="Enter username"
           inputStyle="floatingLabel"
         />
-        {value}
+        <span className="text-gray-900 dark:text-gray-100">{value}</span>
       </div>
       <div className="mb-12">
-        <h1 className="mb-2">Custom Input Component with border style</h1>
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">Custom Input Component with border style</h3>
         <CustomInput
           label="Username"
           value={value}
@@ -25,10 +25,10 @@ export default function InputView() {
           placeholder="Enter username"
           inputStyle="border"
         />
-        {value}
+        <span className="text-gray-900 dark:text-gray-100">{value}</span>
       </div>
       <div className="mb-12">
-        <h1 className="mb-2">Custom Input Component with underline style</h1>
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">Custom Input Component with underline style</h3>
         <CustomInput
           label="Username"
           value={value}
@@ -36,10 +36,10 @@ export default function InputView() {
           placeholder="Enter username"
           inputStyle="underline"
         />
-        {value}
+        <span className="text-gray-900 dark:text-gray-100">{value}</span>
       </div>
       <div className="mb-12">
-        <h1 className="mb-2">Custom Input Component with no style</h1>
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">Custom Input Component with no style</h3>
         <CustomInput
           label="Username"
           value={value}
@@ -47,7 +47,7 @@ export default function InputView() {
           placeholder="Enter username"
           inputStyle="none"
         />
-        {value}
+        <span className="text-gray-900 dark:text-gray-100">{value}</span>
       </div>
     </>
   );

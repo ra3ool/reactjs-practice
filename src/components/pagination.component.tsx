@@ -35,7 +35,7 @@ export default memo(function Pagination({
               {paginationRange?.map((pageNumber, index) => {
                 if (pageNumber === DOTS) {
                   return (
-                    <span key={DOTS + index} className="px-3 py-1">
+                    <span key={DOTS + index} className="px-3 py-1 text-gray-900 dark:text-gray-100">
                       ...
                     </span>
                   );
@@ -46,7 +46,7 @@ export default memo(function Pagination({
                     key={pageNumber}
                     onClick={() => goToPage(pageNumber as number)}
                     isActive={currentPage === pageNumber}
-                    activeClasses="bg-blue-500 text-white"
+                    activeClasses="bg-blue-600 dark:bg-blue-500 text-white"
                   >
                     {pageNumber}
                   </PaginateButton>
@@ -62,7 +62,7 @@ export default memo(function Pagination({
             </>
           )}
         </div>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-gray-600 dark:text-gray-300">
           Showing {Math.min((currentPage - 1) * itemsPerPage + 1, totalItems)}{' '}
           to {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}{' '}
           items
@@ -74,8 +74,8 @@ export default memo(function Pagination({
 
 function PaginateButton({
   isActive,
-  activeClasses = 'bg-gray-500 text-gray-400 cursor-no-drop',
-  deActiveClasses = 'bg-gray-200 text-gray-700 hover:bg-gray-300 cursor-pointer',
+  activeClasses = 'bg-neutral-400 dark:bg-neutral-600 text-gray-600 dark:text-gray-400 cursor-not-allowed',
+  deActiveClasses = 'bg-neutral-200 dark:bg-neutral-800 text-gray-900 dark:text-gray-100 hover:bg-neutral-300 dark:hover:bg-neutral-700 cursor-pointer',
   onClick: onButtonClick,
   children,
 }: PaginationButtonProps) {

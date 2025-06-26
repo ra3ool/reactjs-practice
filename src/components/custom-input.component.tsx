@@ -23,7 +23,7 @@ export default function CustomInput(props: CustomInputProps) {
     return (
       <div className={`flex flex-col ${className}`}>
         {label && (
-          <label className="mb-1" htmlFor={id}>
+          <label className="mb-1 text-gray-900 dark:text-gray-100" htmlFor={id}>
             {label}
           </label>
         )}
@@ -33,7 +33,7 @@ export default function CustomInput(props: CustomInputProps) {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={`border rounded px-2 py-1 ${inputClassName}`}
+          className={`border border-gray-300 dark:border-gray-600 rounded px-2 py-1 dark:bg-neutral-900 text-gray-900 dark:text-gray-100 focus:border-blue-600 dark:focus:border-blue-500 focus:outline-none ${inputClassName}`}
           disabled={disabled}
           {...otherProps}
         />
@@ -44,7 +44,7 @@ export default function CustomInput(props: CustomInputProps) {
     return (
       <div className={`flex flex-col ${className}`}>
         {label && (
-          <label className="mb-1" htmlFor={id}>
+          <label className="mb-1 text-gray-900 dark:text-gray-100" htmlFor={id}>
             {label}
           </label>
         )}
@@ -55,7 +55,7 @@ export default function CustomInput(props: CustomInputProps) {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={`border-b border-gray-300 focus:border-blue-500 focus:outline-none ${inputClassName}`}
+          className={`border-b border-gray-300 dark:border-gray-600 bg-transparent text-gray-900 dark:text-gray-100 focus:border-blue-600 dark:focus:border-blue-500 focus:outline-none ${inputClassName}`}
           disabled={disabled}
         />
       </div>
@@ -65,7 +65,7 @@ export default function CustomInput(props: CustomInputProps) {
     return (
       <div className={`flex flex-col ${className}`}>
         {label && (
-          <label className="mb-1" htmlFor={id}>
+          <label className="mb-1 text-gray-900 dark:text-gray-100" htmlFor={id}>
             {label}
           </label>
         )}
@@ -76,7 +76,7 @@ export default function CustomInput(props: CustomInputProps) {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={`focus:outline-none ${inputClassName}`}
+          className={`bg-transparent text-gray-900 dark:text-gray-100 focus:outline-none ${inputClassName}`}
           disabled={disabled}
         />
       </div>
@@ -93,7 +93,7 @@ export default function CustomInput(props: CustomInputProps) {
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className={`border rounded px-2 py-2 bg-transparent ${inputClassName}`}
+          className={`border border-gray-300 dark:border-gray-600 rounded px-2 py-2 dark:bg-neutral-900 text-gray-900 dark:text-gray-100 focus:border-blue-600 dark:focus:border-blue-500 focus:outline-none ${inputClassName}`}
           disabled={disabled}
         />
         {(label || placeholder) && (
@@ -104,8 +104,8 @@ export default function CustomInput(props: CustomInputProps) {
               pointer-events-none
               ${
                 isFocused || value
-                  ? 'text-xs text-gray-200 -translate-y-3 bg-gray-800'
-                  : 'text-base text-gray-200 bg-gray-800' //TODO fix the background color
+                  ? 'text-xs text-blue-600 dark:text-blue-400 -translate-y-3 bg-white dark:bg-neutral-900'
+                  : 'text-base text-gray-600 dark:text-gray-400 bg-white dark:bg-neutral-900'
               }
             `}
           >

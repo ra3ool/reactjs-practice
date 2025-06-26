@@ -91,7 +91,7 @@ const tableHeaders: TableHeader[] = [
     render: (row) => (
       <i>
         <b>
-          <span className="text-emerald-400">{row?.email as ReactNode}</span>
+          <span className="text-blue-500 dark:text-blue-300">{row?.email as ReactNode}</span>
         </b>
       </i>
     ),
@@ -131,10 +131,10 @@ export default function TableView() {
   return (
     <div className="w-full">
       <div className="mb-4">
-        <p className="mb-4">
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
           Client-side pagination and sorting. The component fetches all data,
           and the CustomTable handles the rest.
-        </p>
+        </h3>
         <CustomTable
           headers={tableHeaders}
           data={allData}
@@ -146,10 +146,10 @@ export default function TableView() {
       </div>
 
       <div className="mb-4">
-        <p className="mb-4">
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
           Server-side pagination. The component fetches only the data for the
           current page.
-        </p>
+        </h3>
         <CustomTable
           headers={tableHeaders}
           data={paginatedData}

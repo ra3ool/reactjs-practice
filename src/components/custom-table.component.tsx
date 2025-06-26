@@ -64,16 +64,16 @@ export default function CustomTable(props: CustomTableProps) {
   return (
     <div className="overflow-x-auto">
       <table
-        className={`w-full border-separate border border-gray-400 text-left ${className}`}
+        className={`w-full border-separate border border-gray-300 dark:border-gray-600 text-left ${className}`}
         role="table"
       >
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="text-xs text-gray-900 dark:text-gray-100 uppercase bg-neutral-200 dark:bg-neutral-800">
           <tr role="row">
             {(headers as TableHeader[]).map((header) => (
               <th
                 key={header.key}
-                className={`p-2 border border-gray-600 select-none ${
-                  sort && 'cursor-pointer'
+                className={`p-2 border border-gray-300 dark:border-gray-600 select-none ${
+                  sort && 'cursor-pointer hover:bg-neutral-300 dark:hover:bg-neutral-700'
                 }`}
                 {...(sort && { onClick: () => handleSort(header.key) })}
                 role="columnheader"
@@ -81,7 +81,9 @@ export default function CustomTable(props: CustomTableProps) {
                 <div className="flex justify-between">
                   <span>{header.value}</span>
                   {sortColumn === header.key && (
-                    <span>{sortDirection === 'asc' ? '▲' : '▼'}</span>
+                    <span className="text-blue-600 dark:text-blue-400">
+                      {sortDirection === 'asc' ? '▲' : '▼'}
+                    </span>
                   )}
                 </div>
               </th>
@@ -91,13 +93,13 @@ export default function CustomTable(props: CustomTableProps) {
         <tbody>
           {loading ? (
             <tr role="row">
-              <td className="text-center p-2" colSpan={headers.length}>
+              <td className="text-center p-2 text-gray-900 dark:text-gray-100" colSpan={headers.length}>
                 <Loading loadingText={loadingText} />
               </td>
             </tr>
           ) : isEmpty ? (
             <tr role="row">
-              <td className="text-center p-2" colSpan={headers.length}>
+              <td className="text-center p-2 text-gray-900 dark:text-gray-100" colSpan={headers.length}>
                 <NothingFound emptyText={emptyText} />
               </td>
             </tr>
@@ -105,7 +107,7 @@ export default function CustomTable(props: CustomTableProps) {
             sortedData.map((row) => (
               <tr
                 key={row.id}
-                className={`hover:bg-gray-100 dark:hover:bg-gray-800 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 ${rowClassName}`}
+                className={`hover:bg-neutral-100 dark:hover:bg-neutral-700 odd:bg-white dark:odd:bg-neutral-900 even:bg-neutral-50 dark:even:bg-neutral-800 ${rowClassName}`}
                 role="row"
                 {...(onRowClick && {
                   onClick: () => onRowClick(row),
@@ -114,7 +116,7 @@ export default function CustomTable(props: CustomTableProps) {
                 {headers.map((header) => (
                   <td
                     key={header.key}
-                    className={`text-nowrap border border-gray-600 p-2 ${cellClassName}`}
+                    className={`text-nowrap border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100 ${cellClassName}`}
                     {...(onCellClick && {
                       onClick: () =>
                         onCellClick(row[header.key] as string, row),

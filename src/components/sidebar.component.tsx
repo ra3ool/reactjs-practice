@@ -5,9 +5,9 @@ export default function Sidebar({ config }: { config: SidebarProps }) {
   const { title, items } = config;
 
   return (
-    <aside className="h-full w-56 bg-gray-900 text-white flex flex-col gap-6 py-6 px-2 shrink-0 select-none rounded-3xl overflow-auto">
+    <aside className="h-full w-56 bg-neutral-200 dark:bg-neutral-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6 py-6 px-2 shrink-0 select-none rounded-3xl overflow-auto">
       {title && (
-        <h2 className="text-xl font-bold text-blue-400 px-4">{title}</h2>
+        <h2 className="text-xl font-bold text-blue-600 dark:text-blue-400 px-4">{title}</h2>
       )}
       <nav className="flex flex-col gap-2">
         {items.map((item) => {
@@ -17,8 +17,8 @@ export default function Sidebar({ config }: { config: SidebarProps }) {
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `hover:text-blue-300 transition-colors py-1 px-4 rounded-xl ${
-                    isActive && 'bg-gray-700'
+                  `p-3 rounded-xl hover:bg-neutral-300 dark:hover:bg-neutral-700 ${
+                    isActive ? 'bg-neutral-300 dark:bg-neutral-700' : ''
                   }`
                 }
               >
@@ -28,7 +28,7 @@ export default function Sidebar({ config }: { config: SidebarProps }) {
           } else if (item.component) {
             return (
               <div
-                className="flex justify-between align-middle py-1 px-4 rounded-xl"
+                className="flex justify-between align-middle py-1 px-4 rounded-xl text-gray-900 dark:text-gray-100"
                 key={item.title}
               >
                 <span>{item.title}</span>
