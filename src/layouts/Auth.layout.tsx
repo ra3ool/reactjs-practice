@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import { Sidebar } from "@/components";
-import { authRoutes } from "@/constants/routes";
+import { authRoutes } from "@/constants";
 import { SidebarProps } from "@/types";
 
 const SideBarConfig : SidebarProps = {

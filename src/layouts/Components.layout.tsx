@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import { Sidebar } from "@/components";
-import { componentsRoutes } from "@/constants/routes";
+import { componentsRoutes } from "@/constants";
 import { SidebarProps } from "@/types";
 
 const SideBarConfig : SidebarProps = {
@@ -8,6 +8,7 @@ const SideBarConfig : SidebarProps = {
     items: [
         { title: "input", path: componentsRoutes.input },
         { title: "table", path: componentsRoutes.table },
+        { title: "toggle", path: componentsRoutes.toggle },
     ]
 }
 

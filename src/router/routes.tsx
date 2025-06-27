@@ -12,6 +12,7 @@ import Register from '@/views/Auth/Register.view';
 import ComponentsLayout from '@/layouts/Components.layout';
 import CustomInput from '@/views/Components/Input.view';
 import CustomTable from '@/views/Components/Table.view';
+import CustomToggle from '@/views/Components/Toggle.view';
 
 const redirect = (to: string) => () => <Navigate to={to} replace />;
 
@@ -19,7 +20,7 @@ const {
   home,
   about,
   auth: { root: authRoot, login, register },
-  components: { root: componentsRoot, input, table },
+  components: { root: componentsRoot, input, table, toggle },
 } = routesConstants;
 
 const routes = [
@@ -42,9 +43,10 @@ const routes = [
         path: componentsRoot,
         Component: ComponentsLayout,
         children: [
-          { index: true, Component: redirect(input) },
+          { index: true, Component: redirect(input) }, //TODO set loop over this routes
           { path: input, Component: CustomInput },
           { path: table, Component: CustomTable },
+          { path: toggle, Component: CustomToggle },
         ],
       },
     ],

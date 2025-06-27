@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import { Sidebar, Toggle } from '@/components';
+import { Sidebar, CustomToggle } from '@/components';
 import { routes } from '@/constants';
 import { SidebarProps } from '@/types';
 import { useTheme } from '@/hooks';
@@ -15,10 +15,12 @@ export default function Layout() {
         { title: 'Home', path: routes.home },
         { title: 'About', path: routes.about },
         { title: 'Auth', path: routes.auth.root },
-        { title: 'Components', path: routes.components.root },
+        { title: 'Components', path: routes.components.root }, //TODO drop down
         {
           title: 'Dark Mode',
-          component: <Toggle toggle={toggleTheme} isActive={isDarkMode} />,
+          component: (
+            <CustomToggle isActive={isDarkMode} toggle={toggleTheme} />
+          ),
         },
       ],
     }),
