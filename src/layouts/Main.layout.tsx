@@ -14,8 +14,14 @@ export default function Layout() {
       items: [
         { title: 'Home', path: routes.home },
         { title: 'About', path: routes.about },
-        { title: 'Auth', path: routes.auth.root },
-        { title: 'Components', path: routes.components.root }, //TODO drop down
+        {
+          title: 'Auth',
+          group: [
+            { title: 'Login', path: routes.auth.login },
+            { title: 'Register', path: routes.auth.register },
+          ],
+        },
+        { title: 'Components', path: routes.components.root },
         {
           title: 'Dark Mode',
           component: (

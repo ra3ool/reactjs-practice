@@ -7,5 +7,6 @@ const componentsRoutes = Object.freeze({
     table: 'table',
     toggle: 'toggle',
     dropdown: 'dropdown',
+    expantionPanel: 'expantion-panel',
 })
 export default createRoutesGroup(prefix, componentsRoutes)
