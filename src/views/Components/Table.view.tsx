@@ -157,7 +157,7 @@ export default function TableView() {
           onRowClick={onRowClick}
           onCellClick={onCellClick}
         />
-        <Pagination
+        <Pagination //FIXME if changed, the page will rerender!!!
           totalItems={totalLength}
           itemsPerPage={ITEMS_PER_PAGE}
           currentPage={currentPage}

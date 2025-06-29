@@ -1,5 +1,6 @@
 import { SidebarProps } from '@/types';
 import { NavLink } from 'react-router';
+import { ExpanisonPanel } from '.';
 
 export default function Sidebar({ config }: { config: SidebarProps }) {
   const { title, items } = config;
@@ -29,11 +30,9 @@ export default function Sidebar({ config }: { config: SidebarProps }) {
             );
           } else if (item.group) {
             return (
-              <div key={item.title}>
-                <div className="flex justify-between align-middle p-3 rounded-xl text-gray-900 dark:text-gray-100">
-                  {item.title}
-                </div>
-              </div>
+              <ExpanisonPanel key={item.title} title={item.title}>
+                <Sidebar config={{items: item.group}} />
+              </ExpanisonPanel>
             );
           } else if (item.component) {
             return (

@@ -1,19 +1,12 @@
-import {
-  useState,
-  useRef,
-  useEffect,
-  cloneElement,
-  ReactElement,
-  HTMLAttributes,
-} from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ExpansionPanelProps } from '@/types';
 
 export default function ExpansionPanel({
   title = 'Panel Title',
-  trigger,
   children,
   isExpanded: isExpandedProp = false,
   className = '',
+  headerClassName = '',
 }: ExpansionPanelProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(isExpandedProp);
   const [contentHeight, setContentHeight] = useState<number>(0);
@@ -38,26 +31,22 @@ export default function ExpansionPanel({
       <div
         className={`border-gray-200 dark:border-gray-700 ${
           children && isExpanded ? 'border-b-1' : ''
-        }`}
+        } ${headerClassName}`}
       >
-        {trigger ? (
-          cloneElement(
-            trigger as ReactElement,
-            {
-              'aria-expanded': isExpanded,
-              onClick: handleToggle,
-            } as HTMLAttributes<HTMLElement>,
-          )
-        ) : (
-          <button
-            type="button"
-            className="w-full flex justify-between items-center p-4 text-left focus:outline-none transition-colors duration-200 cursor-pointer"
-            onClick={handleToggle}
-            aria-expanded={isExpanded}
+        <div
+          className="w-full flex justify-between items-center p-4 text-left focus:outline-none transition-colors duration-200 cursor-pointer select-none"
+          onClick={handleToggle}
+          aria-expanded={isExpanded}
+        >
+          <span className="text-gray-900 dark:text-gray-100">{title}</span>
+          <span
+            className={`text-gray-900 dark:text-gray-100 text-sm duration-500 ${
+              isExpanded ? 'rotate-180' : ''
+            }`}
           >
-            <span className="text-gray-900 dark:text-gray-100">{title}</span>
-          </button>
-        )}
+            ▼
+          </span>
+        </div>
       </div>
       {children && (
         <div

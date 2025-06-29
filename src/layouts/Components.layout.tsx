@@ -10,7 +10,7 @@ const SideBarConfig: SidebarProps = {
     { title: 'table', path: componentsRoutes.table },
     { title: 'toggle', path: componentsRoutes.toggle },
     { title: 'dropdown', path: componentsRoutes.dropdown },
-    { title: 'expantionPanel', path: componentsRoutes.expantionPanel },
+    { title: 'expansionPanel', path: componentsRoutes.expansionPanel },
   ],
 };
 

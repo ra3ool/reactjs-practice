@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router';
 import { componentsRoutes } from '@/constants';
 
-const { root, input, table, toggle, dropdown, expantionPanel } =
+const { root, input, table, toggle, dropdown, expansionPanel } =
   componentsRoutes;
 
 const ComponentsLayout = lazy(() => import('@/layouts/Components.layout'));
@@ -12,8 +12,8 @@ const componentsMap = {
   [table]: lazy(() => import('@/views/Components/Table.view')),
   [toggle]: lazy(() => import('@/views/Components/Toggle.view')),
   [dropdown]: lazy(() => import('@/views/Components/Dropdown.view')),
-  [expantionPanel]: lazy(
-    () => import('@/views/Components/ExpantionPanel.view'),
+  [expansionPanel]: lazy(
+    () => import('@/views/Components/ExpansionPanel.view'),
   ),
 };
 
