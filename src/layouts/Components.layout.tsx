@@ -1,23 +1,25 @@
 import { Outlet } from 'react-router';
 import { Sidebar } from '@/components';
 import { componentsRoutes } from '@/constants';
-import { SidebarProps } from '@/types';
+import { SidebarItem } from '@/types';
 
-const SideBarConfig: SidebarProps = {
-  title: 'Components',
-  items: [
-    { title: 'input', path: componentsRoutes.input },
-    { title: 'table', path: componentsRoutes.table },
-    { title: 'toggle', path: componentsRoutes.toggle },
-    { title: 'dropdown', path: componentsRoutes.dropdown },
-    { title: 'expansionPanel', path: componentsRoutes.expansionPanel },
-  ],
-};
-
+const sideBarItems: SidebarItem[] = [
+  { title: 'input', path: componentsRoutes.input },
+  { title: 'table', path: componentsRoutes.table },
+  { title: 'toggle', path: componentsRoutes.toggle },
+  { title: 'dropdown', path: componentsRoutes.dropdown },
+  { title: 'expansionPanel', path: componentsRoutes.expansionPanel },
+];
 export default function ComponentsLayout() {
   return (
     <div className="component-layout flex h-full w-full gap-4">
-      <Sidebar config={SideBarConfig} />
+      <div className="h-full w-56 shrink-0">
+        <Sidebar
+          title="Components"
+          items={sideBarItems}
+          className="py-6 px-2 rounded-3xl"
+        />
+      </div>
       <div className="grow-1 overflow-auto">
         <Outlet />
       </div>

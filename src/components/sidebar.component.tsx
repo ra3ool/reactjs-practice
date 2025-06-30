@@ -2,11 +2,11 @@ import { SidebarProps } from '@/types';
 import { NavLink } from 'react-router';
 import { ExpanisonPanel } from '.';
 
-export default function Sidebar({ config }: { config: SidebarProps }) {
-  const { title, items } = config;
-
+export default function Sidebar({ title, items, className }: SidebarProps) {
   return (
-    <aside className="h-full w-56 bg-neutral-200 dark:bg-neutral-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6 py-6 px-2 shrink-0 select-none rounded-3xl overflow-auto">
+    <aside
+      className={`h-full w-full bg-neutral-200 dark:bg-neutral-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6 select-none overflow-auto ${className}`}
+    >
       {title && (
         <h2 className="text-xl font-bold text-blue-600 dark:text-blue-400 px-4">
           {title}
@@ -31,7 +31,7 @@ export default function Sidebar({ config }: { config: SidebarProps }) {
           } else if (item.group) {
             return (
               <ExpanisonPanel key={item.title} title={item.title}>
-                <Sidebar config={{items: item.group}} />
+                <Sidebar items={item.group} />
               </ExpanisonPanel>
             );
           } else if (item.component) {

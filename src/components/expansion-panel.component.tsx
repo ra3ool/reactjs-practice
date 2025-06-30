@@ -26,7 +26,7 @@ export default function ExpansionPanel({
 
   return (
     <div
-      className={`w-full border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm overflow-hidden ${className}`}
+      className={`w-full dark:border-gray-700 rounded-lg overflow-hidden ${className}`}
     >
       <div
         className={`border-gray-200 dark:border-gray-700 ${

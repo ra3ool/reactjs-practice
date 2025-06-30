@@ -7,7 +7,11 @@ export default function ExpansionPanel() {
         <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
           expansion panel
         </h3>
-        <ExpanisonPanel isExpanded={true} title="title">
+        <ExpanisonPanel
+          isExpanded={true}
+          title="title"
+          className="border border-gray-200 shadow-sm"
+        >
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat
             eveniet fuga assumenda aut hic porro voluptate odio voluptates.

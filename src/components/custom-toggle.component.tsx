@@ -13,7 +13,11 @@ export default function Toggle({
 
   return (
     <div className="flex gap-2 items-center">
-      {deActiveLabelText && <span>{deActiveLabelText}</span>}
+      {deActiveLabelText && (
+        <span className="text-gray-900 dark:text-gray-100">
+          {deActiveLabelText}
+        </span>
+      )}
       <div
         className={`rounded-2xl bg-neutral-300 dark:bg-neutral-700 w-12 flex items-center align-middle cursor-pointer ${
           hasBiggerBubble ? 'h-4' : 'h-6 p-1'
@@ -29,7 +33,11 @@ export default function Toggle({
           } ${hasBiggerBubble ? 'h-6' : 'h-full'}`}
         ></span>
       </div>
-      {activeLabelText && <span>{activeLabelText}</span>}
+      {activeLabelText && (
+        <span className="text-gray-900 dark:text-gray-100">
+          {activeLabelText}
+        </span>
+      )}
     </div>
   );
 }
