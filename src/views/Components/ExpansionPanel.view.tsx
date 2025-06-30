@@ -11,6 +11,7 @@ export default function ExpansionPanel() {
           isExpanded={true}
           title="title"
           className="border border-gray-200 shadow-sm"
+          expandedHeaderClassName="border-b-1"
         >
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat

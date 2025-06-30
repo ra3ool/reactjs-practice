@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { ExpansionPanelProps } from '@/types';
+import SvgLoader from './svg-loader.component';
 
 export default function ExpansionPanel({
   title = 'Panel Title',
@@ -7,6 +8,7 @@ export default function ExpansionPanel({
   isExpanded: isExpandedProp = false,
   className = '',
   headerClassName = '',
+  expandedHeaderClassName = '',
 }: ExpansionPanelProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(isExpandedProp);
   const [contentHeight, setContentHeight] = useState<number>(0);
@@ -30,11 +32,11 @@ export default function ExpansionPanel({
     >
       <div
         className={`border-gray-200 dark:border-gray-700 ${
-          children && isExpanded ? 'border-b-1' : ''
+          children && isExpanded ? expandedHeaderClassName : ''
         } ${headerClassName}`}
       >
         <div
-          className="w-full flex justify-between items-center p-4 text-left focus:outline-none transition-colors duration-200 cursor-pointer select-none"
+          className="w-full flex justify-between items-center p-3 text-left focus:outline-none transition-colors duration-200 cursor-pointer select-none"
           onClick={handleToggle}
           aria-expanded={isExpanded}
         >
@@ -44,7 +46,7 @@ export default function ExpansionPanel({
               isExpanded ? 'rotate-180' : ''
             }`}
           >
-            ▼
+            <SvgLoader name="chevron-down" />
           </span>
         </div>
       </div>

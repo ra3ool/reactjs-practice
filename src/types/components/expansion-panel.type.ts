@@ -6,4 +6,5 @@ export interface ExpansionPanelProps {
   isExpanded?: boolean;
   className?: string;
   headerClassName?: string;
+  expandedHeaderClassName?: string;
 }
