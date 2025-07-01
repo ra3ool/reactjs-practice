@@ -13,6 +13,7 @@ export default function CustomInput(props: CustomInputProps) {
     className = '',
     inputClassName = '',
     disabled = false,
+    required = false,
     inputStyle = 'border',
     ...otherProps
   } = props;
@@ -32,9 +33,10 @@ export default function CustomInput(props: CustomInputProps) {
           type={type}
           placeholder={placeholder}
           value={value}
-          onChange={onChange}
+          onChange={(event) => onChange(event.target.value)}
           className={`border border-gray-300 dark:border-gray-600 rounded px-2 py-1 dark:bg-neutral-900 text-gray-900 dark:text-gray-100 focus:border-blue-600 dark:focus:border-blue-500 focus:outline-none ${inputClassName}`}
           disabled={disabled}
+          required={required}
           {...otherProps}
         />
       </div>
@@ -54,9 +56,10 @@ export default function CustomInput(props: CustomInputProps) {
           type={type}
           placeholder={placeholder}
           value={value}
-          onChange={onChange}
+          onChange={(event) => onChange(event.target.value)}
           className={`border-b border-gray-300 dark:border-gray-600 bg-transparent text-gray-900 dark:text-gray-100 focus:border-blue-600 dark:focus:border-blue-500 focus:outline-none ${inputClassName}`}
           disabled={disabled}
+          required={required}
         />
       </div>
     );
@@ -75,9 +78,10 @@ export default function CustomInput(props: CustomInputProps) {
           type={type}
           placeholder={placeholder}
           value={value}
-          onChange={onChange}
+          onChange={(event) => onChange(event.target.value)}
           className={`bg-transparent text-gray-900 dark:text-gray-100 focus:outline-none ${inputClassName}`}
           disabled={disabled}
+          required={required}
         />
       </div>
     );
@@ -90,11 +94,12 @@ export default function CustomInput(props: CustomInputProps) {
           id={id}
           type={type}
           value={value}
-          onChange={onChange}
+          onChange={(event) => onChange(event.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           className={`border border-gray-300 dark:border-gray-600 rounded px-2 py-2 dark:bg-neutral-900 text-gray-900 dark:text-gray-100 focus:border-blue-600 dark:focus:border-blue-500 focus:outline-none ${inputClassName}`}
           disabled={disabled}
+          required={required}
         />
         {(label || placeholder) && (
           <label
