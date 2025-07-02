@@ -6,6 +6,7 @@ function CustomInput({
   label,
   type = 'text',
   placeholder = '',
+  name,
   value,
   onChange,
   className = '',
@@ -14,16 +15,24 @@ function CustomInput({
   required = false,
   inputStyle = 'border',
   icon,
-  error,
+  hasError = false,
+  errorText = 'this field is required',
   id,
   autoComplete,
+  register = () => {},
   ref,
-  ...otherProps
 }: CustomInputProps) {
   const randomId = useId();
   const inputId = id || randomId;
   const errorId = `${inputId}-error`;
   const [isFocused, setIsFocused] = useState(false);
+  const { onBlur: registerOnBlur, ...registerProps } = {
+    ...register(name, { required }),
+  };
+  const onBlurHandler = (event) => {
+    if (registerOnBlur) registerOnBlur(event);
+    if (!event.target.value) setIsFocused(false);
+  };
 
   const baseInputClasses = `block w-full border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:outline-none duration-200 bg-transparent focus:border-indigo-500 ${inputClassName}`;
   const inputStyles = {
@@ -59,17 +68,16 @@ function CustomInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => inputStyle === 'floatingLabel' && setIsFocused(true)}
-          onBlur={() => inputStyle === 'floatingLabel' && setIsFocused(false)}
+          onBlur={onBlurHandler}
           className={`${baseInputClasses} ${inputStyles[inputStyle]} ${
             icon ? 'pl-10' : ''
-          } ${error ? 'border-red-500 dark:border-red-400' : ''}`}
+          } ${hasError ? 'border-red-500 dark:border-red-400' : ''}`}
           disabled={disabled}
-          required={required}
-          aria-invalid={!!error}
-          aria-describedby={error ? errorId : undefined}
+          aria-invalid={!!hasError}
+          aria-describedby={hasError ? errorId : undefined}
           aria-label={ariaLabel}
           autoComplete={autoComplete}
-          {...otherProps}
+          {...registerProps}
         />
         {inputStyle === 'floatingLabel' && (label || placeholder) && (
           <label
@@ -87,9 +95,9 @@ function CustomInput({
             {label || placeholder}
           </label>
         )}
-        {error && (
+        {hasError && (
           <p id={errorId} className="mt-1 text-sm text-red-500">
-            {error}
+            {errorText}
           </p>
         )}
       </div>

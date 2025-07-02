@@ -4,7 +4,3 @@ export interface RegisterFormData {
   password: string;
   confirmPassword: string;
 }
-
-export interface RegisterViewProps {
-  className?: string;
-}

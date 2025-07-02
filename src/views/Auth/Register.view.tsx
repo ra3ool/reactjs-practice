@@ -1,23 +1,23 @@
 import { CustomButton, CustomInput } from '@/components';
-import { useState, memo } from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
-import { RegisterFormData as FormData, RegisterViewProps } from '@/types';
+import { RegisterFormData as FormData } from '@/types';
+import { useForm } from 'react-hook-form';
 
-function RegisterView({ className = '' }: RegisterViewProps) {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+function RegisterView() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const handleChange = (field: keyof FormData) => (value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const onSubmit = (formData: FormData) => {
+    console.log(formData);
   };
 
   return (
-    <div className={`flex h-full items-center justify-center p-4 ${className}`}>
+    <div className="flex h-full items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8">
         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-neutral-100 dark:bg-neutral-800 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
           <div className="text-center">
@@ -29,87 +29,87 @@ function RegisterView({ className = '' }: RegisterViewProps) {
             </p>
           </div>
 
-          <form className="mt-8 space-y-6">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <CustomInput
                 inputStyle="floatingLabel"
                 type="text"
+                name="name"
                 label="Full name"
-                value={formData.name}
-                onChange={handleChange('name')}
                 placeholder="John Doe"
                 autoComplete="name"
+                hasError={errors.name}
+                register={register}
                 required
-                // icon="user"
-                className="relative"
               />
               <CustomInput
                 inputStyle="floatingLabel"
                 type="email"
+                name="email"
                 label="Email address"
-                value={formData.email}
-                onChange={handleChange('email')}
                 placeholder="your@email.com"
                 autoComplete="email"
+                hasError={errors.email}
+                register={register}
                 required
-                // icon="email"
-                className="relative"
               />
               <CustomInput
                 inputStyle="floatingLabel"
                 type="password"
+                name="password"
                 label="Password"
-                value={formData.password}
-                onChange={handleChange('password')}
                 placeholder="••••••••"
                 autoComplete="new-password"
+                hasError={errors.password}
+                register={register}
                 required
-                // icon="lock"
-                className="relative"
               />
               <CustomInput
                 inputStyle="floatingLabel"
                 type="password"
+                name="confirmPassword"
                 label="Confirm password"
-                value={formData.confirmPassword}
-                onChange={handleChange('confirmPassword')}
                 placeholder="••••••••"
                 autoComplete="new-password"
+                hasError={errors.confirmPassword}
+                register={register}
                 required
-                // icon="lock"
-                className="relative"
               />
             </div>
 
-            <div className="flex items-center">
-              <input
-                id="terms"
-                name="terms"
-                type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
-                required
-              />
-              <label
-                htmlFor="terms"
-                className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
-              >
-                I agree to the {/*TODO add right to left modal later on*/}
-                <Link
-                  to={authRoutes.terms}
-                  className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
-                  aria-label="View terms of service"
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <input
+                  id="terms"
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
+                  {...register('terms', { required: true })}
+                />
+                <label
+                  htmlFor="terms"
+                  className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
                 >
-                  Terms
-                </Link>{' '}
-                and {/*TODO add right to left modal later on*/}
-                <Link
-                  to={authRoutes.privacy}
-                  className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
-                  aria-label="View privacy policy"
-                >
-                  Privacy Policy
-                </Link>
-              </label>
+                  I agree to the {/*TODO add right to left modal later on*/}
+                  <Link
+                    to={authRoutes.terms}
+                    className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
+                    aria-label="View terms of service"
+                  >
+                    Terms
+                  </Link>{' '}
+                  and {/*TODO add right to left modal later on*/}
+                  <Link
+                    to={authRoutes.privacy}
+                    className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
+                    aria-label="View privacy policy"
+                  >
+                    Privacy Policy
+                  </Link>
+                </label>
+              </div>
+              {errors.terms && (
+                <small className="text-red-500 dark:text-red-400">eano bezan</small>
+              )}
             </div>
 
             <div>

@@ -1,21 +1,23 @@
 import { CustomButton, CustomInput } from '@/components';
-import { useState, memo } from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
-import { LoginFormData as FormData, LoginViewProps } from '@/types';
+import { LoginFormData as FormData } from '@/types';
+import { useForm } from 'react-hook-form';
 
-function LoginView({ className = '' }: LoginViewProps) {
-  const [formData, setFormData] = useState<FormData>({
-    email: '',
-    password: '',
-  });
+function LoginView() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const handleChange = (field: keyof FormData) => (value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const onSubmit = (formData: FormData) => {
+    console.log(formData);
   };
 
   return (
-    <div className={`flex h-full items-center justify-center p-4 ${className}`}>
+    <div className="flex h-full items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8">
         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-neutral-100 dark:bg-neutral-800 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
           <div className="text-center">
@@ -27,31 +29,29 @@ function LoginView({ className = '' }: LoginViewProps) {
             </p>
           </div>
 
-          <form className="mt-8 space-y-6">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <CustomInput
                 inputStyle="floatingLabel"
                 type="email"
+                name="email"
                 label="Email address"
-                value={formData.email}
-                onChange={handleChange('email')}
                 placeholder="your@email.com"
                 autoComplete="email"
+                hasError={errors.email}
+                register={register}
                 required
-                // icon="email"
-                className="relative"
               />
               <CustomInput
                 inputStyle="floatingLabel"
                 type="password"
+                name="password"
                 label="Password"
-                value={formData.password}
-                onChange={handleChange('password')}
                 placeholder="••••••••"
                 autoComplete="current-password"
+                hasError={errors.password}
+                register={register}
                 required
-                // icon="lock"
-                className="relative"
               />
             </div>
 
