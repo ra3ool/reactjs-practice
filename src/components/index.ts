@@ -1,3 +1,4 @@
+export { default as CustomButton } from './custom-button.component'
 export { default as CustomDropdown, DropdownItem } from './custom-dropdown.component'
 export { default as CustomInput } from './custom-input.component'
 export { default as CustomTable } from './custom-table.component'

@@ -6,46 +6,41 @@ export default function InputView() {
   return (
     <>
       <div className="mb-12">
-        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">Custom Input Component with floatingLabel</h3>
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
+          Custom Input Component with floatingLabel
+        </h3>
         <CustomInput
           label="Username"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={setValue}
           placeholder="Enter username"
           inputStyle="floatingLabel"
         />
         <span className="text-gray-900 dark:text-gray-100">{value}</span>
       </div>
       <div className="mb-12">
-        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">Custom Input Component with border style</h3>
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
+          Custom Input Component with border style
+        </h3>
         <CustomInput
           label="Username"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={setValue}
           placeholder="Enter username"
           inputStyle="border"
         />
         <span className="text-gray-900 dark:text-gray-100">{value}</span>
       </div>
       <div className="mb-12">
-        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">Custom Input Component with underline style</h3>
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
+          Custom Input Component with underline style
+        </h3>
         <CustomInput
           label="Username"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={setValue}
           placeholder="Enter username"
           inputStyle="underline"
-        />
-        <span className="text-gray-900 dark:text-gray-100">{value}</span>
-      </div>
-      <div className="mb-12">
-        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">Custom Input Component with no style</h3>
-        <CustomInput
-          label="Username"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Enter username"
-          inputStyle="none"
         />
         <span className="text-gray-900 dark:text-gray-100">{value}</span>
       </div>

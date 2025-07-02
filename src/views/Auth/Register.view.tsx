@@ -1,18 +1,8 @@
-import { CustomInput, SvgLoader } from '@/components';
+import { CustomButton, CustomInput } from '@/components';
 import { useState, memo } from 'react';
 import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
-
-interface FormData {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface RegisterViewProps {
-  className?: string;
-}
+import { RegisterFormData as FormData, RegisterViewProps } from '@/types';
 
 function RegisterView({ className = '' }: RegisterViewProps) {
   const [formData, setFormData] = useState<FormData>({
@@ -29,7 +19,7 @@ function RegisterView({ className = '' }: RegisterViewProps) {
   return (
     <div className={`flex h-full items-center justify-center p-4 ${className}`}>
       <div className="w-full max-w-md space-y-8">
-        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-neutral-100 dark:bg-neutral-800 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-neutral-100 dark:bg-neutral-800 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
               Create your account
@@ -42,45 +32,49 @@ function RegisterView({ className = '' }: RegisterViewProps) {
           <form className="mt-8 space-y-6">
             <div className="space-y-4">
               <CustomInput
+                inputStyle="floatingLabel"
                 type="text"
                 label="Full name"
                 value={formData.name}
                 onChange={handleChange('name')}
                 placeholder="John Doe"
-                // autoComplete="name"
+                autoComplete="name"
                 required
                 // icon="user"
                 className="relative"
               />
               <CustomInput
+                inputStyle="floatingLabel"
                 type="email"
                 label="Email address"
                 value={formData.email}
                 onChange={handleChange('email')}
                 placeholder="your@email.com"
-                // autoComplete="email"
+                autoComplete="email"
                 required
                 // icon="email"
                 className="relative"
               />
               <CustomInput
+                inputStyle="floatingLabel"
                 type="password"
                 label="Password"
                 value={formData.password}
                 onChange={handleChange('password')}
                 placeholder="••••••••"
-                // autoComplete="new-password"
+                autoComplete="new-password"
                 required
                 // icon="lock"
                 className="relative"
               />
               <CustomInput
+                inputStyle="floatingLabel"
                 type="password"
                 label="Confirm password"
                 value={formData.confirmPassword}
                 onChange={handleChange('confirmPassword')}
                 placeholder="••••••••"
-                // autoComplete="new-password"
+                autoComplete="new-password"
                 required
                 // icon="lock"
                 className="relative"
@@ -119,14 +113,13 @@ function RegisterView({ className = '' }: RegisterViewProps) {
             </div>
 
             <div>
-              <button
+              <CustomButton
                 type="submit"
-                className="w-full flex justify-center items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200"
+                className="text-sm"
                 aria-label="Create a new account"
               >
                 Create account
-                <SvgLoader name="spinner" color="white" />
-              </button>
+              </CustomButton>
             </div>
           </form>
 

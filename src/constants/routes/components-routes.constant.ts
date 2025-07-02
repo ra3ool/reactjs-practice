@@ -4,6 +4,7 @@ const prefix = 'components'
 const componentsRoutes = Object.freeze({
     root: '/',
     input: 'input',
+    button: 'button',
     table: 'table',
     toggle: 'toggle',
     dropdown: 'dropdown',

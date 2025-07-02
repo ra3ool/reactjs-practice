@@ -2,13 +2,14 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router';
 import { componentsRoutes } from '@/constants';
 
-const { root, input, table, toggle, dropdown, expansionPanel } =
+const { root, input, button, table, toggle, dropdown, expansionPanel } =
   componentsRoutes;
 
 const ComponentsLayout = lazy(() => import('@/layouts/Components.layout'));
 
 const componentsMap = {
   [input]: lazy(() => import('@/views/Components/Input.view')),
+  [button]: lazy(() => import('@/views/Components/Button.view')),
   [table]: lazy(() => import('@/views/Components/Table.view')),
   [toggle]: lazy(() => import('@/views/Components/Toggle.view')),
   [dropdown]: lazy(() => import('@/views/Components/Dropdown.view')),

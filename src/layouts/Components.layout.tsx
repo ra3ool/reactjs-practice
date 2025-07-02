@@ -5,6 +5,7 @@ import { SidebarItem } from '@/types';
 
 const sideBarItems: SidebarItem[] = [
   { title: 'input', path: componentsRoutes.input },
+  { title: 'button', path: componentsRoutes.button },
   { title: 'table', path: componentsRoutes.table },
   { title: 'toggle', path: componentsRoutes.toggle },
   { title: 'dropdown', path: componentsRoutes.dropdown },
@@ -20,7 +21,7 @@ export default function ComponentsLayout() {
           className="py-6 px-2 rounded-3xl"
         />
       </div>
-      <div className="grow-1 overflow-auto">
+      <div className="grow-1 overflow-auto px-1">
         <Outlet />
       </div>
     </div>

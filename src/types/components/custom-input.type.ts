@@ -1,3 +1,4 @@
+import { Ref } from 'react';
 export interface CustomInputProps {
   label?: string;
   type?: string;
@@ -5,10 +6,13 @@ export interface CustomInputProps {
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
+  icon?: string;
+  autoComplete?: string;
   className?: string;
   inputClassName?: string;
-  inputStyle?: 'border' | 'underline' | 'none' | 'floatingLabel';
+  inputStyle?: 'border' | 'underline' | 'floatingLabel';
   disabled?: boolean;
   required?: boolean;
   error?: string;
+  ref?: Ref<HTMLInputElement> | undefined;
 }
