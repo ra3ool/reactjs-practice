@@ -3,17 +3,20 @@ import { memo } from 'react';
 import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
 import { RegisterFormData as FormData } from '@/types';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 
 function RegisterView() {
   const {
-    register,
     handleSubmit,
+    control,
+    register,
     formState: { errors },
   } = useForm<FormData>();
+  const password = useWatch({ control, name: 'password' });
 
-  const onSubmit = (formData: FormData) => {
-    console.log(formData);
+  const onSubmit = (data: FormData) => {
+    console.log('Login data:', data);
+    // handle login logic here
   };
 
   return (
@@ -31,49 +34,94 @@ function RegisterView() {
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
-              <CustomInput
-                inputStyle="floatingLabel"
-                type="text"
+              <Controller
                 name="name"
-                label="Full name"
-                placeholder="John Doe"
-                autoComplete="name"
-                hasError={errors.name}
-                register={register}
-                required
+                control={control}
+                rules={{
+                  required: 'Name is required',
+                  minLength: {
+                    value: 3,
+                    message: 'Minimum length is 3',
+                  },
+                }}
+                render={({ field }) => (
+                  <CustomInput
+                    {...field}
+                    inputStyle="floatingLabel"
+                    label="Full name"
+                    autoComplete="name"
+                    hasError={!!errors.name}
+                    errorText={errors.name?.message}
+                  />
+                )}
               />
-              <CustomInput
-                inputStyle="floatingLabel"
-                type="email"
+              <Controller
                 name="email"
-                label="Email address"
-                placeholder="your@email.com"
-                autoComplete="email"
-                hasError={errors.email}
-                register={register}
-                required
+                control={control}
+                rules={{
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Invalid email address',
+                  },
+                }}
+                render={({ field }) => (
+                  <CustomInput
+                    {...field}
+                    inputStyle="floatingLabel"
+                    label="Email address"
+                    autoComplete="email"
+                    hasError={!!errors.email}
+                    errorText={errors.email?.message}
+                  />
+                )}
               />
-              <CustomInput
-                inputStyle="floatingLabel"
-                type="password"
+              <Controller
                 name="password"
-                label="Password"
-                placeholder="••••••••"
-                autoComplete="new-password"
-                hasError={errors.password}
-                register={register}
-                required
+                control={control}
+                rules={{
+                  required: 'Password is required',
+                  minLength: {
+                    value: 8,
+                    message: 'Password must be at least 8 characters',
+                  },
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                    message:
+                      'Password must contain uppercase, lowercase, and number',
+                  },
+                }}
+                render={({ field }) => (
+                  <CustomInput
+                    {...field}
+                    inputStyle="floatingLabel"
+                    type="password"
+                    label="Password"
+                    autoComplete="new-password"
+                    hasError={!!errors.password}
+                    errorText={errors.password?.message}
+                  />
+                )}
               />
-              <CustomInput
-                inputStyle="floatingLabel"
-                type="password"
+              <Controller
                 name="confirmPassword"
-                label="Confirm password"
-                placeholder="••••••••"
-                autoComplete="new-password"
-                hasError={errors.confirmPassword}
-                register={register}
-                required
+                control={control}
+                rules={{
+                  required: 'Password confirmation is required',
+                  validate: (value) =>
+                    value === password || 'Passwords do not match',
+                }}
+                render={({ field }) => (
+                  <CustomInput
+                    {...field}
+                    inputStyle="floatingLabel"
+                    type="password"
+                    label="Password confirmation"
+                    autoComplete="new-password"
+                    hasError={!!errors.confirmPassword}
+                    errorText={errors.confirmPassword?.message}
+                  />
+                )}
               />
             </div>
 
@@ -83,7 +131,9 @@ function RegisterView() {
                   id="terms"
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
-                  {...register('terms', { required: true })}
+                  {...register('terms', {
+                    required: 'You must accept the terms',
+                  })}
                 />
                 <label
                   htmlFor="terms"
@@ -108,7 +158,9 @@ function RegisterView() {
                 </label>
               </div>
               {errors.terms && (
-                <small className="text-red-500 dark:text-red-400">eano bezan</small>
+                <small className="text-red-500 dark:text-red-400">
+                  {errors.terms?.message}
+                </small>
               )}
             </div>
 

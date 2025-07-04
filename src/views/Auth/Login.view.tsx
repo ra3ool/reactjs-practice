@@ -3,17 +3,21 @@ import { memo } from 'react';
 import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
 import { LoginFormData as FormData } from '@/types';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 function LoginView() {
   const {
-    register,
     handleSubmit,
+    control,
+    register,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: { email: 'test@gmail.com', password: '123456' },
+  });
 
-  const onSubmit = (formData: FormData) => {
-    console.log(formData);
+  const onSubmit = (data: FormData) => {
+    console.log('Login data:', data);
+    // handle login logic here
   };
 
   return (
@@ -29,29 +33,55 @@ function LoginView() {
             </p>
           </div>
 
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
             <div className="space-y-4">
-              <CustomInput
-                inputStyle="floatingLabel"
-                type="email"
+              <Controller
                 name="email"
-                label="Email address"
-                placeholder="your@email.com"
-                autoComplete="email"
-                hasError={errors.email}
-                register={register}
-                required
+                control={control}
+                rules={{
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Invalid email address',
+                  },
+                }}
+                render={({ field }) => (
+                  <CustomInput
+                    {...field}
+                    inputStyle="floatingLabel"
+                    label="Email address"
+                    autoComplete="email"
+                    hasError={!!errors.email}
+                    errorText={errors.email?.message}
+                  />
+                )}
               />
-              <CustomInput
-                inputStyle="floatingLabel"
-                type="password"
+              <Controller
                 name="password"
-                label="Password"
-                placeholder="••••••••"
-                autoComplete="current-password"
-                hasError={errors.password}
-                register={register}
-                required
+                control={control}
+                rules={{
+                  required: 'Password is required',
+                  minLength: {
+                    value: 8,
+                    message: 'Password must be at least 8 characters',
+                  },
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                    message:
+                      'Password must contain uppercase, lowercase, and number',
+                  },
+                }}
+                render={({ field }) => (
+                  <CustomInput
+                    {...field}
+                    inputStyle="floatingLabel"
+                    type="password"
+                    label="Password"
+                    autoComplete="current-password"
+                    hasError={!!errors.password}
+                    errorText={errors.password?.message}
+                  />
+                )}
               />
             </div>
 
@@ -59,9 +89,9 @@ function LoginView() {
               <div className="flex items-center">
                 <input
                   id="remember-me"
-                  name="remember-me"
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
+                  {...register('remember')}
                 />
                 <label
                   htmlFor="remember-me"

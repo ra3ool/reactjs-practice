@@ -10,6 +10,20 @@ export default function InputView() {
           Custom Input Component with floatingLabel
         </h3>
         <CustomInput
+          name="input1"
+          label="Username"
+          value={value}
+          onChange={setValue}
+          inputStyle="floatingLabel"
+        />
+        <span className="text-gray-900 dark:text-gray-100">{value}</span>
+      </div>
+      <div className="mb-12">
+        <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
+          Custom Input Component with floatingLabel and placeholder
+        </h3>
+        <CustomInput
+          name="input1"
           label="Username"
           value={value}
           onChange={setValue}
@@ -23,6 +37,7 @@ export default function InputView() {
           Custom Input Component with border style
         </h3>
         <CustomInput
+          name="input3"
           label="Username"
           value={value}
           onChange={setValue}
@@ -36,6 +51,7 @@ export default function InputView() {
           Custom Input Component with underline style
         </h3>
         <CustomInput
+          name="input4"
           label="Username"
           value={value}
           onChange={setValue}

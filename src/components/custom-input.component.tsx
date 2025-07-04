@@ -1,48 +1,61 @@
-import { useState, useId, memo } from 'react';
+import { useState, useId, memo, FocusEvent } from 'react';
 import { SvgLoader } from '@/components';
 import { CustomInputProps } from '@/types';
 
+const DEFAULT_ERROR_TEXT = 'This field is required';
+const baseInputClasses =
+  'block w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 focus:outline-none duration-200 bg-transparent';
+const inputStyles = {
+  border: 'border px-3 py-2 rounded-md',
+  underline: 'border-b-1 p-1',
+  floatingLabel: 'border px-3 pt-4 pb-2 rounded-md',
+};
+
 function CustomInput({
   label,
+  id,
+  ref,
   type = 'text',
   placeholder = '',
   name,
-  value,
-  onChange,
+  value = '',
   className = '',
   inputClassName = '',
   disabled = false,
-  required = false,
   inputStyle = 'border',
   icon,
   hasError = false,
-  errorText = 'this field is required',
-  id,
+  errorText,
   autoComplete,
-  register = () => {},
-  ref,
+  onChange,
+  onFocus,
+  onBlur,
 }: CustomInputProps) {
   const randomId = useId();
   const inputId = id || randomId;
   const errorId = `${inputId}-error`;
   const [isFocused, setIsFocused] = useState(false);
-  const { onBlur: registerOnBlur, ...registerProps } = {
-    ...register(name, { required }),
-  };
-  const onBlurHandler = (event) => {
-    if (registerOnBlur) registerOnBlur(event);
-    if (!event.target.value) setIsFocused(false);
-  };
-
-  const baseInputClasses = `block w-full border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:outline-none duration-200 bg-transparent focus:border-indigo-500 ${inputClassName}`;
-  const inputStyles = {
-    border: `border px-3 py-2 rounded-md`,
-    underline: `border-b-1 p-1`,
-    floatingLabel: `border px-3 pt-4 pb-2 rounded-md`,
-  };
 
   const showLabel = label && inputStyle !== 'floatingLabel';
   const ariaLabel = !showLabel ? label || placeholder : undefined;
+
+  const onChangeHandler = ({
+    target: { value },
+  }: {
+    target: { value: string };
+  }) => onChange(value);
+
+  const onFocusHandler = (event: FocusEvent<HTMLInputElement, Element>) => {
+    if (inputStyle === 'floatingLabel' && !event.target.value)
+      setIsFocused(true);
+    if (typeof onFocus === 'function') onFocus(event);
+  };
+
+  const onBlurHandler = (event: FocusEvent<HTMLInputElement, Element>) => {
+    if (inputStyle === 'floatingLabel' && !event.target.value)
+      setIsFocused(false);
+    if (typeof onBlur === 'function') onBlur(event);
+  };
 
   return (
     <div className={`flex flex-col space-y-1 ${className}`}>
@@ -61,43 +74,45 @@ function CustomInput({
           </div>
         )}
         <input
+          name={name}
           ref={ref}
           id={inputId}
           type={type}
-          placeholder={inputStyle === 'floatingLabel' ? undefined : placeholder}
+          placeholder={
+            inputStyle === 'floatingLabel' && !placeholder
+              ? undefined
+              : placeholder
+          }
           value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onFocus={() => inputStyle === 'floatingLabel' && setIsFocused(true)}
+          onChange={onChangeHandler}
+          onFocus={onFocusHandler}
           onBlur={onBlurHandler}
-          className={`${baseInputClasses} ${inputStyles[inputStyle]} ${
-            icon ? 'pl-10' : ''
-          } ${hasError ? 'border-red-500 dark:border-red-400' : ''}`}
+          className={`${baseInputClasses} ${inputClassName} ${
+            inputStyles[inputStyle]
+          } ${icon ? 'pl-10' : ''} ${
+            hasError
+              ? 'border-red-500 dark:border-red-400'
+              : 'focus:border-indigo-500'
+          }`}
           disabled={disabled}
           aria-invalid={!!hasError}
           aria-describedby={hasError ? errorId : undefined}
           aria-label={ariaLabel}
           autoComplete={autoComplete}
-          {...registerProps}
         />
         {inputStyle === 'floatingLabel' && (label || placeholder) && (
           <label
             htmlFor={inputId}
-            className={
-              `absolute left-2 top-4 px-1 text-sm duration-200 pointer-events-none origin-top-left ` +
-              `${
-                isFocused || value
-                  ? 'scale-75 -translate-y-3 text-indigo-600 dark:text-indigo-400'
-                  : 'text-gray-600 dark:text-gray-400'
-              } ` +
-              `${icon ? 'left-10' : ''}`
-            }
+            className={`absolute left-2 top-4 px-1.5 text-sm duration-200 pointer-events-none origin-top-left text-gray-700 dark:text-gray-300 ${
+              isFocused || value || placeholder ? 'scale-75 -translate-y-3' : ''
+            } ${icon ? 'left-10' : ''}`}
           >
             {label || placeholder}
           </label>
         )}
         {hasError && (
           <p id={errorId} className="mt-1 text-sm text-red-500">
-            {errorText}
+            {errorText ? errorText : DEFAULT_ERROR_TEXT}
           </p>
         )}
       </div>
