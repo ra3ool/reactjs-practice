@@ -4,6 +4,7 @@ import { routes } from '@/constants';
 import { SidebarItem } from '@/types';
 import { useTheme } from '@/hooks';
 import { useMemo } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 export default function Layout() {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -29,17 +30,20 @@ export default function Layout() {
   );
 
   return (
-    <main className="mail-layout h-full flex p-6 gap-6">
-      <div className="h-full w-56 shrink-0">
-        <Sidebar
-          title="React Practice"
-          items={sideBarItems}
-          className="py-6 px-2 rounded-3xl"
-        />
-      </div>
-      <div className="grow-1 overflow-auto">
-        <Outlet />
-      </div>
-    </main>
+    <>
+      <main className="mail-layout h-full flex p-6 gap-6">
+        <div className="h-full w-56 shrink-0">
+          <Sidebar
+            title="React Practice"
+            items={sideBarItems}
+            className="py-6 px-2 rounded-3xl"
+          />
+        </div>
+        <div className="grow-1 overflow-auto">
+          <Outlet />
+        </div>
+      </main>
+      <ToastContainer theme={isDarkMode ? 'dark' : 'light'} stacked draggable />
+    </>
   );
 }

@@ -4,6 +4,9 @@ import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
 import { LoginFormData as FormData } from '@/types';
 import { useForm, Controller } from 'react-hook-form';
+import { loginUser } from '@/services';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 function LoginView() {
   const {
@@ -12,12 +15,26 @@ function LoginView() {
     register,
     formState: { errors },
   } = useForm<FormData>({
-    defaultValues: { email: 'test@gmail.com', password: '123456' },
+    defaultValues: { email: 'test@gmail.com', password: 'Pass1234' },
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      console.log('data :', data);
+      toast.success('You are logged in!');
+      // TODO Store user/token if needed
+      // Example: store.setUser(data.user);
+      // Example: store.setToken(data.accessToken);
+    },
+    onError: (error) => {
+      toast.error(error?.message || 'Login failed');
+      // TODO handle errors code text to show to user
+    },
   });
 
   const onSubmit = (data: FormData) => {
-    console.log('Login data:', data);
-    // handle login logic here
+    mutate(data);
   };
 
   return (
@@ -115,6 +132,7 @@ function LoginView() {
                 type="submit"
                 className="text-sm"
                 aria-label="Sign in to your account"
+                loading={isPending}
               >
                 Sign in
               </CustomButton>

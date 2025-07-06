@@ -38,9 +38,9 @@ function CustomButton({
       type={type}
       {...otherProps}
     >
-      {loading && <SvgLoader name="spinner" />}
       {icon && !loading && <SvgLoader name={icon} />}
       {children}
+      {loading && <SvgLoader name="spinner" />}
     </button>
   );
 }
