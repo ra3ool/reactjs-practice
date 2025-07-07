@@ -34,7 +34,7 @@ export default function Layout() {
       <main className="mail-layout h-full flex p-6 gap-6">
         <div className="h-full w-56 shrink-0">
           <Sidebar
-            title="React Practice"
+            title="Simple Panel"
             items={sideBarItems}
             className="py-6 px-2 rounded-3xl"
           />

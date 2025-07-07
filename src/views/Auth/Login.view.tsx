@@ -2,11 +2,13 @@ import { CustomButton, CustomInput } from '@/components';
 import { memo } from 'react';
 import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
-import { LoginFormData as FormData } from '@/types';
+import { LoginFormData } from '@/types';
 import { useForm, Controller } from 'react-hook-form';
-import { loginUser } from '@/services';
+import { authService } from '@/services';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { authSchema } from '@/schemas';
 
 function LoginView() {
   const {
@@ -14,12 +16,17 @@ function LoginView() {
     control,
     register,
     formState: { errors },
-  } = useForm<FormData>({
-    defaultValues: { email: 'test@gmail.com', password: 'Pass1234' },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(authSchema.loginSchema),
+    defaultValues: {
+      identifier: 'rasool',
+      password: 'Pass1234',
+      remember: false,
+    },
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: loginUser,
+    mutationFn: authService.loginUser,
     onSuccess: (data) => {
       console.log('data :', data);
       toast.success('You are logged in!');
@@ -27,13 +34,14 @@ function LoginView() {
       // Example: store.setUser(data.user);
       // Example: store.setToken(data.accessToken);
     },
-    onError: (error) => {
+    onError: (error: Error) => {
+      console.error('error :', error);
       toast.error(error?.message || 'Login failed');
       // TODO handle errors code text to show to user
     },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: LoginFormData) => {
     mutate(data);
   };
 
@@ -53,41 +61,22 @@ function LoginView() {
           <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
             <div className="space-y-4">
               <Controller
-                name="email"
+                name="identifier"
                 control={control}
-                rules={{
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address',
-                  },
-                }}
                 render={({ field }) => (
                   <CustomInput
                     {...field}
                     inputStyle="floatingLabel"
-                    label="Email address"
-                    autoComplete="email"
-                    hasError={!!errors.email}
-                    errorText={errors.email?.message}
+                    label="Email or Username"
+                    autoComplete="username"
+                    hasError={!!errors.identifier}
+                    errorText={errors.identifier?.message}
                   />
                 )}
               />
               <Controller
                 name="password"
                 control={control}
-                rules={{
-                  required: 'Password is required',
-                  minLength: {
-                    value: 8,
-                    message: 'Password must be at least 8 characters',
-                  },
-                  pattern: {
-                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                    message:
-                      'Password must contain uppercase, lowercase, and number',
-                  },
-                }}
                 render={({ field }) => (
                   <CustomInput
                     {...field}

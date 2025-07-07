@@ -1,1 +1,3 @@
-export { default as loginUser } from './login.service'
+import * as loginUser from './login.service';
+
+export const authService = { ...loginUser };

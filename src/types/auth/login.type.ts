@@ -1,5 +1,5 @@
 export interface LoginFormData {
-  email: string;
+  identifier: string; // email or username
   password: string;
   remember: boolean;
 }
