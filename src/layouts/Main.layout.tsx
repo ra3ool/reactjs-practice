@@ -20,7 +20,7 @@ export default function Layout() {
           { title: 'Register', path: routes.auth.register },
         ],
       },
-      { title: 'Components', path: routes.components.input },
+      { title: 'Components', path: routes.components.root }, //for remain active while components routes change
       {
         title: 'Dark Mode',
         component: <CustomToggle isActive={isDarkMode} toggle={toggleTheme} />,

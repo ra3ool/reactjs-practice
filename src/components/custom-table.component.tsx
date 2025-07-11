@@ -1,9 +1,4 @@
-import {
-  CustomTableProps,
-  TableHeader,
-  TableRow,
-  TableCell,
-} from '@/types';
+import { CustomTableProps, TableHeader, TableRow, TableCell } from '@/types';
 import { Loading, NothingFound, Pagination } from '@/components';
 import PropTypes from 'prop-types';
 import { ReactNode, useState, useCallback } from 'react';
@@ -73,7 +68,8 @@ export default function CustomTable(props: CustomTableProps) {
               <th
                 key={header.key}
                 className={`p-2 border border-gray-300 dark:border-gray-600 select-none ${
-                  sort && 'cursor-pointer hover:bg-neutral-300 dark:hover:bg-neutral-700'
+                  sort &&
+                  'cursor-pointer hover:bg-neutral-300 dark:hover:bg-neutral-700'
                 }`}
                 {...(sort && { onClick: () => handleSort(header.key) })}
                 role="columnheader"
@@ -93,13 +89,19 @@ export default function CustomTable(props: CustomTableProps) {
         <tbody>
           {loading ? (
             <tr role="row">
-              <td className="text-center p-2 text-gray-900 dark:text-gray-100" colSpan={headers.length}>
+              <td
+                className="text-center p-2 text-gray-900 dark:text-gray-100"
+                colSpan={headers.length}
+              >
                 <Loading loadingText={loadingText} />
               </td>
             </tr>
           ) : isEmpty ? (
             <tr role="row">
-              <td className="text-center p-2 text-gray-900 dark:text-gray-100" colSpan={headers.length}>
+              <td
+                className="text-center p-2 text-gray-900 dark:text-gray-100"
+                colSpan={headers.length}
+              >
                 <NothingFound emptyText={emptyText} />
               </td>
             </tr>
@@ -107,7 +109,7 @@ export default function CustomTable(props: CustomTableProps) {
             sortedData.map((row) => (
               <tr
                 key={row.id}
-                className={`hover:bg-neutral-100 dark:hover:bg-neutral-700 odd:bg-white dark:odd:bg-neutral-900 even:bg-neutral-50 dark:even:bg-neutral-800 ${rowClassName}`}
+                className={rowClassName}
                 role="row"
                 {...(onRowClick && {
                   onClick: () => onRowClick(row),

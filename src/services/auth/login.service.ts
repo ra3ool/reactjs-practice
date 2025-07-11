@@ -1,13 +1,11 @@
-import { LoginFormData } from '@/types/auth/login.type';
-import axios from 'axios';
+import { LoginFormData } from '@/types';
+import { api } from '@/clients';
 import { authSchema } from '@/schemas';
 import { authMappers } from '@/mappers';
-
-const baseUrl = import.meta.env.VITE_AUTH_BASE_URL;
 
 export const loginUser = async (data: LoginFormData) => {
   authSchema.loginSchema.parse(data);
   const payload = authMappers.toLoginPayload(data);
-  const response = await axios.post(`${baseUrl}/auth/signin`, payload);
+  const response = await api.post(`/auth/signin`, payload);
   return authSchema.responseSchema.parse(response.data);
 };

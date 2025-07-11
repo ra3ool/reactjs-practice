@@ -91,7 +91,9 @@ const tableHeaders: TableHeader[] = [
     render: (row) => (
       <i>
         <b>
-          <span className="text-blue-500 dark:text-blue-300">{row?.email as ReactNode}</span>
+          <span className="text-blue-500 dark:text-blue-300">
+            {row?.email as ReactNode}
+          </span>
         </b>
       </i>
     ),
@@ -139,6 +141,7 @@ export default function TableView() {
           headers={tableHeaders}
           data={allData}
           loading={loadingAllData}
+          rowClassName="hover:bg-neutral-100 dark:hover:bg-neutral-700 odd:bg-neutral-100 dark:odd:bg-neutral-900 even:bg-neutral-200 dark:even:bg-neutral-800"
           sort
           onCellClick={onCellClick}
           pagination={{ itemsPerPage: ITEMS_PER_PAGE }}
@@ -154,6 +157,7 @@ export default function TableView() {
           headers={tableHeaders}
           data={paginatedData}
           loading={loadingPaginatedData}
+          rowClassName="hover:bg-neutral-100 dark:hover:bg-neutral-700 odd:bg-neutral-100 dark:odd:bg-neutral-900 even:bg-neutral-200 dark:even:bg-neutral-800"
           onRowClick={onRowClick}
           onCellClick={onCellClick}
         />
