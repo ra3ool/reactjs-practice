@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// Define schema for request payload
 export const loginSchema = z
   .object({
     identifier: z.string().min(1, 'Email or username is required'),
@@ -11,7 +10,7 @@ export const loginSchema = z
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
         'Password must contain uppercase, lowercase, and number',
       ),
-    remember: z.boolean().default(false),
+    remember: z.boolean(),
   })
   .superRefine((data, ctx) => {
     const { identifier } = data;
@@ -39,14 +38,11 @@ export const loginSchema = z
     }
   });
 
-// Define schema for API response
 export const responseSchema = z.object({
-  id: z.string().optional(), //TODO remove optional after server changes
   accessToken: z.string(),
-  user: z
-    .object({
-      name: z.string(),
-      email: z.string().email(),
-    })
-    .optional(),
+  user: z.object({
+    id: z.number(),
+    username: z.string(),
+    email: z.string().email(),
+  }),
 });

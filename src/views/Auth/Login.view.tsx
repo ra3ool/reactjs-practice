@@ -34,10 +34,14 @@ function LoginView() {
       // Example: store.setUser(data.user);
       // Example: store.setToken(data.accessToken);
     },
-    onError: (error: Error) => {
+    onError: (error: {
+      response?: { data?: { message?: string } };
+      message?: string;
+    }) => {
       console.error('error :', error);
-      toast.error(error?.message || 'Login failed');
-      // TODO handle errors code text to show to user
+      toast.error(
+        error?.response?.data?.message || error?.message || 'Login failed',
+      );
     },
   });
 

@@ -4,7 +4,7 @@ import { CustomInputProps } from '@/types';
 
 const DEFAULT_ERROR_TEXT = 'This field is required';
 const baseInputClasses =
-  'block w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 focus:outline-none duration-200 bg-transparent';
+  'block w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 focus:outline-none duration-200 bg-transparent autofill:bg-transparent';
 const inputStyles = {
   border: 'border px-3 py-2 rounded-md',
   underline: 'border-b-1 p-1',
@@ -58,7 +58,7 @@ function CustomInput({
   };
 
   return (
-    <div className={`flex flex-col space-y-1 ${className}`}>
+    <div className={`flex flex-col space-y-1 select-none ${className}`}>
       {showLabel && (
         <label
           htmlFor={inputId}
