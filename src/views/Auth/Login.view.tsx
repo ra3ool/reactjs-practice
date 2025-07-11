@@ -9,6 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authSchema } from '@/schemas';
+import { cookieStorage } from '@/services';
 
 function LoginView() {
   const {
@@ -28,7 +29,12 @@ function LoginView() {
   const { mutate, isPending } = useMutation({
     mutationFn: authService.loginUser,
     onSuccess: (data) => {
-      console.log('data :', data);
+      cookieStorage.set('accessToken', data.accessToken, {
+        expires: 1, // 1 day
+        secure: true,
+        sameSite: 'strict',
+      });
+
       toast.success('You are logged in!');
       // TODO Store user/token if needed
       // Example: store.setUser(data.user);
