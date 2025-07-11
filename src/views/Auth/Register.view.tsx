@@ -22,7 +22,7 @@ function RegisterView() {
   return (
     <div className="flex h-full items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8">
-        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-neutral-100 dark:bg-neutral-800 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-900 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
               Create your account

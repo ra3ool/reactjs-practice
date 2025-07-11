@@ -39,7 +39,7 @@ export default function Layout() {
             className="py-6 px-2 rounded-3xl"
           />
         </div>
-        <div className="grow-1 overflow-auto">
+        <div className="grow-1 bg-neutral-200 dark:bg-neutral-800 text-gray-900 dark:text-gray-100 p-3 rounded-3xl overflow-auto">
           <Outlet />
         </div>
       </main>
