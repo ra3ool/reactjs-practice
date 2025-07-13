@@ -27,11 +27,9 @@ export default function ExpansionPanel({
   const handleToggle = () => setIsExpanded(!isExpanded);
 
   return (
-    <div
-      className={`w-full dark:border-gray-700 rounded-lg overflow-hidden ${className}`}
-    >
+    <div className={`w-full rounded-lg overflow-hidden ${className}`}>
       <div
-        className={`border-gray-200 dark:border-gray-700 ${
+        className={`${
           children && isExpanded ? expandedHeaderClassName : ''
         } ${headerClassName}`}
       >

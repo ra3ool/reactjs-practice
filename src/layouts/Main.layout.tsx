@@ -36,10 +36,12 @@ export default function Layout() {
           <Sidebar
             title="Simple Panel"
             items={sideBarItems}
-            className="py-6 px-2 rounded-3xl"
+            className="py-6 px-2 rounded-3xl bg-bg-primary text-text-primary"
+            itemClassName="hover:bg-neutral-300 dark:hover:bg-neutral-700"
+            activeItemClassName="bg-neutral-300 dark:bg-neutral-700"
           />
         </div>
-        <div className="grow-1 bg-neutral-200 dark:bg-neutral-800 text-gray-900 dark:text-gray-100 p-3 rounded-3xl overflow-auto">
+        <div className="grow-1 overflow-auto">
           <Outlet />
         </div>
       </main>

@@ -1,3 +1,4 @@
+export * from './header.type';
 export * from './sidebar.type';
 
 export * from './components';

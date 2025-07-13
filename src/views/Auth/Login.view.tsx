@@ -4,12 +4,12 @@ import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
 import { LoginFormData } from '@/types';
 import { useForm, Controller } from 'react-hook-form';
-import { authService } from '@/services';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authSchema } from '@/schemas';
-import { cookieStorage } from '@/services';
+import { authService } from '@/services';
+import { useAuthStore } from '@/stores/auth/auth.store';
 
 function LoginView() {
   const {
@@ -29,16 +29,9 @@ function LoginView() {
   const { mutate, isPending } = useMutation({
     mutationFn: authService.loginUser,
     onSuccess: (data) => {
-      cookieStorage.set('accessToken', data.accessToken, {
-        expires: 1, // 1 day
-        secure: true,
-        sameSite: 'strict',
-      });
-
+      // Update the store with the login data
+      useAuthStore.getState().setLoginData(data);
       toast.success('You are logged in!');
-      // TODO Store user/token if needed
-      // Example: store.setUser(data.user);
-      // Example: store.setToken(data.accessToken);
     },
     onError: (error: {
       response?: { data?: { message?: string } };

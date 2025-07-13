@@ -40,6 +40,7 @@ export const loginSchema = z
 
 export const responseSchema = z.object({
   accessToken: z.string(),
+  refreshToken: z.string().optional(),
   user: z.object({
     id: z.number(),
     username: z.string(),

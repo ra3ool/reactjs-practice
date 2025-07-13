@@ -1,7 +1,7 @@
 import { CustomToggle } from '@/components';
 import { useState } from 'react';
 
-export default function Toggle() {
+export default function ToggleView() {
   const [isActive, setIsActive] = useState(true);
 
   const toggleActivity = (newVal: boolean) => {

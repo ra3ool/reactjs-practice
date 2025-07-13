@@ -6,7 +6,9 @@ export interface SidebarItem {
 }
 
 export interface SidebarProps {
-  className?: string;
   title?: string;
   items: SidebarItem[];
+  className?: string;
+  itemClassName?: string;
+  activeItemClassName?: string;
 }

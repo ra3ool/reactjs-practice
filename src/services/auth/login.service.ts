@@ -1,11 +1,11 @@
 import { LoginFormData } from '@/types';
-import { api } from '@/clients';
 import { authSchema } from '@/schemas';
-import { authMappers } from '@/mappers';
+import { authRepository } from '@/repositories';
 
 export const loginUser = async (data: LoginFormData) => {
   authSchema.loginSchema.parse(data);
-  const payload = authMappers.toLoginPayload(data);
-  const response = await api.post(`/auth/signin`, payload);
-  return authSchema.responseSchema.parse(response.data);
+
+  // Use repository to handle the API call
+  const response = await authRepository.login(data);
+  return response;
 };

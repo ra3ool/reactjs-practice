@@ -1,6 +1,6 @@
 import { CustomDropdown, DropdownItem } from '@/components';
 //TODO develop this component later on
-export default function Dropdown() {
+export default function DropdownView() {
   return (
     <>
       <div className="mb-12">
