@@ -75,7 +75,7 @@ export default memo(function Pagination({
 function PaginateButton({
   isActive,
   activeClasses = 'bg-neutral-400 dark:bg-neutral-600 text-gray-600 dark:text-gray-400 cursor-not-allowed',
-  deActiveClasses = 'bg-neutral-100 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 hover:bg-neutral-300 dark:hover:bg-neutral-700 cursor-pointer',
+  deActiveClasses = 'bg-neutral-100 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 cursor-pointer',
   onClick: onButtonClick,
   children,
 }: PaginationButtonProps) {

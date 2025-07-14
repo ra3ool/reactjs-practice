@@ -21,12 +21,12 @@ export default function ComponentsLayout() {
         <div className="h-full w-56 shrink-0">
           <Sidebar
             items={sideBarItems}
-            className="py-6 px-2"
-            itemClassName="hover:bg-neutral-300 dark:hover:bg-neutral-700"
-            activeItemClassName="bg-neutral-300 dark:bg-neutral-700"
+            className="p-2"
+            itemClassName="hover:bg-neutral-200 dark:hover:bg-neutral-700"
+            activeItemClassName="bg-neutral-200 dark:bg-neutral-700"
           />
         </div>
-        <div className="grow-1 overflow-auto px-1">
+        <div className="grow-1 px-1">
           <Outlet />
         </div>
       </LayoutContent>

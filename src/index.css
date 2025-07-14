@@ -12,7 +12,7 @@ body,
 }
 
 :root {
-  --primary-bg: var(--color-neutral-200); /* Background color for light mode */
+  --primary-bg: var(--color-white); /* Background color for light mode */
   --primary-text: var(--color-neutral-900); /* Text color for light mode */
 }
 

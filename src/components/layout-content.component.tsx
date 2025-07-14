@@ -9,7 +9,7 @@ export default function Header({
 }) {
   return (
     <div
-      className={`grow-1 h-full w-full bg-bg-primary text-text-primary p-3 rounded-xl ${className}`}
+      className={`grow-1 w-full bg-bg-primary text-text-primary p-3 rounded-xl ${className}`}
     >
       {children}
     </div>

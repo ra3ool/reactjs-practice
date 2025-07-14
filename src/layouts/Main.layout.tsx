@@ -31,17 +31,17 @@ export default function Layout() {
 
   return (
     <>
-      <main className="mail-layout h-full flex p-6 gap-6">
-        <div className="h-full w-56 shrink-0">
+      <main className="mail-layout min-h-full flex p-6 gap-6">
+        <div className="h-[calc(100vh-theme(space.12))] w-56 shrink-0 sticky top-6">
           <Sidebar
             title="Simple Panel"
             items={sideBarItems}
             className="py-6 px-2 rounded-3xl bg-bg-primary text-text-primary"
-            itemClassName="hover:bg-neutral-300 dark:hover:bg-neutral-700"
-            activeItemClassName="bg-neutral-300 dark:bg-neutral-700"
+            itemClassName="hover:bg-neutral-200 dark:hover:bg-neutral-700"
+            activeItemClassName="bg-neutral-200 dark:bg-neutral-700"
           />
         </div>
-        <div className="grow-1 overflow-auto">
+        <div className="grow-1 flex flex-col">
           <Outlet />
         </div>
       </main>

@@ -19,7 +19,7 @@ export default function Toggle({
         </span>
       )}
       <div
-        className={`rounded-2xl bg-neutral-300 dark:bg-neutral-700 w-12 flex items-center align-middle cursor-pointer ${
+        className={`rounded-2xl bg-neutral-200 dark:bg-neutral-700 w-12 flex items-center align-middle cursor-pointer ${
           hasBiggerBubble ? 'h-4' : 'h-6 p-1'
         }`}
         onClick={toggleActivity}

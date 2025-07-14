@@ -69,7 +69,7 @@ export default function CustomTable(props: CustomTableProps) {
                 key={header.key}
                 className={`p-2 border border-gray-300 dark:border-gray-600 select-none ${
                   sort &&
-                  'cursor-pointer hover:bg-neutral-300 dark:hover:bg-neutral-700'
+                  'cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700'
                 }`}
                 {...(sort && { onClick: () => handleSort(header.key) })}
                 role="columnheader"
