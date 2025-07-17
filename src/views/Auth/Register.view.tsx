@@ -2,21 +2,41 @@ import { CustomButton, CustomInput } from '@/components';
 import { memo } from 'react';
 import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
-import { RegisterFormData as FormData } from '@/types';
-import { useForm, Controller, useWatch } from 'react-hook-form';
+import { RegisterFormData } from '@/types';
+import { useForm, Controller } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import { useAuthStore } from '@/stores';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { authSchema } from '@/schemas';
 
 function RegisterView() {
   const {
     handleSubmit,
     control,
-    register,
     formState: { errors },
-  } = useForm<FormData>();
-  const password = useWatch({ control, name: 'password' });
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(authSchema.registerSchema),
+  });
 
-  const onSubmit = (data: FormData) => {
-    console.log('Login data:', data);
-    // handle login logic here
+  const { mutate, isPending } = useMutation({
+    mutationFn: useAuthStore.getState().register,
+    onSuccess: () => {
+      toast.success('You are signing up!');
+    },
+    onError: (error: {
+      response?: { data?: { message?: string } };
+      message?: string;
+    }) => {
+      console.error('error :', error);
+      toast.error(
+        error?.response?.data?.message || error?.message || 'Register failed',
+      );
+    },
+  });
+
+  const onSubmit = (data: RegisterFormData) => {
+    mutate(data);
   };
 
   return (
@@ -35,36 +55,22 @@ function RegisterView() {
           <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <Controller
-                name="name"
+                name="username"
                 control={control}
-                rules={{
-                  required: 'Name is required',
-                  minLength: {
-                    value: 3,
-                    message: 'Minimum length is 3',
-                  },
-                }}
                 render={({ field }) => (
                   <CustomInput
                     {...field}
                     inputStyle="floatingLabel"
-                    label="Full name"
-                    autoComplete="name"
-                    hasError={!!errors.name}
-                    errorText={errors.name?.message}
+                    label="Username"
+                    autoComplete="username"
+                    hasError={!!errors.username}
+                    errorText={errors.username?.message}
                   />
                 )}
               />
               <Controller
                 name="email"
                 control={control}
-                rules={{
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address',
-                  },
-                }}
                 render={({ field }) => (
                   <CustomInput
                     {...field}
@@ -79,18 +85,6 @@ function RegisterView() {
               <Controller
                 name="password"
                 control={control}
-                rules={{
-                  required: 'Password is required',
-                  minLength: {
-                    value: 8,
-                    message: 'Password must be at least 8 characters',
-                  },
-                  pattern: {
-                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                    message:
-                      'Password must contain uppercase, lowercase, and number',
-                  },
-                }}
                 render={({ field }) => (
                   <CustomInput
                     {...field}
@@ -106,11 +100,6 @@ function RegisterView() {
               <Controller
                 name="confirmPassword"
                 control={control}
-                rules={{
-                  required: 'Password confirmation is required',
-                  validate: (value) =>
-                    value === password || 'Passwords do not match',
-                }}
                 render={({ field }) => (
                   <CustomInput
                     {...field}
@@ -127,13 +116,22 @@ function RegisterView() {
 
             <div className="flex flex-col">
               <div className="flex items-center">
-                <input
-                  id="terms"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
-                  {...register('terms', {
-                    required: 'You must accept the terms',
-                  })}
+                <Controller
+                  name="terms"
+                  control={control}
+                  render={({ field }) => {
+                    const { value, onChange, ...rest } = field;
+                    return (
+                      <input
+                        {...rest}
+                        id="terms"
+                        type="checkbox"
+                        checked={value}
+                        onChange={(e) => onChange(e.target.checked)}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
+                      />
+                    );
+                  }}
                 />
                 <label
                   htmlFor="terms"
@@ -147,7 +145,7 @@ function RegisterView() {
                   >
                     Terms
                   </Link>{' '}
-                  and {/*TODO add right to left modal later on*/}
+                  and
                   <Link
                     to={authRoutes.privacy}
                     className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
@@ -169,6 +167,7 @@ function RegisterView() {
                 type="submit"
                 className="text-sm"
                 aria-label="Create a new account"
+                loading={isPending}
               >
                 Create account
               </CustomButton>

@@ -1,15 +1,10 @@
 import { LoginFormData } from '@/types';
 
 export const toLoginPayload = (data: LoginFormData) => {
-  return data.identifier.includes('@')
-    ? {
-        email: data.identifier,
-        password: data.password,
-        remember: data.remember,
-      }
-    : {
-        username: data.identifier,
-        password: data.password,
-        remember: data.remember,
-      };
+  const isEmail = data.identifier.includes('@');
+  return {
+    ...(isEmail ? { email: data.identifier } : { username: data.identifier }),
+    password: data.password,
+    remember: data.remember,
+  };
 };

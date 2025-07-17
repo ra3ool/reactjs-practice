@@ -1,2 +1,2 @@
 export * from './shared';
-export { authRepository } from './auth';
+export * from './auth';

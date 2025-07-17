@@ -2,9 +2,11 @@ import { z } from 'zod';
 
 export const loginSchema = z
   .object({
-    identifier: z.string().min(1, 'Email or username is required'),
+    identifier: z
+      .string({ required_error: 'Email or username is required' })
+      .min(1, 'Email or username is required'),
     password: z
-      .string()
+      .string({ required_error: 'Password is required' })
       .min(8, 'Password must be at least 8 characters')
       .regex(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
@@ -16,10 +18,12 @@ export const loginSchema = z
     const { identifier } = data;
     if (identifier.includes('@')) {
       // Validate as email
-      if (!/^([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})$/i.test(identifier)) {
+      try {
+        z.string().email('Invalid email').parse(identifier);
+      } catch {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'Invalid email address',
+          message: 'Invalid email',
           path: ['identifier'],
         });
       }
@@ -39,11 +43,11 @@ export const loginSchema = z
   });
 
 export const responseSchema = z.object({
-  accessToken: z.string(),
+  accessToken: z.string().min(1, 'Access token is required'),
   refreshToken: z.string().optional(),
   user: z.object({
     id: z.number(),
-    username: z.string(),
-    email: z.string().email(),
+    username: z.string().min(1, 'Username is required'),
+    email: z.string().email('Invalid email format'),
   }),
 });

@@ -8,29 +8,25 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authSchema } from '@/schemas';
-import { authService } from '@/services';
-import { useAuthStore } from '@/stores/auth/auth.store';
+import { useAuthStore } from '@/stores';
 
 function LoginView() {
   const {
     handleSubmit,
     control,
-    register,
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(authSchema.loginSchema),
     defaultValues: {
-      identifier: 'rasool',
-      password: 'Pass1234',
+      identifier: 'rasool', // default value
+      password: 'Pass1234', // default value
       remember: false,
     },
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: authService.loginUser,
-    onSuccess: (data) => {
-      // Update the store with the login data
-      useAuthStore.getState().setLoginData(data);
+    mutationFn: useAuthStore.getState().login,
+    onSuccess: () => {
       toast.success('You are logged in!');
     },
     onError: (error: {
@@ -63,7 +59,7 @@ function LoginView() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
             <div className="space-y-4">
-              <Controller
+              <Controller //TODO move to independent component
                 name="identifier"
                 control={control}
                 render={({ field }) => (
@@ -96,11 +92,22 @@ function LoginView() {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
-                  {...register('remember')}
+                <Controller
+                  name="remember"
+                  control={control}
+                  render={({ field }) => {
+                    const { value, onChange, ...rest } = field;
+                    return (
+                      <input
+                        {...rest}
+                        id="remember-me"
+                        type="checkbox"
+                        checked={value}
+                        onChange={(e) => onChange(e.target.checked)}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
+                      />
+                    );
+                  }}
                 />
                 <label
                   htmlFor="remember-me"
