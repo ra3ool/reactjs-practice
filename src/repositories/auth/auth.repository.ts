@@ -1,9 +1,19 @@
 import { api } from '@/clients';
-import { LoginRequestPayload, LoginResponse, User } from '@/types';
+import {
+  LoginRequestPayload,
+  LoginResponse,
+  registerRequestPayload,
+  User,
+} from '@/types';
 
 class AuthRepository {
   async login(credentials: LoginRequestPayload): Promise<LoginResponse> {
     const response = await api.post('/auth/signin', credentials);
+    return response.data;
+  }
+
+  async register(credentials: registerRequestPayload): Promise<LoginResponse> {
+    const response = await api.post('/auth/signup', credentials);
     return response.data;
   }
 

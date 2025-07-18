@@ -5,3 +5,5 @@ export interface RegisterFormData {
   confirmPassword: string;
   terms: boolean;
 }
+
+export type registerRequestPayload = Omit<RegisterFormData, 'confirmPassword'>;

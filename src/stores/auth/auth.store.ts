@@ -14,7 +14,9 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   register: async (credentials: RegisterFormData) => {
-    console.log('credentials :', credentials);
+    const data = await authService.register(credentials);
+    get().setLoginData(data);
+    return data;
   },
 
   setLoginData: (data: LoginResponse) => {
