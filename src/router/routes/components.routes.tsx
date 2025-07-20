@@ -7,27 +7,36 @@ const { root, input, button, table, toggle, dropdown, expansionPanel } =
 
 const ComponentsLayout = lazy(() => import('@/layouts/Components.layout'));
 
-const componentsMap = {
-  [input]: lazy(() => import('@/views/Components/Input.view')),
-  [button]: lazy(() => import('@/views/Components/Button.view')),
-  [table]: lazy(() => import('@/views/Components/Table.view')),
-  [toggle]: lazy(() => import('@/views/Components/Toggle.view')),
-  [dropdown]: lazy(() => import('@/views/Components/Dropdown.view')),
-  [expansionPanel]: lazy(
-    () => import('@/views/Components/ExpansionPanel.view'),
-  ),
-};
-
 const routes = [
   {
-    path: root,
+    path: root.path,
     Component: ComponentsLayout,
     children: [
-      { index: true, element: <Navigate to={input} replace /> },
-      ...Object.entries(componentsMap).map(([path, Component]) => ({
-        path,
-        Component,
-      })),
+      { index: true, element: <Navigate to={input.path} replace /> },
+      {
+        ...input,
+        Component: lazy(() => import('@/views/Components/Input.view')),
+      },
+      {
+        ...button,
+        Component: lazy(() => import('@/views/Components/Button.view')),
+      },
+      {
+        ...table,
+        Component: lazy(() => import('@/views/Components/Table.view')),
+      },
+      {
+        ...toggle,
+        Component: lazy(() => import('@/views/Components/Toggle.view')),
+      },
+      {
+        ...dropdown,
+        Component: lazy(() => import('@/views/Components/Dropdown.view')),
+      },
+      {
+        ...expansionPanel,
+        Component: lazy(() => import('@/views/Components/ExpansionPanel.view')),
+      },
     ],
   },
 ];

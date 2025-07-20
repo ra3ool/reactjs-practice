@@ -5,12 +5,12 @@ import { SidebarItem } from '@/types';
 import { Header } from '@/components';
 
 const sideBarItems: SidebarItem[] = [
-  { title: 'input', path: componentsRoutes.input },
-  { title: 'button', path: componentsRoutes.button },
-  { title: 'table', path: componentsRoutes.table },
-  { title: 'toggle', path: componentsRoutes.toggle },
-  { title: 'dropdown', path: componentsRoutes.dropdown },
-  { title: 'expansionPanel', path: componentsRoutes.expansionPanel },
+  { title: componentsRoutes.input.name, path: componentsRoutes.input.path },
+  { title: componentsRoutes.button.name, path: componentsRoutes.button.path },
+  { title: componentsRoutes.table.name, path: componentsRoutes.table.path },
+  { title: componentsRoutes.toggle.name, path: componentsRoutes.toggle.path },
+  { title: componentsRoutes.dropdown.name, path: componentsRoutes.dropdown.path },
+  { title: componentsRoutes.expansionPanel.name, path: componentsRoutes.expansionPanel.path },
 ];
 
 export default function ComponentsLayout() {

@@ -6,21 +6,20 @@ const { root, login, register } = authRoutes;
 
 const AuthLayout = lazy(() => import('@/layouts/Auth.layout'));
 
-const componentsMap = {
-  [login]: lazy(() => import('@/views/Auth/Login.view')),
-  [register]: lazy(() => import('@/views/Auth/Register.view')),
-};
-
 const routes = [
   {
-    path: root,
+    path: root.path,
     Component: AuthLayout,
     children: [
-      { index: true, element: <Navigate to={login} replace /> },
-      ...Object.entries(componentsMap).map(([path, Component]) => ({
-        path,
-        Component,
-      })),
+      { index: true, element: <Navigate to={login.path} replace /> },
+      {
+        ...login,
+        Component: lazy(() => import('@/views/Auth/Login.view')),
+      },
+      {
+        ...register,
+        Component: lazy(() => import('@/views/Auth/Register.view')),
+      },
     ],
   },
 ];

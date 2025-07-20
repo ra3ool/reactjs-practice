@@ -1,33 +1,47 @@
 import { Outlet } from 'react-router';
-import { Sidebar, CustomToggle } from '@/components';
+import { Sidebar, CustomToggle, Breadcrumb } from '@/components';
 import { routes } from '@/constants';
 import { SidebarItem } from '@/types';
 import { useTheme } from '@/hooks';
 import { useMemo } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { useAuthStore } from '@/stores';
 
 export default function Layout() {
   const { isDarkMode, toggleTheme } = useTheme();
+  const { user, isAuthenticated } = useAuthStore();
 
-  const sideBarItems: SidebarItem[] = useMemo(
-    () => [
-      { title: 'Home', path: routes.home },
-      { title: 'About', path: routes.about },
-      {
+  const sideBarItems: SidebarItem[] = useMemo(() => {
+    const items: SidebarItem[] = [
+      { title: routes.home.name, path: routes.home.path },
+      { title: routes.about.name, path: routes.about.path },
+      { title: routes.demo.name, path: routes.demo.path },
+    ];
+    if (!isAuthenticated) {
+      items.push({
         title: 'Auth',
         group: [
-          { title: 'Login', path: routes.auth.login },
-          { title: 'Register', path: routes.auth.register },
+          { title: routes.auth.login.name, path: routes.auth.login.path },
+          { title: routes.auth.register.name, path: routes.auth.register.path },
         ],
-      },
-      { title: 'Components', path: routes.components.root }, //for remain active while components routes change
-      {
-        title: 'Dark Mode',
-        component: <CustomToggle isActive={isDarkMode} toggle={toggleTheme} />,
-      },
-    ],
-    [isDarkMode, toggleTheme],
-  );
+      });
+    } else {
+      items.push(
+        {
+          title: routes.components.root.name,
+          path: routes.components.root.path,
+        }, // write root for remain active while components routes change
+      );
+    }
+    if (isAuthenticated && user?.roles?.includes('admin')) {
+      items.push({ title: routes.demo.name, path: routes.demo.path }); //TODO implement panel
+    }
+    items.push({
+      title: 'Dark Mode',
+      component: <CustomToggle isActive={isDarkMode} toggle={toggleTheme} />,
+    });
+    return items;
+  }, [isDarkMode, toggleTheme, user, isAuthenticated]);
 
   return (
     <>
@@ -42,6 +56,7 @@ export default function Layout() {
           />
         </div>
         <div className="grow-1 flex flex-col">
+          <Breadcrumb />
           <Outlet />
         </div>
       </main>
