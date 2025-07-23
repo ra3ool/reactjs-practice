@@ -14,3 +14,5 @@ export { default as Pagination } from './pagination.component';
 export { default as Sidebar } from './the-sidebar.component';
 export { default as SvgLoader } from './svg-loader.component';
 export { default as Header } from './the-header.component';
+export { default as ProtectedRoute } from './protected-route.component';
+export { default as RouteWrapper } from './route-wrapper.component';

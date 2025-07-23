@@ -5,6 +5,7 @@ import { RegisterFormData } from './register.type';
 export interface AuthStore {
   user: User | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (credentials: LoginFormData) => Promise<LoginResponse>;
   register: (credentials: RegisterFormData) => Promise<LoginResponse>;
   setLoginData: (data: LoginResponse) => void;
