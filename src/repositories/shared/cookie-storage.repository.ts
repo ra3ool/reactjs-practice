@@ -1,5 +1,5 @@
 import { cookieStorage as cookieStorageClient } from '@/clients';
-import { Storage } from '@/interfaces';
+import { Storage } from '@/types';
 
 class CookieStorage implements Storage {
   set(key: string, value: string, options: object) {

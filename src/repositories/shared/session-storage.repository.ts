@@ -1,5 +1,5 @@
 import { sessionStorage as sessionStorageClient } from '@/clients';
-import { Storage } from '@/interfaces';
+import { Storage } from '@/types';
 
 class SessionStorage implements Storage {
   set(key: string, value: string) {
