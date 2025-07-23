@@ -25,6 +25,18 @@ const baseRoutes: RouteGroup = Object.freeze({
       breadcrumb: true,
     },
   },
+  demo: {
+    name: 'Demo',
+    path: 'demo',
+    meta: {
+      title: 'Demo',
+      description: 'Routing system demo',
+      requiresAuth: false,
+      layout: 'main',
+      icon: 'demo',
+      breadcrumb: true,
+    },
+  },
 });
 
 export default baseRoutes;
