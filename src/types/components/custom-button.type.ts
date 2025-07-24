@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 
 export interface CustomButtonProps {
-  children: ReactNode;
+  children: string | ReactNode;
+  onClick?: () => void;
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   icon?: string;

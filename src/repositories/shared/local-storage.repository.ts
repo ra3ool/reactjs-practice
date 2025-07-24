@@ -1,5 +1,5 @@
 import { localStorage as localStorageClient } from '@/clients';
-import { Storage } from '@/interfaces';
+import { Storage } from '@/types';
 
 class LocalStorage implements Storage {
   set(key: string, value: string) {
