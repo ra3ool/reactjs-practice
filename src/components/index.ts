@@ -16,3 +16,4 @@ export { default as SvgLoader } from './svg-loader.component';
 export { default as Header } from './the-header.component';
 export { default as ProtectedRoute } from './protected-route.component';
 export { default as RouteWrapper } from './route-wrapper.component';
+export { default as Breadcrumb } from './breadcrumb.component';

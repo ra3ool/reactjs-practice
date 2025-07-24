@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import { LayoutContent, Sidebar } from '@/components';
+import { Breadcrumb, LayoutContent, Sidebar } from '@/components';
 import { componentsRoutes } from '@/constants';
 import { SidebarItem } from '@/types';
 import { Header } from '@/components';
@@ -9,8 +9,14 @@ const sideBarItems: SidebarItem[] = [
   { title: componentsRoutes.button.name, path: componentsRoutes.button.path },
   { title: componentsRoutes.table.name, path: componentsRoutes.table.path },
   { title: componentsRoutes.toggle.name, path: componentsRoutes.toggle.path },
-  { title: componentsRoutes.dropdown.name, path: componentsRoutes.dropdown.path },
-  { title: componentsRoutes.expansionPanel.name, path: componentsRoutes.expansionPanel.path },
+  {
+    title: componentsRoutes.dropdown.name,
+    path: componentsRoutes.dropdown.path,
+  },
+  {
+    title: componentsRoutes.expansionPanel.name,
+    path: componentsRoutes.expansionPanel.path,
+  },
 ];
 
 export default function ComponentsLayout() {
@@ -27,6 +33,7 @@ export default function ComponentsLayout() {
           />
         </div>
         <div className="grow-1 px-1">
+          <Breadcrumb />
           <Outlet />
         </div>
       </LayoutContent>

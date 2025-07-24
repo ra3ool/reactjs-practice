@@ -1,26 +1,20 @@
-import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router';
 import { useAuthStore } from '@/stores';
-import { RouteMeta } from '@/types';
-import { Loading } from '@/components';
+import { ProtectedRouteProps } from '@/types';
+// import { Loading } from '@/components';
 import { authRoutes } from '@/constants';
-
-interface ProtectedRouteProps {
-  children: ReactNode;
-  meta?: RouteMeta;
-}
 
 export default function ProtectedRoute({
   children,
   meta,
 }: ProtectedRouteProps) {
-  const { user, isAuthenticated, isLoading } = useAuthStore();
+  const { user, isAuthenticated /*isLoading*/ } = useAuthStore();
   const location = useLocation();
 
-  // Show loading state for async auth
-  if (isLoading) {
-    return <Loading />;
-  }
+  // // Show loading state for async auth
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   // Check if authentication is required
   if (meta?.requiresAuth && !isAuthenticated) {

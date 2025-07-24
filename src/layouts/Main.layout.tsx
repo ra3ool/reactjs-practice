@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
-import { Sidebar, CustomToggle, Breadcrumb } from '@/components';
-import { routes } from '@/constants';
+import { Sidebar, CustomToggle } from '@/components';
+import { authRoutes, baseRoutes, componentsRoutes } from '@/constants';
 import { SidebarItem } from '@/types';
 import { useTheme } from '@/hooks';
 import { useMemo } from 'react';
@@ -13,28 +13,25 @@ export default function Layout() {
 
   const sideBarItems: SidebarItem[] = useMemo(() => {
     const items: SidebarItem[] = [
-      { title: routes.home.name, path: routes.home.path },
-      { title: routes.about.name, path: routes.about.path },
-      { title: routes.demo.name, path: routes.demo.path },
+      { title: baseRoutes.home.name, path: baseRoutes.home.path },
+      { title: baseRoutes.about.name, path: baseRoutes.about.path },
+      { title: baseRoutes.demo.name, path: baseRoutes.demo.path },
     ];
     if (!isAuthenticated) {
       items.push({
-        title: 'Auth',
+        title: authRoutes.root.name,
         group: [
-          { title: routes.auth.login.name, path: routes.auth.login.path },
-          { title: routes.auth.register.name, path: routes.auth.register.path },
+          { title: authRoutes.login.name, path: authRoutes.login.path },
+          { title: authRoutes.register.name, path: authRoutes.register.path },
         ],
       });
-    } else {
-      items.push(
-        {
-          title: routes.components.root.name,
-          path: routes.components.root.path,
-        }, // write root for remain active while components routes change
-      );
     }
+    items.push({
+      title: componentsRoutes.root.name,
+      path: componentsRoutes.root.path,
+    });
     if (isAuthenticated && user?.roles?.includes('admin')) {
-      items.push({ title: routes.demo.name, path: routes.demo.path }); //TODO implement panel
+      items.push({ title: baseRoutes.demo.name, path: baseRoutes.demo.path }); //TODO implement panel
     }
     items.push({
       title: 'Dark Mode',
@@ -56,7 +53,6 @@ export default function Layout() {
           />
         </div>
         <div className="grow-1 flex flex-col">
-          <Breadcrumb />
           <Outlet />
         </div>
       </main>
