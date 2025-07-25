@@ -27,14 +27,14 @@ export interface RouteConfig {
   redirect?: string;
 }
 
-export interface NamedRoute {
+export interface RouteType {
   name: string;
   path: string;
   meta?: RouteMeta;
 }
 
 export interface RouteGroup {
-  [key: string]: NamedRoute;
+  [key: string]: RouteType;
 }
 
 export interface RouteWrapperProps {

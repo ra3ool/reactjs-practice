@@ -4,6 +4,7 @@ import { createRoute, transformRoutes } from '@/helpers';
 import { componentsRoutes as componentsRoutesConstants } from '@/constants';
 
 const ComponentsLayout = lazy(() => import('@/layouts/Components.layout'));
+const IndexView = lazy(() => import('@/views/Components/Index.view'));
 const InputView = lazy(() => import('@/views/Components/Input.view'));
 const ButtonView = lazy(() => import('@/views/Components/Button.view'));
 const TableView = lazy(() => import('@/views/Components/Table.view'));
@@ -17,6 +18,9 @@ const componentsRoutes: RouteConfig[] = [
   createRoute(componentsRoutesConstants.root)
     .withComponent(ComponentsLayout)
     .withChildren([
+      createRoute(componentsRoutesConstants.index)
+        .withComponent(IndexView)
+        .build(),
       createRoute(componentsRoutesConstants.input)
         .withComponent(InputView)
         .build(),

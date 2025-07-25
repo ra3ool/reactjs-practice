@@ -9,8 +9,8 @@ export { componentsRoutes };
 // export { panelRoutes };
 
 export const routes = Object.freeze({
-  //app
-  ...baseRoutes,
+  //base
+  base: baseRoutes,
 
   //auth
   auth: authRoutes,

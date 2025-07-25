@@ -1,4 +1,3 @@
-export type { BreadcrumbItem } from './breadcrumb.type';
 export type { CustomButtonProps } from './custom-button.type';
 export type { CustomInputProps } from './custom-input.type';
 export type {

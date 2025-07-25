@@ -9,7 +9,7 @@ const AboutView = lazy(() => import('@/views/About.view'));
 const DemoView = lazy(() => import('@/views/Demo.view'));
 
 // Define routes using the route builder
-const routes: RouteConfig[] = [
+const baseRoutes: RouteConfig[] = [
   createRoute()
     .withChildren([
       createRoute(baseRoutesConstants.home).withComponent(HomeView).build(),
@@ -19,5 +19,5 @@ const routes: RouteConfig[] = [
     .build(),
 ];
 
-const tr = transformRoutes(routes);
+const tr = transformRoutes(baseRoutes);
 export default tr;
