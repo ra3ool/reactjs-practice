@@ -1,5 +1,8 @@
 import { useNavigate, useLocation } from 'react-router';
 import { routes } from '@/constants';
+import { flattenRoutes } from '@/helpers';
+import { useMemo } from 'react';
+import type { RouteType } from '@/types';
 
 type RoutesKey = keyof typeof routes;
 type RouteName = RoutesKey | string;
@@ -8,42 +11,33 @@ export function useRouteNavigation() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const routeMap = useMemo(() => flattenRoutes(routes, 'name'), []);
+
+  const findRoute = (routeName: RouteName): RouteType | undefined => {
+    if (!routeName.includes('.') && routeMap[`/${routeName}`]) {
+      return routeMap[`/${routeName}`];
+    }
+
+    if (routeName.includes('.')) {
+      const [parent, child] = routeName.split('.');
+      const parentRoute = routes[parent as RoutesKey];
+      if (parentRoute && child) {
+        const childRoute = parentRoute[child];
+        if (childRoute?.path) {
+          return routeMap[childRoute.path] || childRoute;
+        }
+      }
+    } else {
+      return routes.base[routeName];
+    }
+  };
+
   const navigateTo = (
     routeName: RouteName,
     options?: { replace?: boolean; state?: Record<string, unknown> },
   ) => {
-    let path = '/';
-
-    // Handle nested route names (e.g., 'auth.login', 'components.input')
-    if (routeName.includes('.')) {
-      const [parent, child] = routeName.split('.');
-      const parentRoute = routes[parent as RoutesKey];
-
-      if (
-        parentRoute &&
-        typeof parentRoute === 'object' &&
-        'path' in parentRoute
-      ) {
-        // Handle route groups (like auth, components)
-        const childRoute = parentRoute[child as keyof typeof parentRoute];
-        if (child && childRoute) {
-          if (
-            typeof childRoute === 'object' &&
-            'path' in childRoute &&
-            typeof childRoute.path === 'string'
-          ) {
-            path = childRoute.path;
-          }
-        }
-      }
-    } else {
-      // Handle direct route names
-      const route = routes[routeName as RoutesKey];
-      if (route && typeof route === 'object' && 'path' in route) {
-        const routePath = route.path as string;
-        path = `${routePath.startsWith('/') ? '' : '/'}${routePath}`;
-      }
-    }
+    const route = findRoute(routeName);
+    const path = route?.path ? route.path : '/';
 
     if (options?.replace) {
       navigate(path, { replace: true, state: options.state });
@@ -61,34 +55,8 @@ export function useRouteNavigation() {
   };
 
   const isCurrentRoute = (routeName: RouteName) => {
-    let expectedPath = '/';
-
-    // Handle nested route names
-    if (routeName.includes('.')) {
-      const [parent, child] = routeName.split('.');
-      const parentRoute = routes[parent as RoutesKey];
-
-      if (
-        parentRoute &&
-        typeof parentRoute === 'object' &&
-        'path' in parentRoute
-      ) {
-        if (child && parentRoute[child as keyof typeof parentRoute]) {
-          const childRoute = parentRoute[child as keyof typeof parentRoute];
-          if (typeof childRoute === 'object' && 'path' in childRoute) {
-            expectedPath = childRoute.path;
-          }
-        }
-      }
-    } else {
-      // Handle direct route names
-      const route = routes[routeName as RoutesKey];
-      if (route && typeof route === 'object' && 'path' in route) {
-        expectedPath = route.path as string;
-      }
-    }
-
-    return location.pathname === expectedPath;
+    const route = findRoute(routeName);
+    return route ? location.pathname === route.path : false;
   };
 
   return {

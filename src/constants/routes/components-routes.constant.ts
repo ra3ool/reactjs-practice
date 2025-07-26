@@ -6,16 +6,14 @@ const componentsRoutes: RouteGroup = Object.freeze({
   root: {
     name: 'Components',
     path: '/',
-    meta: {
-      breadcrumb: true,
-    },
   },
   index: {
-    name: '',
+    name: 'Components',
     path: '/',
     meta: {
       title: 'Components',
       description: 'UI Components showcase',
+      breadcrumb: true,
     },
   },
   input: {

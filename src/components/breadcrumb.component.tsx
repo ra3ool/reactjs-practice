@@ -2,54 +2,36 @@ import { Link, useLocation } from 'react-router';
 import { routes } from '@/constants';
 import { RouteType } from '@/types';
 import { SvgLoader } from '.';
+import { useMemo } from 'react';
+import { flattenRoutes } from '@/helpers';
 
 export default function Breadcrumb() {
   const location = useLocation();
-  const HOME_BREADCRUMB = (({ name, path, meta }) => ({ name, path, meta }))(
-    routes.base.home,
-  );
 
-  const findRouteByPath = (path: string): RouteType | null => {
-    for (const [, moduleRoutes] of Object.entries(routes)) {
-      if (typeof moduleRoutes === 'object' && moduleRoutes !== null) {
-        for (const [, childRoute] of Object.entries(moduleRoutes)) {
-          if (childRoute.path === path) {
-            return {
-              name: childRoute.name,
-              path: childRoute.path,
-              meta: childRoute.meta,
-            };
-          }
+  const routeMap = useMemo(() => flattenRoutes(routes, 'path'), []);
+
+  const breadcrumbs = useMemo(() => {
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    const crumbs: RouteType[] = [];
+    let currentPath = '';
+
+    if (routeMap['/']) {
+      crumbs.push(routeMap['/']);
+    }
+    for (const segment of pathSegments) {
+      currentPath += `/${segment}`;
+      const route = routeMap[currentPath];
+      if (route && route.meta?.breadcrumb) {
+        // Avoid duplicate home
+        if (route.path !== '/' || crumbs.length === 0) {
+          crumbs.push(route);
         }
       }
     }
+    return crumbs;
+  }, [location.pathname, routeMap]);
 
-    return null;
-  };
-
-  const generateBreadcrumbs = (): RouteType[] => {
-    const pathSegments = location.pathname.split('/').filter(Boolean);
-    const breadcrumbs: RouteType[] = [HOME_BREADCRUMB];
-
-    let currentPath = '';
-
-    pathSegments.forEach((segment) => {
-      currentPath += `/${segment}`;
-      const routeInfo = findRouteByPath(currentPath);
-
-      if (routeInfo && routeInfo.meta?.breadcrumb) {
-        breadcrumbs.push(routeInfo);
-      }
-    });
-
-    return breadcrumbs;
-  };
-
-  const breadcrumbs = generateBreadcrumbs();
-
-  if (breadcrumbs.length <= 1) {
-    return null;
-  }
+  if (breadcrumbs.length <= 1) return null;
 
   return (
     <nav className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
@@ -58,7 +40,7 @@ export default function Breadcrumb() {
           {index > 0 && (
             <SvgLoader name="chevron-right" width={12} height={12} />
           )}
-          {index === breadcrumbs.length /*- 1*/ ? ( //FIXME
+          {index === breadcrumbs.length - 1 ? (
             <span className="font-medium text-gray-900 dark:text-gray-100">
               {breadcrumb.name}
             </span>

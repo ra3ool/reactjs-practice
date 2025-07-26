@@ -1,4 +1,5 @@
 export { default as createRoutesGroup } from './create-routes-group';
+export { default as flattenRoutes } from './flatten-routes';
 export { default as paginateData } from './paginate-data';
 export * from './route-builder';
 export * from './route-transformer';
