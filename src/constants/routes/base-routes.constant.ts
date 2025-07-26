@@ -1,5 +1,7 @@
+import { createRoutesGroup } from '@/helpers';
 import { RouteGroup } from '@/types';
 
+const prefix = '';
 const baseRoutes: RouteGroup = Object.freeze({
   home: {
     name: 'Home',
@@ -30,4 +32,4 @@ const baseRoutes: RouteGroup = Object.freeze({
   },
 });
 
-export default baseRoutes;
+export default createRoutesGroup(prefix, baseRoutes);

@@ -1,5 +1,5 @@
-export { default as createRoutesGroup } from './createRoutesGroup';
-export { default as sortData } from './sort-data';
+export { default as createRoutesGroup } from './create-routes-group';
 export { default as paginateData } from './paginate-data';
-export * from './routeBuilder';
-export * from './routeTransformer';
+export * from './route-builder';
+export * from './route-transformer';
+export { default as sortData } from './sort-data';

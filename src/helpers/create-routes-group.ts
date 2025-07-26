@@ -2,7 +2,7 @@ import { RouteGroup } from '@/types';
 
 const createRoutesGroup = (prefix: string, routes: RouteGroup): RouteGroup => {
   const trimmed = prefix.replace(/^\/+|\/+$/g, '');
-  const normalizedPrefix = `/${trimmed}`;
+  const normalizedPrefix = trimmed ? `/${trimmed}` : '';
 
   const newRoutes = Object.fromEntries(
     Object.entries(routes).map(([key, route]) => {
@@ -14,6 +14,8 @@ const createRoutesGroup = (prefix: string, routes: RouteGroup): RouteGroup => {
           path:
             path === '' || path === '/'
               ? normalizedPrefix
+                ? normalizedPrefix
+                : '/'
               : `${normalizedPrefix}${path.startsWith('/') ? '' : '/'}${path}`,
         },
       ];
