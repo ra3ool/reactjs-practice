@@ -1,62 +1,72 @@
 import { useNavigate, useLocation } from 'react-router';
-import { routes } from '@/constants';
-import { flattenRoutes } from '@/helpers';
-import { useMemo } from 'react';
+import { flatRoutesByName, flatRoutesByPath } from '@/constants';
 import type { RouteType } from '@/types';
 
-type RoutesKey = keyof typeof routes;
-type RouteName = RoutesKey | string;
+type RouteName = keyof typeof flatRoutesByName;
 
 export function useRouteNavigation() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const routeMap = useMemo(() => flattenRoutes(routes, 'name'), []);
-
-  const findRoute = (routeName: RouteName): RouteType | undefined => {
-    if (!routeName.includes('.') && routeMap[`/${routeName}`]) {
-      return routeMap[`/${routeName}`];
-    }
-
-    if (routeName.includes('.')) {
-      const [parent, child] = routeName.split('.');
-      const parentRoute = routes[parent as RoutesKey];
-      if (parentRoute && child) {
-        const childRoute = parentRoute[child];
-        if (childRoute?.path) {
-          return routeMap[childRoute.path] || childRoute;
-        }
-      }
-    } else {
-      return routes.base[routeName];
-    }
+  const findRoute = (
+    identifier: RouteName,
+    by: 'name' | 'path' = 'name',
+  ): RouteType | undefined => {
+    return by === 'name'
+      ? flatRoutesByName[identifier]
+      : flatRoutesByPath[identifier];
   };
 
   const navigateTo = (
-    routeName: RouteName,
-    options?: { replace?: boolean; state?: Record<string, unknown> },
+    identifier: RouteName,
+    options?: {
+      by?: 'name' | 'path';
+      replace?: boolean;
+      state?: Record<string, unknown>;
+      params?: Record<string, string>;
+      query?: Record<string, string>;
+    },
   ) => {
-    const route = findRoute(routeName);
-    const path = route?.path ? route.path : '/';
+    const route = options?.by
+      ? findRoute(identifier, options.by)
+      : findRoute(identifier);
 
-    if (options?.replace) {
-      navigate(path, { replace: true, state: options.state });
-    } else {
-      navigate(path, { state: options?.state });
+    let path = route?.path ?? identifier; // Fallback to using identifier as path if route not found
+
+    // Handle dynamic params if provided
+    if (options?.params) {
+      Object.entries(options.params).forEach(([key, value]) => {
+        path = path.replace(new RegExp(`:${key}(\\?|\\b)`), value);
+      });
+    }
+
+    // Handle query params if provided
+    const searchParams = new URLSearchParams(options?.query).toString();
+    const fullPath = searchParams ? `${path}?${searchParams}` : path;
+
+    navigate(fullPath, {
+      replace: options?.replace,
+      state: options?.state,
+    });
+  };
+
+  const goBack = (fallbackPath?: string) => {
+    if (window.history.state?.idx > 0) {
+      navigate(-1);
+    } else if (fallbackPath) {
+      navigate(fallbackPath, { replace: true });
     }
   };
 
-  const goBack = () => {
-    navigate(-1);
-  };
+  const goForward = () => navigate(1);
 
-  const goForward = () => {
-    navigate(1);
-  };
-
-  const isCurrentRoute = (routeName: RouteName) => {
-    const route = findRoute(routeName);
+  const isCurrentRoute = (identifier: RouteName, by?: 'name' | 'path') => {
+    const route = by ? findRoute(identifier, by) : findRoute(identifier);
     return route ? location.pathname === route.path : false;
+  };
+
+  const getCurrentRoute = (): RouteType | undefined => {
+    return findRoute(location.pathname, 'path');
   };
 
   return {
@@ -64,6 +74,8 @@ export function useRouteNavigation() {
     goBack,
     goForward,
     isCurrentRoute,
+    getCurrentRoute,
     currentPath: location.pathname,
+    currentLocation: location,
   };
 }

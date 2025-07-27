@@ -1,47 +1,60 @@
-import { Link, useLocation } from 'react-router';
-import { routes } from '@/constants';
+import { Link } from 'react-router';
 import { RouteType } from '@/types';
-import { SvgLoader } from '.';
+import { SvgLoader } from '@/components';
 import { useMemo } from 'react';
-import { flattenRoutes } from '@/helpers';
+import { flatRoutesByPath } from '@/constants';
+import { useRouteNavigation } from '@/hooks';
 
 export default function Breadcrumb() {
-  const location = useLocation();
-
-  const routeMap = useMemo(() => flattenRoutes(routes, 'path'), []);
+  const { currentPath } = useRouteNavigation();
 
   const breadcrumbs = useMemo(() => {
-    const pathSegments = location.pathname.split('/').filter(Boolean);
+    const pathSegments = currentPath.split('/').filter(Boolean);
     const crumbs: RouteType[] = [];
-    let currentPath = '';
+    let accumulatedPath = '';
 
-    if (routeMap['/']) {
-      crumbs.push(routeMap['/']);
-    }
+    const homeRoute = flatRoutesByPath['/'];
+    if (homeRoute) crumbs.push(homeRoute);
+
     for (const segment of pathSegments) {
-      currentPath += `/${segment}`;
-      const route = routeMap[currentPath];
-      if (route && route.meta?.breadcrumb) {
-        // Avoid duplicate home
-        if (route.path !== '/' || crumbs.length === 0) {
+      accumulatedPath += `/${segment}`;
+      const route = flatRoutesByPath[accumulatedPath];
+
+      if (route?.meta?.breadcrumb !== false) {
+        if (route && (route.path !== '/' || crumbs.length === 0)) {
           crumbs.push(route);
         }
       }
     }
-    return crumbs;
-  }, [location.pathname, routeMap]);
+
+    return crumbs.filter(Boolean);
+  }, [currentPath]);
 
   if (breadcrumbs.length <= 1) return null;
 
   return (
-    <nav className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
+    <nav
+      className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4"
+      aria-label="Breadcrumb"
+    >
       {breadcrumbs.map((breadcrumb, index) => (
-        <div key={breadcrumb.path} className="flex items-center gap-2">
+        <div
+          key={`${breadcrumb.path}-${index}`}
+          className="flex items-center gap-2"
+        >
           {index > 0 && (
-            <SvgLoader name="chevron-right" width={12} height={12} />
+            <SvgLoader
+              name="chevron-right"
+              width={12}
+              height={12}
+              aria-hidden="true"
+            />
           )}
           {index === breadcrumbs.length - 1 ? (
-            <span className="font-medium text-gray-900 dark:text-gray-100">
+            <span
+              className="font-medium text-gray-900 dark:text-gray-100"
+              aria-current="page"
+            >
               {breadcrumb.name}
             </span>
           ) : (

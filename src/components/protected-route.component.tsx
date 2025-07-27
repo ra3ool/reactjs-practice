@@ -1,15 +1,16 @@
-import { Navigate, useLocation } from 'react-router';
+import { Navigate } from 'react-router';
 import { useAuthStore } from '@/stores';
 import { ProtectedRouteProps } from '@/types';
 // import { Loading } from '@/components';
 import { authRoutes } from '@/constants';
+import { useRouteNavigation } from '@/hooks';
 
 export default function ProtectedRoute({
   children,
   meta,
 }: ProtectedRouteProps) {
   const { user, isAuthenticated /*isLoading*/ } = useAuthStore();
-  const location = useLocation();
+  const { currentPath } = useRouteNavigation();
 
   // // Show loading state for async auth
   // if (isLoading) {
@@ -19,7 +20,11 @@ export default function ProtectedRoute({
   // Check if authentication is required
   if (meta?.requiresAuth && !isAuthenticated) {
     return (
-      <Navigate to={authRoutes.login.path} state={{ from: location }} replace />
+      <Navigate
+        to={authRoutes.login.path}
+        state={{ from: currentPath }}
+        replace
+      />
     );
   }
 
@@ -51,7 +56,7 @@ export default function ProtectedRoute({
   }
 
   // Redirect authenticated users from auth routes
-  if (isAuthenticated && location.pathname.startsWith('/auth')) {
+  if (isAuthenticated && currentPath.startsWith('/auth')) {
     return <Navigate to="/" replace />;
   }
 
