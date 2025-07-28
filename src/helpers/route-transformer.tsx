@@ -48,7 +48,7 @@ export function transformRoute(route: RouteConfig): RouteConfig {
       children: createElement(
         'div',
         null,
-        `Route ${route.name} has no component`,
+        `Route ${route.label} has no component`,
       ),
     }),
   };

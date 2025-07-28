@@ -5,16 +5,16 @@ import { SidebarItem } from '@/types';
 import { Header } from '@/components';
 
 const sideBarItems: SidebarItem[] = [
-  { title: componentsRoutes.input.name, path: componentsRoutes.input.path },
-  { title: componentsRoutes.button.name, path: componentsRoutes.button.path },
-  { title: componentsRoutes.table.name, path: componentsRoutes.table.path },
-  { title: componentsRoutes.toggle.name, path: componentsRoutes.toggle.path },
+  { title: componentsRoutes.input.label, path: componentsRoutes.input.path },
+  { title: componentsRoutes.button.label, path: componentsRoutes.button.path },
+  { title: componentsRoutes.table.label, path: componentsRoutes.table.path },
+  { title: componentsRoutes.toggle.label, path: componentsRoutes.toggle.path },
   {
-    title: componentsRoutes.dropdown.name,
+    title: componentsRoutes.dropdown.label,
     path: componentsRoutes.dropdown.path,
   },
   {
-    title: componentsRoutes.expansionPanel.name,
+    title: componentsRoutes.expansionPanel.label,
     path: componentsRoutes.expansionPanel.path,
   },
 ];

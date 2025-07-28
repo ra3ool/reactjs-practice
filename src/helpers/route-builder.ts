@@ -69,7 +69,7 @@ export class RouteBuilder {
 
   build(): RouteConfig {
     return {
-      name: this.config.name || '',
+      label: this.config.label || '',
       path: this.config.path || '/',
       component: this.config.component,
       meta: this.config.meta,

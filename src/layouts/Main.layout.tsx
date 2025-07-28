@@ -13,25 +13,25 @@ export default function Layout() {
 
   const sideBarItems: SidebarItem[] = useMemo(() => {
     const items: SidebarItem[] = [
-      { title: baseRoutes.home.name, path: baseRoutes.home.path },
-      { title: baseRoutes.about.name, path: baseRoutes.about.path },
-      { title: baseRoutes.demo.name, path: baseRoutes.demo.path },
+      { title: baseRoutes.home.label, path: baseRoutes.home.path },
+      { title: baseRoutes.about.label, path: baseRoutes.about.path },
+      { title: baseRoutes.demo.label, path: baseRoutes.demo.path },
     ];
     if (!isAuthenticated) {
       items.push({
-        title: authRoutes.root.name,
+        title: authRoutes.root.label,
         group: [
-          { title: authRoutes.login.name, path: authRoutes.login.path },
-          { title: authRoutes.register.name, path: authRoutes.register.path },
+          { title: authRoutes.login.label, path: authRoutes.login.path },
+          { title: authRoutes.register.label, path: authRoutes.register.path },
         ],
       });
     }
     items.push({
-      title: componentsRoutes.root.name,
+      title: componentsRoutes.root.label,
       path: componentsRoutes.root.path,
     });
     if (isAuthenticated && user?.roles?.includes('admin')) {
-      items.push({ title: baseRoutes.demo.name, path: baseRoutes.demo.path }); //TODO implement panel
+      items.push({ title: baseRoutes.demo.label, path: baseRoutes.demo.path }); //TODO implement panel
     }
     items.push({
       title: 'Dark Mode',

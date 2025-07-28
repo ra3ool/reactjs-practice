@@ -4,8 +4,9 @@ import { RouteGroup } from '@/types';
 const prefix = 'auth';
 const authRoutes: RouteGroup = Object.freeze({
   root: {
-    name: 'Auth',
+    label: 'Auth',
     path: '/',
+    name: 'auth',
     meta: {
       title: 'Authentication',
       description: 'User authentication pages',
@@ -13,8 +14,9 @@ const authRoutes: RouteGroup = Object.freeze({
     },
   },
   login: {
-    name: 'Login',
+    label: 'Login',
     path: 'login',
+    name: 'auth.login',
     meta: {
       title: 'Login',
       description: 'Sign in to your account',
@@ -22,8 +24,9 @@ const authRoutes: RouteGroup = Object.freeze({
     },
   },
   register: {
-    name: 'Register',
+    label: 'Register',
     path: 'register',
+    name: 'auth.register',
     meta: {
       title: 'Register',
       description: 'Create a new account',

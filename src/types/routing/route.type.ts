@@ -1,6 +1,7 @@
 import { ComponentType, LazyExoticComponent, ReactNode } from 'react';
 
 export type UserRole = 'admin' | 'user' | 'guest';
+export type navigateBy = 'name' | 'path';
 
 export interface RouteMeta {
   title?: string;
@@ -15,8 +16,9 @@ export interface RouteMeta {
 }
 
 export interface RouteConfig {
-  name: string;
+  label: string;
   path: string;
+  name?: string;
   component?:
     | ComponentType<Record<string, unknown>>
     | LazyExoticComponent<ComponentType<Record<string, unknown>>>;
@@ -28,8 +30,9 @@ export interface RouteConfig {
 }
 
 export interface RouteType {
-  name: string;
+  label: string;
   path: string;
+  name?: string;
   meta?: RouteMeta;
 }
 

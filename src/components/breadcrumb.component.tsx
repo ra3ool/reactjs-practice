@@ -55,14 +55,14 @@ export default function Breadcrumb() {
               className="font-medium text-gray-900 dark:text-gray-100"
               aria-current="page"
             >
-              {breadcrumb.name}
+              {breadcrumb.label}
             </span>
           ) : (
             <Link
               to={breadcrumb.path}
               className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
             >
-              {breadcrumb.name}
+              {breadcrumb.label}
             </Link>
           )}
         </div>

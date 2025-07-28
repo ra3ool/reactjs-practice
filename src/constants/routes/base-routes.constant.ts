@@ -4,8 +4,9 @@ import { RouteGroup } from '@/types';
 const prefix = '';
 const baseRoutes: RouteGroup = Object.freeze({
   home: {
-    name: 'Home',
+    label: 'Home',
     path: '/',
+    name: 'home',
     meta: {
       title: 'Home',
       description: 'Welcome to the application',
@@ -13,8 +14,9 @@ const baseRoutes: RouteGroup = Object.freeze({
     },
   },
   about: {
-    name: 'About',
+    label: 'About',
     path: 'about',
+    name: 'about',
     meta: {
       title: 'About',
       description: 'About our application',
@@ -22,8 +24,9 @@ const baseRoutes: RouteGroup = Object.freeze({
     },
   },
   demo: {
-    name: 'Demo',
+    label: 'Demo',
     path: 'demo',
+    name: 'demo',
     meta: {
       title: 'Demo',
       description: 'Routing system demo',

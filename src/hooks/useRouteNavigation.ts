@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router';
 import { flatRoutesByName, flatRoutesByPath } from '@/constants';
-import type { RouteType } from '@/types';
+import type { navigateBy, RouteType } from '@/types';
 
 type RouteName = keyof typeof flatRoutesByName;
 
@@ -10,7 +10,7 @@ export function useRouteNavigation() {
 
   const findRoute = (
     identifier: RouteName,
-    by: 'name' | 'path' = 'name',
+    by: navigateBy = 'name',
   ): RouteType | undefined => {
     return by === 'name'
       ? flatRoutesByName[identifier]
@@ -20,7 +20,7 @@ export function useRouteNavigation() {
   const navigateTo = (
     identifier: RouteName,
     options?: {
-      by?: 'name' | 'path';
+      by?: navigateBy;
       replace?: boolean;
       state?: Record<string, unknown>;
       params?: Record<string, string>;
@@ -60,7 +60,7 @@ export function useRouteNavigation() {
 
   const goForward = () => navigate(1);
 
-  const isCurrentRoute = (identifier: RouteName, by?: 'name' | 'path') => {
+  const isCurrentRoute = (identifier: RouteName, by?: navigateBy) => {
     const route = by ? findRoute(identifier, by) : findRoute(identifier);
     return route ? location.pathname === route.path : false;
   };

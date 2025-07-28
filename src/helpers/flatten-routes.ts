@@ -1,26 +1,18 @@
-import { RouteType } from '@/types';
+import { navigateBy, RouteType } from '@/types';
 
 export default function flattenRoutes(
-  routesObj: Record<string, Record<string, RouteType>>,
-  by: string = 'path',
-) {
-  const map: Record<string, RouteType> = {};
-  for (const group of Object.values(routesObj)) {
-    for (const route of Object.values(group)) {
-      if (route && typeof route.path === 'string') {
-        const key =
-          (by === 'path'
-            ? route.path
-            : by === 'name'
-            ? route.path.split('/').filter(Boolean).join('.')
-            : '') || 'home';
-        map[key] = {
-          name: route.name,
-          path: route.path,
-          meta: route.meta,
-        };
-      }
+  routesObj: Record<string, RouteType>,
+  by: navigateBy = 'path',
+): Record<string, RouteType> {
+  return Object.values(routesObj).reduce((acc, route) => {
+    const key = route[by];
+    if (key) {
+      acc[key] = {
+        label: route.label,
+        path: route.path,
+        meta: route.meta,
+      };
     }
-  }
-  return map;
+    return acc;
+  }, {} as Record<string, RouteType>);
 }

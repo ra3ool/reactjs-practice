@@ -9,19 +9,19 @@ export { authRoutes };
 export { componentsRoutes };
 // export { panelRoutes };
 
-export const routes = Object.freeze({
+const routes = {
   //base
-  base: baseRoutes,
+  ...baseRoutes,
 
   //auth
-  auth: authRoutes,
+  ...authRoutes,
 
   //components
-  components: componentsRoutes,
+  ...componentsRoutes,
 
   //panel
   // panel: panelRoutesConstant,
-});
+};
 
 export const flatRoutesByPath = flattenRoutes(routes, 'path');
-export const flatRoutesByName = flattenRoutes(routes, 'name'); //TODO get name in constants by user
+export const flatRoutesByName = flattenRoutes(routes, 'name');
