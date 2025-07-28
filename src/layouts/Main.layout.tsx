@@ -47,7 +47,7 @@ export default function Layout() {
           <Sidebar
             title="Simple Panel"
             items={sideBarItems}
-            className="py-6 px-2 rounded-3xl bg-bg-primary text-text-primary"
+            className="py-6 px-2 rounded-3xl bg-bg-primary text-text-primary shadow"
             itemClassName="hover:bg-neutral-200 dark:hover:bg-neutral-700"
             activeItemClassName="bg-neutral-200 dark:bg-neutral-700"
           />
