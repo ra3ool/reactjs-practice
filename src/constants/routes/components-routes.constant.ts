@@ -79,4 +79,5 @@ const componentsRoutes: RouteGroup = Object.freeze({
     },
   },
 });
+
 export default createRoutesGroup(prefix, componentsRoutes);

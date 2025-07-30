@@ -16,6 +16,10 @@ export default function Layout() {
       { title: baseRoutes.home.label, path: baseRoutes.home.path },
       { title: baseRoutes.about.label, path: baseRoutes.about.path },
       { title: baseRoutes.demo.label, path: baseRoutes.demo.path },
+      {
+        title: componentsRoutes.root.label,
+        path: componentsRoutes.root.path,
+      },
     ];
     if (!isAuthenticated) {
       items.push({
@@ -26,10 +30,6 @@ export default function Layout() {
         ],
       });
     }
-    items.push({
-      title: componentsRoutes.root.label,
-      path: componentsRoutes.root.path,
-    });
     if (isAuthenticated && user?.roles?.includes('admin')) {
       items.push({ title: baseRoutes.demo.label, path: baseRoutes.demo.path }); //TODO implement panel
     }

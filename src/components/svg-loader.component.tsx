@@ -32,7 +32,7 @@ const SvgRenderer = memo(
       () => lazy(() => getSvgComponent(name)),
       [name],
     );
-
+    //FIXME think about fix refetching
     return (
       <Suspense fallback={null}>
         <SvgComponent

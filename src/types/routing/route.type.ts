@@ -37,7 +37,7 @@ export interface RouteType {
 }
 
 export interface RouteGroup {
-  [key: string]: RouteType;
+  [key: string]: RouteType | RouteGroup;
 }
 
 export interface RouteWrapperProps {
