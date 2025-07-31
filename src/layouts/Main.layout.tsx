@@ -55,7 +55,7 @@ export default function Layout() {
       items.push({
         title: String(panelRoutes.root.label),
         path: String(panelRoutes.root.path),
-      }); //TODO implement panel
+      });
     }
     items.push({
       title: 'Dark Mode',

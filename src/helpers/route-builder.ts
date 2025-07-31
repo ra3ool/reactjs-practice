@@ -1,4 +1,4 @@
-import { RouteConfig, RouteMeta, UserRole } from '@/types';
+import { RouteConfig, RouteMeta, RouteType, UserRole } from '@/types';
 
 export class RouteBuilder {
   private config: Partial<RouteConfig>;
@@ -68,15 +68,7 @@ export class RouteBuilder {
   }
 
   build(): RouteConfig {
-    return {
-      label: this.config.label || '',
-      path: this.config.path || '/',
-      component: this.config.component,
-      meta: this.config.meta,
-      children: this.config.children,
-      index: this.config.index,
-      redirect: this.config.redirect,
-    };
+    return this.config as RouteType;
   }
 }
 

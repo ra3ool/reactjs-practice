@@ -5,8 +5,8 @@ export default function Header({
   children,
   headerComponent = undefined,
 }: {
-  className: string;
   children: ReactNode;
+  className?: string;
   headerComponent?: ReactNode;
 }) {
   return (
