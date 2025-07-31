@@ -45,7 +45,7 @@ function LoginView() {
   };
 
   return (
-    <div className="flex h-full items-center justify-center p-4">
+    <div className="flex h-full w-full items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8">
         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-900 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
           <div className="text-center">
@@ -118,7 +118,7 @@ function LoginView() {
               </div>
 
               <Link
-                to={authRoutes.forgotPassword?.path}
+                to={String(authRoutes.forgotPassword?.path)}
                 className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
                 aria-label="Forgot your password?"
               >
@@ -141,7 +141,7 @@ function LoginView() {
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
             Don&apos;t have an account?{' '}
             <Link
-              to={authRoutes.register.path}
+              to={String(authRoutes.register.path)}
               className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
               aria-label="Navigate to sign up page"
             >

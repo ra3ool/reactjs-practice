@@ -21,7 +21,7 @@ export default function ProtectedRoute({
   if (meta?.requiresAuth && !isAuthenticated) {
     return (
       <Navigate
-        to={authRoutes.login.path}
+        to={String(authRoutes.login.path)}
         state={{ from: currentPath }}
         replace
       />

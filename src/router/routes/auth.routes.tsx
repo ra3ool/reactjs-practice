@@ -12,9 +12,10 @@ const authRoutes: RouteConfig[] = [
     .withComponent(AuthLayout)
     .withChildren([
       createRoute({
-        path: authRoutesConstants.root.path,
-        redirect: authRoutesConstants.login.path,
-      }).build(),
+        path: String(authRoutesConstants.root.path),
+      })
+        .withRedirect(String(authRoutesConstants.login.path))
+        .build(),
       createRoute(authRoutesConstants.login).withComponent(LoginView).build(),
       createRoute(authRoutesConstants.register)
         .withComponent(RegisterView)

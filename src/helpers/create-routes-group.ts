@@ -9,13 +9,13 @@ const createRoutesGroup = (prefix: string, routes: RouteGroup): RouteGroup => {
     parentPrefix: string,
     parentName: string,
   ): RouteType | RouteGroup => {
-    if (!('path' in route) || typeof route?.path === 'object') {
+    if (!('path' in route) || typeof (route as RouteType)?.path === 'object') {
       return Object.fromEntries(
         Object.entries(route).map(([key, nestedRoute]) => [
           key,
           processRoute(nestedRoute, parentPrefix, parentName),
         ]),
-      ) as RouteGroup;
+      );
     }
 
     const { path, ...rest } = route as RouteType;
@@ -36,7 +36,7 @@ const createRoutesGroup = (prefix: string, routes: RouteGroup): RouteGroup => {
       key,
       processRoute(route, normalizedPrefix, prefix),
     ]),
-  ) as RouteGroup;
+  );
 
   return Object.freeze(processedRoutes);
 };

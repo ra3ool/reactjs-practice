@@ -40,7 +40,7 @@ function RegisterView() {
   };
 
   return (
-    <div className="flex h-full items-center justify-center p-4">
+    <div className="flex h-full w-full items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8">
         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-900 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
           <div className="text-center">
@@ -139,7 +139,7 @@ function RegisterView() {
                 >
                   I agree to the {/*TODO add right to left modal later on*/}
                   <Link
-                    to={authRoutes.terms?.path}
+                    to={String(authRoutes.terms?.path)}
                     className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
                     aria-label="View terms of service"
                   >
@@ -147,7 +147,7 @@ function RegisterView() {
                   </Link>{' '}
                   and
                   <Link
-                    to={authRoutes.privacy?.path}
+                    to={String(authRoutes.privacy?.path)}
                     className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
                     aria-label="View privacy policy"
                   >
@@ -177,7 +177,7 @@ function RegisterView() {
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
             Already have an account?{' '}
             <Link
-              to={authRoutes.login.path}
+              to={String(authRoutes.login.path)}
               className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
               aria-label="Navigate to sign in page"
             >

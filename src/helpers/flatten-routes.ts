@@ -1,8 +1,7 @@
-import { navigateBy, RouteGroup, RouteType } from '@/types';
-type flattenRoutes = Record<string, RouteType | RouteGroup>;
+import { RouteGroup, navigateBy, RouteType } from '@/types';
 
 export default function flattenRoutes(
-  routesObj: flattenRoutes,
+  routesObj: RouteGroup,
   by: navigateBy = 'path',
 ): Record<string, RouteType> {
   const isRoute = (value: unknown): value is RouteType => {
@@ -15,7 +14,7 @@ export default function flattenRoutes(
   };
 
   const flatten = (
-    routes: flattenRoutes,
+    routes: RouteGroup,
     acc: Record<string, RouteType> = {},
   ): Record<string, RouteType> => {
     for (const value of Object.values(routes)) {
@@ -25,12 +24,12 @@ export default function flattenRoutes(
           acc[key] = value;
         }
       } else if (typeof value === 'object' && value !== null) {
-        flatten(value as flattenRoutes, acc);
+        flatten(value as RouteGroup, acc);
       }
     }
 
     return acc;
   };
 
-  return flatten(routesObj as flattenRoutes);
+  return flatten(routesObj);
 }

@@ -5,17 +5,29 @@ import { SidebarItem } from '@/types';
 import { Header } from '@/components';
 
 const sideBarItems: SidebarItem[] = [
-  { title: componentsRoutes.input.label, path: componentsRoutes.input.path },
-  { title: componentsRoutes.button.label, path: componentsRoutes.button.path },
-  { title: componentsRoutes.table.label, path: componentsRoutes.table.path },
-  { title: componentsRoutes.toggle.label, path: componentsRoutes.toggle.path },
   {
-    title: componentsRoutes.dropdown.label,
-    path: componentsRoutes.dropdown.path,
+    title: String(componentsRoutes.input.label),
+    path: String(componentsRoutes.input.path),
   },
   {
-    title: componentsRoutes.expansionPanel.label,
-    path: componentsRoutes.expansionPanel.path,
+    title: String(componentsRoutes.button.label),
+    path: String(componentsRoutes.button.path),
+  },
+  {
+    title: String(componentsRoutes.table.label),
+    path: String(componentsRoutes.table.path),
+  },
+  {
+    title: String(componentsRoutes.toggle.label),
+    path: String(componentsRoutes.toggle.path),
+  },
+  {
+    title: String(componentsRoutes.dropdown.label),
+    path: String(componentsRoutes.dropdown.path),
+  },
+  {
+    title: String(componentsRoutes.expansionPanel.label),
+    path: String(componentsRoutes.expansionPanel.path),
   },
 ];
 

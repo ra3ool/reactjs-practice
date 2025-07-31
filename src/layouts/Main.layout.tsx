@@ -1,6 +1,11 @@
 import { Outlet } from 'react-router';
 import { Sidebar, CustomToggle } from '@/components';
-import { authRoutes, baseRoutes, componentsRoutes } from '@/constants';
+import {
+  authRoutes,
+  baseRoutes,
+  componentsRoutes,
+  panelRoutes,
+} from '@/constants';
 import { SidebarItem } from '@/types';
 import { useTheme } from '@/hooks';
 import { useMemo } from 'react';
@@ -9,36 +14,55 @@ import { useAuthStore } from '@/stores';
 
 export default function Layout() {
   const { isDarkMode, toggleTheme } = useTheme();
-  const { user, isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
 
   const sideBarItems: SidebarItem[] = useMemo(() => {
     const items: SidebarItem[] = [
-      { title: baseRoutes.home.label, path: baseRoutes.home.path },
-      { title: baseRoutes.about.label, path: baseRoutes.about.path },
-      { title: baseRoutes.demo.label, path: baseRoutes.demo.path },
       {
-        title: componentsRoutes.root.label,
-        path: componentsRoutes.root.path,
+        title: String(baseRoutes.home.label),
+        path: String(baseRoutes.home.path),
+      },
+      {
+        title: String(baseRoutes.about.label),
+        path: String(baseRoutes.about.path),
+      },
+      {
+        title: String(baseRoutes.demo.label),
+        path: String(baseRoutes.demo.path),
+      },
+      {
+        title: String(componentsRoutes.root.label),
+        path: String(componentsRoutes.root.path),
       },
     ];
     if (!isAuthenticated) {
       items.push({
-        title: authRoutes.root.label,
+        title: String(authRoutes.root.label),
         group: [
-          { title: authRoutes.login.label, path: authRoutes.login.path },
-          { title: authRoutes.register.label, path: authRoutes.register.path },
+          {
+            title: String(authRoutes.login.label),
+            path: String(authRoutes.login.path),
+          },
+          {
+            title: String(authRoutes.register.label),
+            path: String(authRoutes.register.path),
+          },
         ],
       });
     }
-    if (isAuthenticated && user?.roles?.includes('admin')) {
-      items.push({ title: baseRoutes.demo.label, path: baseRoutes.demo.path }); //TODO implement panel
+    if (isAuthenticated) {
+      //TODO add acl
+      items.push({
+        title: String(panelRoutes.root.label),
+        path: String(panelRoutes.root.path),
+      }); //TODO implement panel
     }
     items.push({
       title: 'Dark Mode',
       component: <CustomToggle isActive={isDarkMode} toggle={toggleTheme} />,
     });
     return items;
-  }, [isDarkMode, toggleTheme, user, isAuthenticated]);
+  }, [isDarkMode, toggleTheme, isAuthenticated]);
 
   return (
     <>
