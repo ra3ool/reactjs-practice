@@ -7,14 +7,23 @@ import {
   panelRoutes,
 } from '@/constants';
 import { SidebarItem } from '@/types';
-import { useTheme } from '@/hooks';
-import { useMemo } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { useRouteNavigation, useTheme } from '@/hooks';
+import { useCallback, useMemo } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import { useAuthStore } from '@/stores';
 
 export default function Layout() {
   const { isDarkMode, toggleTheme } = useTheme();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, logout } = useAuthStore();
+  const { navigateTo } = useRouteNavigation();
+
+  const handleLogout = useCallback(async () => {
+    const response = await logout();
+    if (response.status) {
+      toast.success(response.message);
+      navigateTo('home', { replace: true });
+    }
+  }, [logout, navigateTo]);
 
   const sideBarItems: SidebarItem[] = useMemo(() => {
     const items: SidebarItem[] = [
@@ -61,8 +70,19 @@ export default function Layout() {
       title: 'Dark Mode',
       component: <CustomToggle isActive={isDarkMode} toggle={toggleTheme} />,
     });
+    if (isAuthenticated) {
+      //TODO add confirmation later
+      items.push({
+        title: 'logout',
+        className:
+          'cursor-pointer text-red-500 hover:bg-red-200 dark:hover:bg-red-950',
+        actions: {
+          onClick: handleLogout,
+        },
+      });
+    }
     return items;
-  }, [isDarkMode, toggleTheme, isAuthenticated]);
+  }, [handleLogout, isAuthenticated, isDarkMode, toggleTheme]);
 
   return (
     <>

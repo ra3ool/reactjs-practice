@@ -1,12 +1,12 @@
 import { HeaderProps } from '@/types';
 
-export default function Header({ className, title }: HeaderProps) {
+export default function Header({ className, title, action }: HeaderProps) {
   return (
     <div
-      className={`flex justify-between items-center shrink-0 bg-bg-primary text-text-primary shadow p-5 rounded-xl ${className}`}
+      className={`flex justify-between items-center shrink-0 bg-bg-primary text-text-primary shadow px-5 min-h-16 rounded-xl ${className}`}
     >
       <div>{title}</div>
-      <div>action</div>
+      {action && <div>{action}</div>}
     </div>
   );
 }

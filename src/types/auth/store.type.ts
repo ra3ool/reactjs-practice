@@ -9,5 +9,5 @@ export interface AuthStore {
   login: (credentials: LoginFormData) => Promise<LoginResponse>;
   register: (credentials: RegisterFormData) => Promise<LoginResponse>;
   setLoginData: (data: LoginResponse) => void;
-  logout: () => void;
+  logout: () => Promise<{ status: string; message: string }>;
 }

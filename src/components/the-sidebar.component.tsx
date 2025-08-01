@@ -2,6 +2,8 @@ import { SidebarProps } from '@/types';
 import { NavLink } from 'react-router';
 import { ExpansionPanel } from '.';
 
+const DEFAULT_ITEM_CLASS = 'flex justify-between align-middle p-3 rounded-xl';
+
 export default function Sidebar({
   title,
   items,
@@ -26,7 +28,7 @@ export default function Sidebar({
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `p-3 rounded-xl ${itemClassName} ${
+                  `${DEFAULT_ITEM_CLASS} ${itemClassName} ${
                     isActive ? activeItemClassName : ''
                   }`
                 }
@@ -46,12 +48,19 @@ export default function Sidebar({
             );
           } else if (item.component) {
             return (
-              <div
-                className="flex justify-between align-middle p-3 rounded-xl"
-                key={item.title}
-              >
+              <div className={DEFAULT_ITEM_CLASS} key={item.title}>
                 <span>{item.title}</span>
                 {item.component}
+              </div>
+            );
+          } else if (item.actions) {
+            return (
+              <div
+                className={`${DEFAULT_ITEM_CLASS} ${item.className}`}
+                key={item.title}
+                {...item.actions}
+              >
+                <span>{item.title}</span>
               </div>
             );
           }

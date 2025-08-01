@@ -91,12 +91,12 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   logout: async () => {
     set({ isLoading: true });
     try {
-      const response = await authService.logout();
+      // const response = await authService.logout();
       cookieStorage.remove('accessToken');
       cookieStorage.remove('refreshToken');
       cookieStorage.remove('user');
       set({ user: null, isAuthenticated: false });
-      return response;
+      return { status: 'ok', message: 'you logged out successfully' };
     } finally {
       set({ isLoading: false });
     }

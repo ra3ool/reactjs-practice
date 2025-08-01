@@ -25,6 +25,11 @@ class AuthRepository {
   async logout() {
     await api.post('/auth/logout');
   }
+
+  async refreshToken(refreshToken: string) {
+    //TODO implement this later
+    return { accessToken: '', refreshToken };
+  }
 }
 
 export const authRepository = new AuthRepository();

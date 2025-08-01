@@ -7,6 +7,7 @@ export default function ButtonView() {
         <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
           Custom Button Component with variant primary
         </h3>
+        <h3>variant primary</h3>
         <div className="flex gap-4 mb-8">
           <div className="flex flex-col">
             <label htmlFor="">size sm</label>
@@ -27,6 +28,8 @@ export default function ButtonView() {
             </CustomButton>
           </div>
         </div>
+
+        <h3>variant secondary</h3>
         <div className="flex gap-4 mb-8">
           <div className="flex flex-col">
             <label htmlFor="">size sm</label>
@@ -47,6 +50,8 @@ export default function ButtonView() {
             </CustomButton>
           </div>
         </div>
+
+        <h3>variant outline</h3>
         <div className="flex gap-4 mb-8">
           <div className="flex flex-col">
             <label htmlFor="">size sm</label>

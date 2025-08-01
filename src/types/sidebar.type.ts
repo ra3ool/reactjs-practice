@@ -1,7 +1,11 @@
+import { ReactNode } from 'react';
+
 export interface SidebarItem {
   title: string;
   path?: string;
-  component?: React.ReactNode;
+  component?: ReactNode;
+  className?: string;
+  actions?: object;
   group?: Omit<SidebarItem, 'group'>[]; // Prevent infinite nesting
 }
 

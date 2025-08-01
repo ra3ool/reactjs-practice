@@ -137,7 +137,7 @@ function RegisterView() {
                   htmlFor="terms"
                   className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
                 >
-                  I agree to the {/*TODO add right to left modal later on*/}
+                  I agree to the {/*TODO add right to left modal later*/}
                   <Link
                     to={String(authRoutes.terms?.path)}
                     className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"

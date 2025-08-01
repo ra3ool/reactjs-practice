@@ -1,11 +1,11 @@
 import { CustomDropdown, DropdownItem } from '@/components';
-//TODO develop this component later on
+
 export default function DropdownView() {
   return (
     <>
       <div className="mb-12">
         <CustomDropdown
-          trigger={
+          triggerText={
             <span className="px-4 py-2 bg-blue-500 text-white rounded">
               Menu
             </span>
