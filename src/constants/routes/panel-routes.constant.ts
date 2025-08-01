@@ -15,6 +15,11 @@ const panelRoutes = Object.freeze({
   invoices: createRoutesGroup('invoices', {
     root: {
       label: 'All invoice',
+      name: 'panel.invoices',
+      path: '/',
+    },
+    index: {
+      label: 'All invoice',
       name: 'panel.invoices.all-invoices',
       path: '/',
     },

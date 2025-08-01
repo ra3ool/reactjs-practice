@@ -1,3 +1,5 @@
+import { UserRole } from '../user';
+
 export enum IdentifierType {
   EMAIL = 'email',
   USERNAME = 'username',
@@ -20,5 +22,6 @@ export interface LoginResponse {
     id: number;
     username: string;
     email: string;
+    role: UserRole;
   };
 }

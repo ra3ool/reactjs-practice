@@ -1,13 +1,13 @@
 import { ComponentType, LazyExoticComponent, ReactNode } from 'react';
+import { UserRole } from '../user';
 
-export type UserRole = 'admin' | 'user' | 'guest';
 export type navigateBy = 'name' | 'path';
 
 export interface RouteMeta {
   title?: string;
   description?: string;
   icon?: string;
-  roles?: UserRole[];
+  role?: UserRole;
   requiresAuth?: boolean;
   layout?: string;
   breadcrumb?: boolean;

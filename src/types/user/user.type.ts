@@ -1,8 +1,8 @@
-import { UserRole } from '../routing';
+export type UserRole = 'admin' | 'user' | 'guest';
 
 export interface User {
   username: string;
   email: string;
   id: number;
-  roles?: UserRole[];
+  role: UserRole;
 }

@@ -1,6 +1,6 @@
 import { RouteConfig, RouteMeta, RouteType, UserRole } from '@/types';
 
-export class RouteBuilder {
+class RouteBuilder {
   private config: Partial<RouteConfig>;
 
   constructor(options: Partial<RouteConfig> = {}) {
@@ -27,8 +27,8 @@ export class RouteBuilder {
     return this;
   }
 
-  withRoles(roles: UserRole[]): RouteBuilder {
-    this.config.meta = { ...this.config.meta, roles };
+  withRoles(role: UserRole): RouteBuilder {
+    this.config.meta = { ...this.config.meta, role };
     return this;
   }
 
@@ -72,8 +72,8 @@ export class RouteBuilder {
   }
 }
 
-export const createRoute = (
-  options: Partial<RouteConfig> = {},
-): RouteBuilder => {
+const createRoute = (options: Partial<RouteConfig> = {}): RouteBuilder => {
   return new RouteBuilder(options);
 };
+
+export default createRoute;

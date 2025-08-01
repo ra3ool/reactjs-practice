@@ -62,12 +62,16 @@ export function useRouteNavigation() {
 
   const isCurrentRoute = (identifier: RouteName, by?: navigateBy) => {
     const route = by ? findRoute(identifier, by) : findRoute(identifier);
-    return route ? location.pathname === route.path : false;
+    return route ? currentPath === route.path : false;
   };
 
   const getCurrentRoute = (): RouteType | undefined => {
-    return findRoute(location.pathname, 'path');
+    return findRoute(currentPath, 'path');
   };
+
+  const currentPath = location.pathname;
+
+  const currentName = getCurrentRoute()?.name;
 
   return {
     navigateTo,
@@ -75,7 +79,8 @@ export function useRouteNavigation() {
     goForward,
     isCurrentRoute,
     getCurrentRoute,
-    currentPath: location.pathname,
+    currentPath,
+    currentName,
     currentLocation: location,
   };
 }

@@ -1,4 +1,4 @@
-import { AuthStore, LoginFormData, RegisterFormData } from '@/types';
+import { AuthStore, LoginFormData, RegisterFormData, User } from '@/types';
 import { create } from 'zustand';
 import { authService, cookieStorage } from '@/services';
 import { LoginResponse } from '@/types';
@@ -70,6 +70,10 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         sameSite: 'strict',
       });
     }
+  },
+
+  updateUser: async (user: User) => {
+    set({ user });
   },
 
   getCurrentUser: async () => {

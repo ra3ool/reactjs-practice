@@ -1,10 +1,11 @@
 import { useRouteNavigation } from '@/hooks';
 import { useAuthStore } from '@/stores';
 import { CustomButton } from '@/components';
+import { User, UserRole } from '@/types';
 
 export default function DemoView() {
   const { navigateTo, isCurrentRoute } = useRouteNavigation();
-  const { user, isAuthenticated, logout } = useAuthStore();
+  const { user, isAuthenticated, logout, updateUser } = useAuthStore();
 
   const handleLogin = () => {
     navigateTo('auth.login');
@@ -17,6 +18,10 @@ export default function DemoView() {
 
   const handleAdminRoute = () => {
     navigateTo('components.input');
+  };
+
+  const handleRoleChanges = (role: UserRole) => {
+    updateUser({ ...user, role } as User);
   };
 
   return (
@@ -36,12 +41,28 @@ export default function DemoView() {
             <CustomButton onClick={() => navigateTo('about')}>
               Go to About
             </CustomButton>
-            <CustomButton onClick={() => navigateTo('auth.login')}>
-              Go to Login
-            </CustomButton>
-            <CustomButton onClick={() => navigateTo('auth.register')}>
-              Go to Register
-            </CustomButton>
+            {isAuthenticated && (
+              <div className="flex gap-2">
+                <CustomButton
+                  variant={'guest' === user?.role ? 'primary' : 'outline'}
+                  onClick={() => handleRoleChanges('guest')}
+                >
+                  guest
+                </CustomButton>
+                <CustomButton
+                  variant={'user' === user?.role ? 'primary' : 'outline'}
+                  onClick={() => handleRoleChanges('user')}
+                >
+                  user
+                </CustomButton>
+                <CustomButton
+                  variant={'admin' === user?.role ? 'primary' : 'outline'}
+                  onClick={() => handleRoleChanges('admin')}
+                >
+                  admin
+                </CustomButton>
+              </div>
+            )}
           </div>
         </div>
 
@@ -56,7 +77,7 @@ export default function DemoView() {
               <div>
                 <p>User: {user.username}</p>
                 <p>Email: {user.email}</p>
-                <p>Roles: {user.roles?.join(', ') || 'No roles'}</p>
+                <p>Role: {user.role}</p>
               </div>
             )}
             {!isAuthenticated ? (
@@ -72,7 +93,7 @@ export default function DemoView() {
           <h2 className="text-xl font-semibold mb-4">Access Control (ACL)</h2>
           <div className="space-y-3">
             <p>Components section requires admin role</p>
-            {isAuthenticated && user?.roles?.includes('admin') ? (
+            {isAuthenticated && user?.role === 'admin' ? (
               <CustomButton onClick={handleAdminRoute}>
                 Access Admin Route
               </CustomButton>
@@ -107,7 +128,7 @@ export default function DemoView() {
           <li>✅ Type-safe route definitions</li>
           <li>✅ Programmatic navigation with route names</li>
           <li>✅ Breadcrumb navigation</li>
-          <li>✅ Dynamic sidebar based on user roles</li>
+          <li>✅ Dynamic sidebar based on user role</li>
           <li>✅ Route protection components</li>
           <li>✅ Document title updates</li>
         </ul>
