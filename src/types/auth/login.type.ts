@@ -1,4 +1,4 @@
-import { UserRole } from '../user';
+import { User } from '../user';
 
 export enum IdentifierType {
   EMAIL = 'email',
@@ -18,10 +18,5 @@ export type LoginRequestPayload = {
 export interface LoginResponse {
   accessToken: string;
   refreshToken?: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    role: UserRole;
-  };
+  user: User;
 }

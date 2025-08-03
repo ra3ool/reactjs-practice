@@ -12,7 +12,7 @@ export interface RouteMeta {
   layout?: string;
   breadcrumb?: boolean;
   cache?: boolean;
-  [key: string]: string | boolean | UserRole[] | undefined;
+  [key: string]: string | boolean | undefined;
 }
 
 export interface RouteConfig {

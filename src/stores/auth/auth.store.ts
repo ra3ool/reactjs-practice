@@ -1,7 +1,12 @@
-import { AuthStore, LoginFormData, RegisterFormData, User } from '@/types';
-import { create } from 'zustand';
 import { authService, cookieStorage } from '@/services';
-import { LoginResponse } from '@/types';
+import {
+  AuthStore,
+  LoginFormData,
+  LoginResponse,
+  RegisterFormData,
+  User,
+} from '@/types';
+import { create } from 'zustand';
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
   user: (() => {
@@ -32,8 +37,8 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     set({ isLoading: true });
     try {
       const data = await authService.login(credentials);
-      get().setLoginData(data);
-      return data;
+      get().setLoginData(data as LoginResponse);
+      return data as LoginResponse;
     } finally {
       set({ isLoading: false });
     }
@@ -43,8 +48,8 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     set({ isLoading: true });
     try {
       const data = await authService.register(credentials);
-      get().setLoginData(data);
-      return data;
+      get().setLoginData(data as LoginResponse);
+      return data as LoginResponse;
     } finally {
       set({ isLoading: false });
     }
