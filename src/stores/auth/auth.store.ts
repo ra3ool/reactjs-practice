@@ -56,18 +56,16 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   setLoginData: (data: LoginResponse) => {
-    set({ user: data.user, isAuthenticated: true });
+    set({ isAuthenticated: true });
+    get().updateUser(data.user);
+
     //TODO use zustand persist later
     cookieStorage.set('accessToken', data.accessToken, {
       expires: 1,
       secure: true,
       sameSite: 'strict',
     });
-    cookieStorage.set('user', JSON.stringify(data.user), {
-      expires: 1,
-      secure: true,
-      sameSite: 'strict',
-    });
+
     if (data.refreshToken) {
       cookieStorage.set('refreshToken', data.refreshToken, {
         expires: 7,
@@ -79,6 +77,11 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
   updateUser: async (user: User) => {
     set({ user });
+    cookieStorage.set('user', JSON.stringify(user), {
+      expires: 1,
+      secure: true,
+      sameSite: 'strict',
+    });
   },
 
   getCurrentUser: async () => {
