@@ -1,8 +1,8 @@
-import { Navigate } from 'react-router';
-import { useAuthStore } from '@/stores';
-import { ProtectedRouteProps } from '@/types';
 import { authRoutes } from '@/constants';
 import { useAcl, useRouteNavigation } from '@/hooks';
+import { useAuthStore } from '@/stores';
+import { ProtectedRouteProps } from '@/types';
+import { Navigate } from 'react-router';
 
 export default function ProtectedRoute({
   children,
@@ -15,7 +15,7 @@ export default function ProtectedRoute({
   if (meta?.requiresAuth && !isAuthenticated) {
     return (
       <Navigate
-        to={String(authRoutes.login.path)}
+        to={authRoutes.login.path as string}
         state={{ from: currentPath }} //TODO work with states later
         replace
       />

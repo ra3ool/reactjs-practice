@@ -1,16 +1,16 @@
-import { Outlet } from 'react-router';
-import { Sidebar, CustomToggle } from '@/components';
+import { CustomToggle, Sidebar } from '@/components';
 import {
   authRoutes,
   baseRoutes,
   componentsRoutes,
   panelRoutes,
 } from '@/constants';
-import { SidebarItem } from '@/types';
 import { useRouteNavigation, useTheme } from '@/hooks';
-import { useCallback, useMemo } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
 import { useAuthStore } from '@/stores';
+import { SidebarItem } from '@/types';
+import { useCallback, useMemo } from 'react';
+import { Outlet } from 'react-router';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function Layout() {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -28,33 +28,33 @@ export default function Layout() {
   const sideBarItems: SidebarItem[] = useMemo(() => {
     const items: SidebarItem[] = [
       {
-        title: String(baseRoutes.home.label),
-        path: String(baseRoutes.home.path),
+        title: baseRoutes.home.label as string,
+        path: baseRoutes.home.path as string,
       },
       {
-        title: String(baseRoutes.about.label),
-        path: String(baseRoutes.about.path),
+        title: baseRoutes.about.label as string,
+        path: baseRoutes.about.path as string,
       },
       {
-        title: String(baseRoutes.demo.label),
-        path: String(baseRoutes.demo.path),
+        title: baseRoutes.demo.label as string,
+        path: baseRoutes.demo.path as string,
       },
       {
-        title: String(componentsRoutes.root.label),
-        path: String(componentsRoutes.root.path),
+        title: componentsRoutes.root.label as string,
+        path: componentsRoutes.root.path as string,
       },
     ];
     if (!isAuthenticated) {
       items.push({
-        title: String(authRoutes.root.label),
+        title: authRoutes.root.label as string,
         group: [
           {
-            title: String(authRoutes.login.label),
-            path: String(authRoutes.login.path),
+            title: authRoutes.login.label as string,
+            path: authRoutes.login.path as string,
           },
           {
-            title: String(authRoutes.register.label),
-            path: String(authRoutes.register.path),
+            title: authRoutes.register.label as string,
+            path: authRoutes.register.path as string,
           },
         ],
       });
@@ -62,8 +62,8 @@ export default function Layout() {
     if (isAuthenticated) {
       //TODO add acl
       items.push({
-        title: String(panelRoutes.root.label),
-        path: String(panelRoutes.root.path),
+        title: panelRoutes.root.label as string,
+        path: panelRoutes.root.path as string,
       });
     }
     items.push({

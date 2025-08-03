@@ -1,14 +1,14 @@
 import { CustomButton, CustomInput } from '@/components';
-import { memo } from 'react';
-import { Link } from 'react-router';
 import { authRoutes } from '@/constants';
-import { LoginFormData } from '@/types';
-import { useForm, Controller } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { authSchema } from '@/schemas';
 import { useAuthStore } from '@/stores';
+import { LoginFormData } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { memo } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Link } from 'react-router';
+import { toast } from 'react-toastify';
 
 function LoginView() {
   const {
@@ -118,7 +118,7 @@ function LoginView() {
               </div>
 
               <Link
-                to={String(authRoutes.forgotPassword?.path)}
+                to={authRoutes.forgotPassword?.path as string}
                 className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
                 aria-label="Forgot your password?"
               >
@@ -141,7 +141,7 @@ function LoginView() {
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
             Don&apos;t have an account?{' '}
             <Link
-              to={String(authRoutes.register.path)}
+              to={authRoutes.register.path as string}
               className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
               aria-label="Navigate to sign up page"
             >

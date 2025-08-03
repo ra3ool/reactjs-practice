@@ -1,7 +1,8 @@
 import { createRoutesGroup } from '@/helpers';
+import { RouteGroup } from '@/types';
 
 const prefix = 'panel';
-const panelRoutes = Object.freeze({
+const panelRoutes: RouteGroup = Object.freeze({
   root: {
     label: 'Panel',
     name: 'panel',

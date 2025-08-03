@@ -1,4 +1,4 @@
-import { TableRow } from "@/types/components";
+import { TableRow } from '@/types/components';
 
 const sortData = (
   data: TableRow[],
@@ -13,10 +13,10 @@ const sortData = (
       return direction === 'asc' ? valueA - valueB : valueB - valueA;
     } else {
       return direction === 'asc'
-        ? String(valueA).localeCompare(String(valueB))
-        : String(valueB).localeCompare(String(valueA));
+        ? (valueA as string).localeCompare(valueB as string)
+        : (valueB as string).localeCompare(valueA as string);
     }
   });
 };
 
-export default sortData
+export default sortData;

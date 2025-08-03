@@ -1,6 +1,6 @@
-import { UserRole } from '@/types';
-import { baseRoutes, authRoutes, componentsRoutes, panelRoutes } from '.';
 import { flattenRoutes } from '@/helpers';
+import { RouteGroup, RouteType, UserRole } from '@/types';
+import { authRoutes, baseRoutes, componentsRoutes, panelRoutes } from '.';
 
 type AclRuleType = Record<UserRole, { routes: string[]; actions: string[] }>;
 
@@ -23,7 +23,10 @@ export const defineAclRules: AclRuleType = {
       ...publicRouteNames,
       ...componentsRouteNames,
       ...panelRouteNames.filter(
-        (name) => !name.includes(panelRoutes.invoices.root.name),
+        (routeName) =>
+          !routeName.includes(
+            ((panelRoutes.invoices as RouteGroup).root as RouteType).name || '',
+          ),
       ),
     ],
     actions: [],

@@ -1,7 +1,7 @@
-import { lazy } from 'react';
-import { RouteConfig } from '@/types';
-import { createRoute, transformRoutes } from '@/helpers';
 import { panelRoutes as panelRoutesConstants } from '@/constants';
+import { createRoute, transformRoutes } from '@/helpers';
+import { RouteConfig } from '@/types';
+import { lazy } from 'react';
 
 const PanelLayout = lazy(() => import('@/layouts/Panel.layout'));
 const ProfileView = lazy(() => import('@/views/Auth/Login.view'));
