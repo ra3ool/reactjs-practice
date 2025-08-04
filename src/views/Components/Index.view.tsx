@@ -1,4 +1,4 @@
-export default function ToggleView() {
+export default function ComponentsView() {
   return (
     <>
     <p>Here you see UI Components showcase</p>

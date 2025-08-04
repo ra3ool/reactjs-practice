@@ -1,6 +1,6 @@
-import { useNavigate, useLocation } from 'react-router';
 import { flatRoutesByName, flatRoutesByPath } from '@/constants';
 import type { navigateBy, RouteType } from '@/types';
+import { useLocation, useNavigate } from 'react-router';
 
 type RouteName = keyof typeof flatRoutesByName;
 

@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect, cloneElement } from 'react';
-import { DropdownProps, DropdownItemProps } from '@/types';
+import { DropdownItemProps, DropdownProps } from '@/types';
+import { cloneElement, useEffect, useRef, useState } from 'react';
 
 export default function CustomDropdown({
   trigger,
@@ -92,7 +92,7 @@ export function DropdownItem({
       className={`block w-full text-left px-4 py-2 text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 ${className}`}
       role="menuitem"
       tabIndex={-1}
-      onClick={onClick}
+      onClick={onClick} //TODO implement close after click
     >
       {children}
     </button>

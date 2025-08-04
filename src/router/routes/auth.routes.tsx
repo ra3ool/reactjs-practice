@@ -1,4 +1,4 @@
-import { authRoutes as authRoutesConstants } from '@/constants';
+import { authRoutes as ARC } from '@/constants';
 import { createRoute, transformRoutes } from '@/helpers';
 import { RouteConfig } from '@/types';
 import { lazy } from 'react';
@@ -8,18 +8,16 @@ const LoginView = lazy(() => import('@/views/Auth/Login.view'));
 const RegisterView = lazy(() => import('@/views/Auth/Register.view'));
 
 const authRoutes: RouteConfig[] = [
-  createRoute(authRoutesConstants.root)
+  createRoute(ARC.root)
     .withComponent(AuthLayout)
     .withChildren([
       createRoute({
-        path: authRoutesConstants.root.path as string,
+        path: ARC.root.path as string,
       })
-        .withRedirect(authRoutesConstants.login.path as string)
+        .withRedirect(ARC.login.path as string)
         .build(),
-      createRoute(authRoutesConstants.login).withComponent(LoginView).build(),
-      createRoute(authRoutesConstants.register)
-        .withComponent(RegisterView)
-        .build(),
+      createRoute(ARC.login).withComponent(LoginView).build(),
+      createRoute(ARC.register).withComponent(RegisterView).build(),
     ])
     .build(),
 ];

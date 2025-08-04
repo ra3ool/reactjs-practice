@@ -1,7 +1,7 @@
-import { lazy } from 'react';
-import { RouteConfig } from '@/types';
+import { componentsRoutes as CRC } from '@/constants';
 import { createRoute, transformRoutes } from '@/helpers';
-import { componentsRoutes as componentsRoutesConstants } from '@/constants';
+import { RouteConfig } from '@/types';
+import { lazy } from 'react';
 
 const ComponentsLayout = lazy(() => import('@/layouts/Components.layout'));
 const IndexView = lazy(() => import('@/views/Components/Index.view'));
@@ -15,30 +15,16 @@ const ExpansionPanelView = lazy(
 );
 
 const componentsRoutes: RouteConfig[] = [
-  createRoute(componentsRoutesConstants.root)
+  createRoute(CRC.root)
     .withComponent(ComponentsLayout)
     .withChildren([
-      createRoute(componentsRoutesConstants.index)
-        .withComponent(IndexView)
-        .build(),
-      createRoute(componentsRoutesConstants.input)
-        .withComponent(InputView)
-        .build(),
-      createRoute(componentsRoutesConstants.button)
-        .withComponent(ButtonView)
-        .build(),
-      createRoute(componentsRoutesConstants.table)
-        .withComponent(TableView)
-        .build(),
-      createRoute(componentsRoutesConstants.toggle)
-        .withComponent(ToggleView)
-        .build(),
-      createRoute(componentsRoutesConstants.dropdown)
-        .withComponent(DropdownView)
-        .build(),
-      createRoute(componentsRoutesConstants.expansionPanel)
-        .withComponent(ExpansionPanelView)
-        .build(),
+      createRoute(CRC.index).withComponent(IndexView).build(),
+      createRoute(CRC.input).withComponent(InputView).build(),
+      createRoute(CRC.button).withComponent(ButtonView).build(),
+      createRoute(CRC.table).withComponent(TableView).build(),
+      createRoute(CRC.toggle).withComponent(ToggleView).build(),
+      createRoute(CRC.dropdown).withComponent(DropdownView).build(),
+      createRoute(CRC.expansionPanel).withComponent(ExpansionPanelView).build(),
     ])
     .build(),
 ];
