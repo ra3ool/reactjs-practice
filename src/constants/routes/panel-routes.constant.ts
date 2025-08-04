@@ -5,17 +5,32 @@ const prefix = 'panel';
 const panelRoutes: RouteGroup = Object.freeze({
   root: {
     label: 'Panel',
-    name: 'panel',
     path: '/',
+    name: 'panel',
+  },
+  index: {
+    label: 'Panel',
+    path: '/',
+    name: 'panel',
+    meta: {
+      title: 'Panel',
+      description: 'panel page',
+      breadcrumb: true,
+    },
   },
   profile: {
     label: 'Profile',
     name: 'panel.profile',
     path: 'profile',
+    meta: {
+      title: 'Profile',
+      description: 'profile and user info',
+      breadcrumb: true,
+    },
   },
   invoices: createRoutesGroup('invoices', {
     root: {
-      label: 'All invoice',
+      label: 'Invoices',
       name: 'panel.invoices',
       path: '/',
     },

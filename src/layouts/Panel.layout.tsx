@@ -1,14 +1,18 @@
-import { Outlet } from 'react-router';
 import {
   Breadcrumb,
   CustomButton,
   CustomDropdown,
   DropdownItem,
+  Header,
   LayoutContent,
 } from '@/components';
-import { Header } from '@/components';
+import { panelRoutes } from '@/constants';
+import { useRouteNavigation } from '@/hooks';
+import { RouteGroup } from '@/types';
+import { Outlet } from 'react-router';
 
-export default function ComponentsLayout() {
+export default function PanelLayout() {
+  const { navigateTo } = useRouteNavigation();
   return (
     <LayoutContent
       headerComponent={
@@ -19,10 +23,26 @@ export default function ComponentsLayout() {
               align="right"
               trigger={<CustomButton variant="outline">options</CustomButton>}
             >
-              <DropdownItem onClick={() => console.log('profile clicked')}>
+              <DropdownItem
+                onClick={() => navigateTo(panelRoutes.root.name as string)}
+                className="cursor-pointer"
+              >
+                panel
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => navigateTo(panelRoutes.profile.name as string)}
+                className="cursor-pointer"
+              >
                 profile
               </DropdownItem>
-              <DropdownItem onClick={() => console.log('invoices clicked')}>
+              <DropdownItem
+                onClick={() =>
+                  navigateTo(
+                    (panelRoutes.invoices as RouteGroup).root.name as string,
+                  )
+                }
+                className="cursor-pointer"
+              >
                 invoices
               </DropdownItem>
             </CustomDropdown>
