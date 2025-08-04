@@ -8,7 +8,7 @@ const createRoutesGroup = (prefix: string, routes: RouteGroup): RouteGroup => {
     route: RouteType | RouteGroup,
     parentPrefix: string,
   ): RouteType | RouteGroup => {
-    if (!('path' in route) || typeof (route as RouteType)?.path === 'object') {
+    if (!('path' in route) || typeof route?.path === 'object') {
       return Object.fromEntries(
         Object.entries(route).map(([key, nestedRoute]) => [
           key,

@@ -1,26 +1,23 @@
-import baseRoutes from './base-routes.constant';
-import authRoutes from './auth-routes.constant';
-import componentsRoutes from './components-routes.constant';
 import { flattenRoutes } from '@/helpers';
+import authRoutes from './auth-routes.constant';
+import baseRoutes from './base-routes.constant';
+import componentsRoutes from './components-routes.constant';
 import panelRoutes from './panel-routes.constant';
 
-export { baseRoutes };
-export { authRoutes };
-export { componentsRoutes };
-export { panelRoutes };
+export { authRoutes, baseRoutes, componentsRoutes, panelRoutes };
 
 const routes = {
   //base
-  ...baseRoutes,
+  base: baseRoutes,
 
   //auth
-  ...authRoutes,
+  auth: authRoutes,
 
   //components
-  ...componentsRoutes,
+  component: componentsRoutes,
 
   //panel
-  ...panelRoutes,
+  panel: panelRoutes,
 };
 
 export const flatRoutesByPath = flattenRoutes(routes, 'path');

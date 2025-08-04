@@ -3,10 +3,10 @@ import { useAuthStore } from '@/stores';
 
 export const useAcl = () => {
   const { user } = useAuthStore();
-  const userRole = user && user.role ? user.role : 'guest';
+  const userRole = user && user.role ? user.role : 'guest'; //TODO add roles to constants
   const rules = defineAclRules[userRole];
 
-  const canAccessRoute = (routeName?: string) => {
+  const canAccessRoute = (routeName?: string): boolean => {
     if (!routeName) return false;
     return rules.routes.includes(routeName);
   };

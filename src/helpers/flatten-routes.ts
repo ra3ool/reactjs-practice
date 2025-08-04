@@ -1,30 +1,21 @@
-import { RouteGroup, navigateBy, RouteType } from '@/types';
+import { navigateBy, RouteGroup, RouteType } from '@/types';
 
 export default function flattenRoutes(
   routesObj: RouteGroup,
   by: navigateBy = 'path',
 ): Record<string, RouteType> {
-  const isRoute = (value: unknown): value is RouteType => {
-    return (
-      typeof value === 'object' &&
-      value !== null &&
-      'path' in value &&
-      typeof (value as RouteType).path === 'string'
-    );
-  };
-
   const flatten = (
     routes: RouteGroup,
     acc: Record<string, RouteType> = {},
   ): Record<string, RouteType> => {
-    for (const value of Object.values(routes)) {
-      if (isRoute(value)) {
-        const key = value[by];
+    for (const route of Object.values(routes)) {
+      if (!('path' in route) || typeof route?.path === 'object') {
+        flatten(route as RouteGroup, acc);
+      } else {
+        const key = route[by];
         if (key) {
-          acc[key] = value;
+          acc[key as string] = route as RouteType;
         }
-      } else if (typeof value === 'object' && value !== null) {
-        flatten(value as RouteGroup, acc);
       }
     }
 
