@@ -1,8 +1,9 @@
-import baseRoutes from './base.routes';
+import MainLayout from '@/layouts/Main.layout';
+import NotFoundPageView from '@/views/Errors/NotFound.view';
 import authRoutes from './auth.routes';
+import baseRoutes from './base.routes';
 import componentsRoutes from './components.routes';
 import panelRoutes from './panel.routes';
-import MainLayout from '@/layouts/Main.layout';
 
 const routes = [
   {
@@ -14,6 +15,10 @@ const routes = [
       ...componentsRoutes,
       ...panelRoutes,
     ],
+  },
+  {
+    path: '*',
+    element: <NotFoundPageView />,
   },
 ];
 

@@ -2,6 +2,7 @@ import { authRoutes } from '@/constants';
 import { useAcl, useRouteNavigation } from '@/hooks';
 import { useAuthStore } from '@/stores';
 import { ProtectedRouteProps } from '@/types';
+import AccessDeniedView from '@/views/Errors/AccessDenied.view';
 import { Navigate } from 'react-router';
 
 export default function ProtectedRoute({
@@ -24,7 +25,7 @@ export default function ProtectedRoute({
 
   if (!acl.canAccessRoute(currentName)) {
     // return <Navigate to="/" replace />;
-    return <div>Access Denied, 403</div>; //TODO create 403 and 404 page later
+    return <AccessDeniedView />;
   }
 
   if (
