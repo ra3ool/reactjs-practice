@@ -7,12 +7,13 @@ import {
   LayoutContent,
 } from '@/components';
 import { panelRoutes } from '@/constants';
-import { useRouteNavigation } from '@/hooks';
+import { useAcl, useRouteNavigation } from '@/hooks';
 import { RouteGroup } from '@/types';
 import { Outlet } from 'react-router';
 
 export default function PanelLayout() {
   const { navigateTo } = useRouteNavigation();
+  const { canAccessRoute } = useAcl();
   return (
     <LayoutContent
       headerComponent={
@@ -24,7 +25,9 @@ export default function PanelLayout() {
               trigger={<CustomButton variant="outline">options</CustomButton>}
             >
               <DropdownItem
-                onClick={() => navigateTo(panelRoutes.root.name as string)}
+                onClick={() =>
+                  navigateTo(panelRoutes.root.path as string, { by: 'path' })
+                }
                 className="cursor-pointer"
               >
                 panel
@@ -35,16 +38,18 @@ export default function PanelLayout() {
               >
                 profile
               </DropdownItem>
-              <DropdownItem
-                onClick={() =>
-                  navigateTo(
-                    (panelRoutes.invoices as RouteGroup).root.name as string,
-                  )
-                }
-                className="cursor-pointer"
-              >
-                invoices
-              </DropdownItem>
+              {canAccessRoute('panel.invoices.all-invoices') && (
+                <DropdownItem
+                  onClick={() =>
+                    navigateTo(
+                      (panelRoutes.invoices as RouteGroup)?.all?.name as string,
+                    )
+                  }
+                  className="cursor-pointer"
+                >
+                  invoices
+                </DropdownItem>
+              )}
             </CustomDropdown>
           }
         />

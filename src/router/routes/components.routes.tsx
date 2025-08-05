@@ -18,7 +18,7 @@ const componentsRoutes: RouteConfig[] = [
   createRoute(CRC.root)
     .withComponent(ComponentsLayout)
     .withChildren([
-      createRoute(CRC.index).withComponent(IndexView).build(),
+      createRoute(CRC.index).withComponent(IndexView).asIndex().build(),
       createRoute(CRC.input).withComponent(InputView).build(),
       createRoute(CRC.button).withComponent(ButtonView).build(),
       createRoute(CRC.table).withComponent(TableView).build(),

@@ -1,20 +1,43 @@
 import { panelRoutes as PRC } from '@/constants';
 import { createRoute, transformRoutes } from '@/helpers';
-import { RouteConfig } from '@/types';
+import { RouteConfig, RouteGroup } from '@/types';
 import { lazy } from 'react';
 
 const PanelLayout = lazy(() => import('@/layouts/Panel.layout'));
 const PanelIndex = lazy(() => import('@/views/Panel/Index.view'));
 const ProfileView = lazy(() => import('@/views/Panel/Profile.view'));
-// const InvoicesView = lazy(() => import('@/views/Panel/Invoices/Index.view'));
+const InvoicesView = lazy(
+  () => import('@/views/Panel/Invoices/AllInvoices.view'),
+);
+const GetInvoice = lazy(() => import('@/views/Panel/Invoices/GetInvoice.view'));
+const AddInvoice = lazy(() => import('@/views/Panel/Invoices/AddInvoice.view'));
+const EditInvoice = lazy(
+  () => import('@/views/Panel/Invoices/EditInvoice.view'),
+);
 
 const panelRoutes: RouteConfig[] = [
   createRoute(PRC.root)
     .withComponent(PanelLayout)
     .withChildren([
-      createRoute(PRC.index).withComponent(PanelIndex).build(),
+      createRoute(PRC.index).withComponent(PanelIndex).asIndex().build(),
       createRoute(PRC.profile).withComponent(ProfileView).build(),
-      // createRoute(PRC.invoices).withComponent(InvoicesView).build(),
+      createRoute()
+        .withChildren([
+          createRoute((PRC.invoices as RouteGroup)?.all)
+            .withComponent(InvoicesView)
+            .asIndex()
+            .build(),
+          createRoute((PRC.invoices as RouteGroup)?.get)
+            .withComponent(GetInvoice)
+            .build(),
+          createRoute((PRC.invoices as RouteGroup)?.add)
+            .withComponent(AddInvoice)
+            .build(),
+          createRoute((PRC.invoices as RouteGroup)?.edit)
+            .withComponent(EditInvoice)
+            .build(),
+        ])
+        .build(),
     ])
     .build(),
 ];

@@ -22,6 +22,12 @@ class RouteBuilder {
     return this;
   }
 
+  asIndex(): RouteBuilder {
+    this.config.index = true;
+    // delete this.config.path;
+    return this;
+  }
+
   build(): RouteConfig {
     return this.config as RouteConfig;
   }

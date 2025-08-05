@@ -25,7 +25,8 @@ export const defineAclRules: AclRuleType = {
       ...panelRouteNames.filter(
         (routeName) =>
           !routeName.includes(
-            ((panelRoutes.invoices as RouteGroup).root as RouteType).name || '',
+            ((panelRoutes.invoices as RouteGroup)?.all as RouteType)?.name ||
+              '',
           ),
       ),
     ],
