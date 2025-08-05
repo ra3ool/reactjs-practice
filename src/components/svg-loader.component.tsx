@@ -39,6 +39,7 @@ const SvgRenderer = memo(
           width={width}
           height={height}
           stroke={color}
+          color={color}
           className={className}
           aria-label={name}
         />
