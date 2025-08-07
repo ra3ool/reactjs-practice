@@ -24,7 +24,12 @@ class RouteBuilder {
 
   asIndex(): RouteBuilder {
     this.config.index = true;
-    // delete this.config.path;
+    delete this.config.path;
+    return this;
+  }
+
+  withPreload(shouldPreload = true): RouteBuilder {
+    this.config.preload = shouldPreload;
     return this;
   }
 

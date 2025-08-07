@@ -1,6 +1,6 @@
-import { ProtectedRoute } from '@/components';
+import { Loading, ProtectedRoute } from '@/components';
 import { RouteWrapperProps } from '@/types';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 
 export default function RouteWrapper({ route, children }: RouteWrapperProps) {
   useEffect(() => {
@@ -23,8 +23,8 @@ export default function RouteWrapper({ route, children }: RouteWrapperProps) {
   }, [route.meta]);
 
   return (
-    // <Suspense fallback={<Loading />}>
-    <ProtectedRoute meta={route.meta}>{children}</ProtectedRoute>
-    // </Suspense>
+    <Suspense fallback={<Loading />}>
+      <ProtectedRoute meta={route.meta}>{children}</ProtectedRoute>
+    </Suspense>
   );
 }

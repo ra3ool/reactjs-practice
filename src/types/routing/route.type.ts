@@ -24,6 +24,7 @@ export interface RouteConfig {
     | LazyExoticComponent<ComponentType<Record<string, unknown>>>;
   element?: React.ReactNode;
   meta?: RouteMeta;
+  preload?: boolean;
   children?: RouteConfig[];
   index?: boolean;
   redirect?: string;

@@ -1,8 +1,9 @@
-import { createElement } from 'react';
-import { RouteConfig } from '@/types';
-import { Navigate } from 'react-router';
 import { RouteWrapper } from '@/components';
+import { RouteConfig } from '@/types';
+import { createElement } from 'react';
+import { Navigate } from 'react-router';
 
+//TODO memoize this functions if can
 export function transformRoute(route: RouteConfig): RouteConfig {
   const { component, children, redirect, meta = {}, ...rest } = route;
 

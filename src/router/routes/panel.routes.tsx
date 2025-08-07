@@ -25,7 +25,6 @@ const panelRoutes: RouteConfig[] = [
         .withChildren([
           createRoute((PRC.invoices as RouteGroup)?.all)
             .withComponent(InvoicesView)
-            .asIndex()
             .build(),
           createRoute((PRC.invoices as RouteGroup)?.get)
             .withComponent(GetInvoice)

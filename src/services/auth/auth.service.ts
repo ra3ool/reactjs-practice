@@ -8,7 +8,6 @@ export const login = async (data: LoginFormData) => {
   const payload = authMappers.toLoginPayload(credentials);
   const response = await authRepository.login(payload);
   const result = authSchema.responseSchema.parse(response);
-  result.user.role = 'guest'; //TODO remove after add role to server response
   return result;
 };
 
@@ -17,7 +16,6 @@ export const register = async (data: RegisterFormData) => {
   const payload = authMappers.toRegisterPayload(credentials);
   const response = await authRepository.register(payload);
   const result = authSchema.responseSchema.parse(response);
-  result.user.role = 'guest'; //TODO remove after add role to server response
   return result;
 };
 

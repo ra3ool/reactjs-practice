@@ -1,8 +1,8 @@
-import { ReactNode, useCallback } from 'react';
 import { CustomTable, Pagination } from '@/components';
-import { TableHeader, TableRow, TableCell } from '@/types';
 import { paginateData } from '@/helpers';
 import { useTable } from '@/hooks';
+import { TableCell, TableHeader, TableRow } from '@/types';
+import { ReactNode, useCallback } from 'react';
 
 const ITEMS_PER_PAGE = 4;
 const getTableData = (
@@ -145,6 +145,7 @@ export default function TableView() {
           sort
           onCellClick={onCellClick}
           pagination={{ itemsPerPage: ITEMS_PER_PAGE }}
+          loadingText="Loading rows..."
         />
       </div>
 
@@ -160,6 +161,7 @@ export default function TableView() {
           rowClassName="hover:bg-neutral-100 dark:hover:bg-neutral-700 odd:bg-neutral-100 dark:odd:bg-neutral-900 even:bg-neutral-200 dark:even:bg-neutral-800"
           onRowClick={onRowClick}
           onCellClick={onCellClick}
+          loadingText="Loading rows..."
         />
         <Pagination //FIXME if changed, the page will rerender!!!
           totalItems={totalLength}

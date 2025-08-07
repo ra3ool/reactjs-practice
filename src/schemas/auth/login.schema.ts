@@ -49,6 +49,6 @@ export const responseSchema = z.object({
     id: z.number(),
     username: z.string().min(1, 'Username is required'),
     email: z.string().email('Invalid email format'),
-    role: z.string().optional(), //TODO remove optional after add role to server response
+    role: z.string(),
   }),
 });

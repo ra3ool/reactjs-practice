@@ -1,6 +1,10 @@
 import { RouteGroup, RouteType } from '@/types';
 
-const createRoutesGroup = (prefix: string, routes: RouteGroup): RouteGroup => {
+const createRoutesGroup = (
+  prefix: string,
+  routeConstant: RouteGroup,
+): RouteGroup => {
+  const routes = { ...routeConstant }; //TODO check why add component to route object
   const trimmed = prefix.replace(/^\/+|\/+$/g, '');
   const normalizedPrefix = trimmed ? `/${trimmed}` : '';
 
@@ -21,6 +25,7 @@ const createRoutesGroup = (prefix: string, routes: RouteGroup): RouteGroup => {
     let cleanPath = path.replace(/^\/+|\/+$/g, '');
     cleanPath = cleanPath === '' ? '/' : cleanPath;
 
+    //TODO check why add children to root
     return {
       ...rest,
       path:

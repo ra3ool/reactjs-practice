@@ -1,9 +1,9 @@
-import { Link } from 'react-router';
-import { RouteType } from '@/types';
 import { SvgLoader } from '@/components';
-import { useMemo } from 'react';
 import { flatRoutesByPath } from '@/constants';
 import { useRouteNavigation } from '@/hooks';
+import { RouteType } from '@/types';
+import { useMemo } from 'react';
+import { Link } from 'react-router';
 
 export default function Breadcrumb() {
   const { currentPath } = useRouteNavigation();
@@ -58,6 +58,7 @@ export default function Breadcrumb() {
               {breadcrumb.label}
             </span>
           ) : (
+            //TODO make an wrapper for Link to get route name
             <Link
               to={breadcrumb.path}
               className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"

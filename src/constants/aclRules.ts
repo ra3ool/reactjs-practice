@@ -1,5 +1,5 @@
 import { flattenRoutes } from '@/helpers';
-import { RouteGroup, RouteType, UserRole } from '@/types';
+import { UserRole } from '@/types';
 import { authRoutes, baseRoutes, componentsRoutes, panelRoutes } from '.';
 
 type AclRuleType = Record<UserRole, { routes: string[]; actions: string[] }>;
@@ -22,13 +22,8 @@ export const defineAclRules: AclRuleType = {
     routes: [
       ...publicRouteNames,
       ...componentsRouteNames,
-      ...panelRouteNames.filter(
-        (routeName) =>
-          !routeName.includes(
-            ((panelRoutes.invoices as RouteGroup)?.all as RouteType)?.name ||
-              '',
-          ),
-      ),
+      'panel',
+      'panel.profile', //TODO do better f.e use filter on constants
     ],
     actions: [],
   },

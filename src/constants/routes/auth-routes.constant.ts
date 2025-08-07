@@ -10,7 +10,6 @@ const authRoutes: RouteGroup = Object.freeze({
     meta: {
       title: 'Authentication',
       description: 'User authentication pages',
-      requiresAuth: false,
     },
   },
   login: {
@@ -20,7 +19,6 @@ const authRoutes: RouteGroup = Object.freeze({
     meta: {
       title: 'Login',
       description: 'Sign in to your account',
-      requiresAuth: false,
     },
   },
   register: {
@@ -30,7 +28,6 @@ const authRoutes: RouteGroup = Object.freeze({
     meta: {
       title: 'Register',
       description: 'Create a new account',
-      requiresAuth: false,
     },
   },
 });
