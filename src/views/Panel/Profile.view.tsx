@@ -1,8 +1,15 @@
 import { CustomInput } from '@/components';
+import { useHeader } from '@/contexts';
 import { useAuthStore } from '@/stores';
+import { useEffect } from 'react';
 
 export default function ProfileView() {
   const { user } = useAuthStore();
+  const { setHeaderTitle } = useHeader();
+
+  useEffect(() => {
+    setHeaderTitle('profile header');
+  }, [setHeaderTitle]);
 
   if (!user) {
     return (
@@ -13,7 +20,7 @@ export default function ProfileView() {
   }
 
   return (
-    <div className="max-w-xl mx-auto space-y-6">
+    <div className="max-w-xl mx-auto space-y-6 w-full">
       <h1 className="text-3xl font-bold text-text-primary">My Profile</h1>
 
       <div className="rounded-xl bg-bg-primary text-text-primary p-6 shadow space-y-4">

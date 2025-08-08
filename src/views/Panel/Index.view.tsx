@@ -1,4 +1,4 @@
-// src/pages/panel/Panel.tsx
+import { useHeader } from '@/contexts';
 import { useAuthStore } from '@/stores';
 import { useEffect, useState } from 'react';
 
@@ -15,6 +15,11 @@ export default function Panel() {
     invoices: 0,
     revenue: 0,
   });
+  const { setHeaderTitle } = useHeader();
+
+  useEffect(() => {
+    setHeaderTitle('panel header');
+  }, [setHeaderTitle]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
