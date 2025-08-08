@@ -15,7 +15,7 @@ const authRoutes: RouteGroup = Object.freeze({
   login: {
     label: 'Login',
     path: 'login',
-    name: 'auth.login',
+    name: 'login',
     meta: {
       title: 'Login',
       description: 'Sign in to your account',
@@ -24,7 +24,7 @@ const authRoutes: RouteGroup = Object.freeze({
   register: {
     label: 'Register',
     path: 'register',
-    name: 'auth.register',
+    name: 'register',
     meta: {
       title: 'Register',
       description: 'Create a new account',

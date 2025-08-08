@@ -20,7 +20,7 @@ const panelRoutes: RouteGroup = Object.freeze({
   },
   profile: {
     label: 'Profile',
-    name: 'panel.profile',
+    name: 'profile',
     path: 'profile',
     meta: {
       title: 'Profile',
@@ -31,7 +31,7 @@ const panelRoutes: RouteGroup = Object.freeze({
   invoices: createRoutesGroup('invoices', {
     all: {
       label: 'All invoice',
-      name: 'panel.invoices.all-invoices',
+      name: 'invoices-list',
       path: '/',
       meta: {
         title: 'All invoice',
@@ -41,7 +41,7 @@ const panelRoutes: RouteGroup = Object.freeze({
     },
     get: {
       label: 'Get invoice',
-      name: 'panel.invoices.get-invoice',
+      name: 'get-invoice',
       path: 'get/:id',
       meta: {
         title: 'Get invoice',
@@ -51,7 +51,7 @@ const panelRoutes: RouteGroup = Object.freeze({
     },
     add: {
       label: 'Add invoice',
-      name: 'panel.invoices.add-invoice',
+      name: 'add-invoice',
       path: 'add',
       meta: {
         title: 'Add invoice',
@@ -61,7 +61,7 @@ const panelRoutes: RouteGroup = Object.freeze({
     },
     delete: {
       label: 'Delete invoice',
-      name: 'panel.invoices.delete-invoice',
+      name: 'delete-invoice',
       path: 'delete/:id',
       meta: {
         title: 'Delete invoice',
@@ -71,7 +71,7 @@ const panelRoutes: RouteGroup = Object.freeze({
     },
     edit: {
       label: 'Edit invoice',
-      name: 'panel.invoices.edit-invoice',
+      name: 'edit-invoice',
       path: 'edit/:id',
       meta: {
         title: 'Edit invoice',

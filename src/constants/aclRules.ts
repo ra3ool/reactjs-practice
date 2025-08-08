@@ -22,8 +22,8 @@ export const defineAclRules: AclRuleType = {
     routes: [
       ...publicRouteNames,
       ...componentsRouteNames,
-      'panel',
-      'panel.profile', //TODO do better f.e use filter on constants
+      panelRoutes.index.name as string,
+      panelRoutes.profile.name as string, //TODO fine better way to declare
     ],
     actions: [],
   },

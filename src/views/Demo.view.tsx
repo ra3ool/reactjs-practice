@@ -1,6 +1,6 @@
+import { CustomButton } from '@/components';
 import { useRouteNavigation } from '@/hooks';
 import { useAuthStore } from '@/stores';
-import { CustomButton } from '@/components';
 import { User, UserRole } from '@/types';
 
 export default function DemoView() {
@@ -8,7 +8,7 @@ export default function DemoView() {
   const { user, isAuthenticated, logout, updateUser } = useAuthStore();
 
   const handleLogin = () => {
-    navigateTo('auth.login');
+    navigateTo('login');
   };
 
   const handleLogout = async () => {
@@ -111,8 +111,8 @@ export default function DemoView() {
           <div className="space-y-2">
             <p>Home: {isCurrentRoute('home') ? '✓' : '✗'}</p>
             <p>About: {isCurrentRoute('about') ? '✓' : '✗'}</p>
-            <p>Login: {isCurrentRoute('auth.login') ? '✓' : '✗'}</p>
-            <p>Register: {isCurrentRoute('auth.register') ? '✓' : '✗'}</p>
+            <p>Login: {isCurrentRoute('login') ? '✓' : '✗'}</p>
+            <p>Register: {isCurrentRoute('register') ? '✓' : '✗'}</p>
           </div>
         </div>
       </div>
