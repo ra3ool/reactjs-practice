@@ -1,6 +1,6 @@
-import { useState, useId, memo, FocusEvent } from 'react';
 import { SvgLoader } from '@/components';
 import { CustomInputProps } from '@/types';
+import { FocusEvent, memo, useId, useState } from 'react';
 
 const DEFAULT_ERROR_TEXT = 'This field is required';
 const baseInputClasses =
@@ -43,7 +43,9 @@ function CustomInput({
     target: { value },
   }: {
     target: { value: string };
-  }) => onChange(value);
+  }) => {
+    if (onChange) onChange(value);
+  };
 
   const onFocusHandler = (event: FocusEvent<HTMLInputElement, Element>) => {
     if (inputStyle === 'floatingLabel' && !event.target.value)

@@ -5,8 +5,8 @@ export interface CustomInputProps {
   type?: string;
   id?: string;
   placeholder?: string;
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
   onFocus?: (event: FocusEvent<HTMLInputElement, Element>) => void;
   onBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
   name: string;
