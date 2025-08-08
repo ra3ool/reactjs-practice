@@ -5,7 +5,7 @@ import {
   componentsRoutes,
   panelRoutes,
 } from '@/constants';
-import { useRouteNavigation, useTheme } from '@/hooks';
+import { useAcl, useRouteNavigation, useTheme } from '@/hooks';
 import { useAuthStore } from '@/stores';
 import { SidebarItem } from '@/types';
 import { useCallback, useMemo } from 'react';
@@ -16,6 +16,7 @@ export default function Layout() {
   const { isDarkMode, toggleTheme } = useTheme();
   const { isAuthenticated, logout } = useAuthStore();
   const { navigateTo } = useRouteNavigation();
+  const { canAccessRoute } = useAcl();
 
   const handleLogout = useCallback(async () => {
     const response = await logout();
@@ -39,11 +40,13 @@ export default function Layout() {
         title: baseRoutes.demo.label as string,
         path: baseRoutes.demo.path as string,
       },
-      {
+    ];
+    if (canAccessRoute(componentsRoutes.root.name as string)) {
+      items.push({
         title: componentsRoutes.root.label as string,
         path: componentsRoutes.root.path as string,
-      },
-    ];
+      });
+    }
     if (!isAuthenticated) {
       items.push({
         title: authRoutes.root.label as string,
@@ -59,8 +62,7 @@ export default function Layout() {
         ],
       });
     }
-    if (isAuthenticated) {
-      //TODO add acl
+    if (isAuthenticated && canAccessRoute(panelRoutes.root.name as string)) {
       items.push({
         title: panelRoutes.root.label as string,
         path: panelRoutes.root.path as string,
@@ -82,7 +84,7 @@ export default function Layout() {
       });
     }
     return items;
-  }, [handleLogout, isAuthenticated, isDarkMode, toggleTheme]);
+  }, [canAccessRoute, handleLogout, isAuthenticated, isDarkMode, toggleTheme]);
 
   return (
     <>
