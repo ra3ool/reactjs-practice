@@ -38,7 +38,9 @@ export default function PanelLayout() {
               >
                 profile
               </DropdownItem>
-              {canAccessRoute('invoices-list') && (
+              {canAccessRoute(
+                (panelRoutes.invoices as RouteGroup)?.all?.name as string,
+              ) && (
                 <DropdownItem
                   onClick={() =>
                     navigateTo(

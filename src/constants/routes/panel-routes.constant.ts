@@ -30,11 +30,11 @@ const panelRoutes: RouteGroup = Object.freeze({
   },
   invoices: createRoutesGroup('invoices', {
     all: {
-      label: 'All invoice',
+      label: 'Invoices',
       name: 'invoices-list',
       path: '/',
       meta: {
-        title: 'All invoice',
+        title: 'Invoices',
         description: 'all user invoice',
         breadcrumb: true,
       },
