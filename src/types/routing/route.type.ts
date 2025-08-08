@@ -48,5 +48,6 @@ export interface RouteWrapperProps {
 
 export interface ProtectedRouteProps {
   children: ReactNode;
-  meta?: RouteMeta;
+  routMeta?: RouteMeta;
+  routeName?: string;
 }

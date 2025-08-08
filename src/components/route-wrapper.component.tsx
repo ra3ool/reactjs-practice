@@ -24,7 +24,9 @@ export default function RouteWrapper({ route, children }: RouteWrapperProps) {
 
   return (
     <Suspense fallback={<Loading />}>
-      <ProtectedRoute meta={route.meta}>{children}</ProtectedRoute>
+      <ProtectedRoute routeName={route.name} routMeta={route.meta}>
+        {children}
+      </ProtectedRoute>
     </Suspense>
   );
 }
