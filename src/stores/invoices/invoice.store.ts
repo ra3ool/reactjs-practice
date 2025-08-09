@@ -1,53 +1,17 @@
+import { fetchInvoices } from '@/services';
+import { InvoiceStore } from '@/types';
 import { create } from 'zustand';
-
-export type Invoice = {
-  id: string;
-  customer: string;
-  amount: number;
-  status: 'paid' | 'unpaid' | 'overdue';
-  date: string;
-};
-
-type InvoiceStore = {
-  invoices: Invoice[];
-  currentInvoice: Invoice | null;
-  isLoading: boolean;
-
-  // Actions
-  fetchInvoices: () => Promise<void>;
-  getInvoiceById: (id: string) => Promise<void>;
-  createInvoice: (invoice: Invoice) => Promise<void>;
-  updateInvoice: (invoice: Invoice) => Promise<void>;
-  deleteInvoice: (id: string) => Promise<void>;
-  clearCurrentInvoice: () => void;
-};
 
 export const useInvoiceStore = create<InvoiceStore>((set, get) => ({
   invoices: [],
+  meta: {},
   currentInvoice: null,
   isLoading: false,
 
-  fetchInvoices: async () => {
+  fetchInvoices: async (payload) => {
     set({ isLoading: true });
-    // Replace with API call
-    await new Promise((res) => setTimeout(res, 500));
-    const mockData: Invoice[] = [
-      {
-        id: '1',
-        customer: 'Alice',
-        amount: 200,
-        status: 'paid',
-        date: '2025-08-01',
-      },
-      {
-        id: '2',
-        customer: 'Bob',
-        amount: 450,
-        status: 'unpaid',
-        date: '2025-08-02',
-      },
-    ];
-    set({ invoices: mockData, isLoading: false });
+    const { data, meta } = await fetchInvoices(payload);
+    set({ invoices: data, meta, isLoading: false });
   },
 
   getInvoiceById: async (id) => {
@@ -58,7 +22,6 @@ export const useInvoiceStore = create<InvoiceStore>((set, get) => ({
   },
 
   createInvoice: async (invoice) => {
-    // Simulate server response
     await new Promise((res) => setTimeout(res, 300));
     set((state) => ({
       invoices: [...state.invoices, invoice],

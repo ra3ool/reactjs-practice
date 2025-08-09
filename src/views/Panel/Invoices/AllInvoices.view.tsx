@@ -5,7 +5,7 @@ export default function AllInvoicesView() {
   const { invoices, fetchInvoices, isLoading } = useInvoiceStore();
 
   useEffect(() => {
-    fetchInvoices();
+    fetchInvoices({});
   }, [fetchInvoices]);
 
   return (
@@ -17,8 +17,8 @@ export default function AllInvoicesView() {
         <ul className="space-y-2">
           {invoices.map((invoice) => (
             <li key={invoice.id} className="p-4 rounded bg-bg-primary shadow">
-              <strong>{invoice.customer}</strong> – ${invoice.amount} (
-              {invoice.status})
+              <strong>{invoice.customer?.username}</strong> – ${invoice.amount}{' '}
+              - ({invoice.status})
             </li>
           ))}
         </ul>
