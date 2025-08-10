@@ -1,8 +1,8 @@
-import { CustomTableProps, TableHeader, TableRow, TableCell } from '@/types';
 import { Loading, NothingFound, Pagination } from '@/components';
+import { paginateData, sortData } from '@/helpers';
+import { CustomTableProps, TableCell, TableHeader, TableRow } from '@/types';
 import PropTypes from 'prop-types';
-import { ReactNode, useState, useCallback } from 'react';
-import { sortData, paginateData } from '@/helpers';
+import { ReactNode, useCallback, useState } from 'react';
 
 const TableCellRender = ({
   header,
@@ -71,7 +71,10 @@ export default function CustomTable(props: CustomTableProps) {
                   sort &&
                   'cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700'
                 }`}
-                {...(sort && { onClick: () => handleSort(header.key) })}
+                {...(sort &&
+                  header.sort !== false && {
+                    onClick: () => handleSort(header.key),
+                  })}
                 role="columnheader"
               >
                 <div className="flex justify-between">
@@ -87,7 +90,7 @@ export default function CustomTable(props: CustomTableProps) {
           </tr>
         </thead>
         <tbody>
-          {loading ? (
+          {loading && data.length === 0 ? (
             <tr role="row">
               <td
                 className="text-center p-2 text-gray-900 dark:text-gray-100"

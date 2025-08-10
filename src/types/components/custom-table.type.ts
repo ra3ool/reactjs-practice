@@ -3,9 +3,12 @@ import { ReactNode } from 'react';
 export type TableHeader = {
   key: string;
   value: string;
+  sort?: boolean;
   render?: (row: TableRow) => ReactNode;
 };
-export type TableRow = { id: string | number; [key: string]: unknown };
+export type TableRow<T = Record<string, unknown>> = {
+  id: string | number;
+} & T;
 export type TableCell = string | number;
 
 export interface CustomTableProps {
