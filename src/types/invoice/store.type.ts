@@ -1,9 +1,10 @@
 export interface Invoice {
-  id: string;
+  id: string | number;
   customer: string;
   amount: number;
   status: 'paid' | 'unpaid' | 'overdue';
   date: string;
+  [key: string]: unknown;
 }
 
 export interface InvoiceStore {
@@ -18,4 +19,5 @@ export interface InvoiceStore {
   updateInvoice: (invoice: Invoice) => Promise<void>;
   deleteInvoice: (id: string) => Promise<void>;
   clearCurrentInvoice: () => void;
+  clearInvoiceList: () => void;
 }

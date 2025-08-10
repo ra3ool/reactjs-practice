@@ -47,4 +47,8 @@ export const useInvoiceStore = create<InvoiceStore>((set, get) => ({
   clearCurrentInvoice: () => {
     set({ currentInvoice: null });
   },
+
+  clearInvoiceList: () => {
+    set({ invoices: [] });
+  },
 }));
