@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 export default function Layout() {
   const { isDarkMode } = useTheme();
   const sideBarItems = useSidebarItems();
-  
+
   return (
     <>
       <main className="mail-layout min-h-full flex p-6 gap-6">

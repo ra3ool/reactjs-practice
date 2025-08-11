@@ -1,4 +1,4 @@
-import { fetchInvoices } from '@/services';
+import { invoiceService } from '@/services';
 import { InvoiceStore } from '@/types';
 import { create } from 'zustand';
 
@@ -10,7 +10,7 @@ export const useInvoiceStore = create<InvoiceStore>((set, get) => ({
 
   fetchInvoices: async (payload) => {
     set({ isLoading: true });
-    const { data, meta } = await fetchInvoices(payload);
+    const { data, meta } = await invoiceService.fetchInvoices(payload);
     set({ invoices: data, meta, isLoading: false });
   },
 
@@ -49,6 +49,6 @@ export const useInvoiceStore = create<InvoiceStore>((set, get) => ({
   },
 
   clearInvoiceList: () => {
-    set({ invoices: [] });
+    set({ invoices: [], meta: {} });
   },
 }));

@@ -21,7 +21,7 @@ export function useSidebarItems(): SidebarItem[] {
     const response = await logout();
     if (response.status) {
       toast.success(response.message);
-      navigateTo(baseRoutes.root.name as string, { replace: true });
+      navigateTo(baseRoutes?.home?.name as string, { replace: true });
     }
   }, [logout, navigateTo]);
 
@@ -41,52 +41,52 @@ export function useSidebarItems(): SidebarItem[] {
       },
     ];
 
-    if (canAccessRoute(componentsRoutes.root.name as string)) {
+    if (canAccessRoute(componentsRoutes?.root?.name as string)) {
       items.push({
-        title: componentsRoutes.root.label as string,
-        path: componentsRoutes.root.path as string,
+        title: componentsRoutes?.root?.label as string,
+        path: componentsRoutes?.root?.path as string,
       });
     }
 
     if (!isAuthenticated) {
       items.push({
-        title: authRoutes.root.label as string,
+        title: authRoutes?.root?.label as string,
         group: [
           {
-            title: authRoutes.login.label as string,
-            path: authRoutes.login.path as string,
+            title: authRoutes?.login?.label as string,
+            path: authRoutes?.login?.path as string,
           },
           {
-            title: authRoutes.register.label as string,
-            path: authRoutes.register.path as string,
+            title: authRoutes?.register?.label as string,
+            path: authRoutes?.register?.path as string,
           },
         ],
       });
     }
 
-    if (isAuthenticated && canAccessRoute(panelRoutes.root.name as string)) {
+    if (isAuthenticated && canAccessRoute(panelRoutes?.root?.name as string)) {
       if (
         canAccessRoute(
-          (panelRoutes.invoices as RouteGroup)?.all?.name as string,
+          (panelRoutes?.invoices as RouteGroup)?.all?.name as string,
         )
       ) {
         items.push({
-          title: panelRoutes.root.label as string,
+          title: panelRoutes?.root?.label as string,
           group: [
             {
-              title: panelRoutes.root.label as string,
-              path: panelRoutes.root.path as string,
+              title: panelRoutes?.root?.label as string,
+              path: panelRoutes?.root?.path as string,
             },
             {
-              title: (panelRoutes.invoices as RouteGroup)?.all?.label as string,
-              path: (panelRoutes.invoices as RouteGroup)?.all?.path as string,
+              title: (panelRoutes?.invoices as RouteGroup)?.all?.label as string,
+              path: (panelRoutes?.invoices as RouteGroup)?.all?.path as string,
             },
           ],
         });
       } else {
         items.push({
-          title: panelRoutes.root.label as string,
-          path: panelRoutes.root.path as string,
+          title: panelRoutes?.root?.label as string,
+          path: panelRoutes?.root?.path as string,
         });
       }
     }

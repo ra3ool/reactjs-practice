@@ -17,7 +17,7 @@ export default function ProtectedRoute({
   if (routMeta?.requiresAuth && !isAuthenticated) {
     return (
       <Navigate
-        to={authRoutes.login.path as string}
+        to={authRoutes?.login?.path as string}
         // state={{ from: currentPath }} //TODO work with states later
         replace
       />
@@ -31,7 +31,7 @@ export default function ProtectedRoute({
 
   if (
     isAuthenticated &&
-    routeName?.startsWith(authRoutes.root.name as string)
+    routeName?.startsWith(authRoutes?.root?.name as string)
   ) {
     return <Navigate to="/" replace />;
   }

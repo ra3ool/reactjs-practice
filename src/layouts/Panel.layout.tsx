@@ -31,25 +31,27 @@ export default function PanelLayout() {
               >
                 <DropdownItem
                   onClick={() =>
-                    navigateTo(panelRoutes.root.path as string, { by: 'path' })
+                    navigateTo(panelRoutes?.root.path as string, { by: 'path' })
                   }
                   className="cursor-pointer"
                 >
                   panel
                 </DropdownItem>
                 <DropdownItem
-                  onClick={() => navigateTo(panelRoutes.profile.name as string)}
+                  onClick={() =>
+                    navigateTo(panelRoutes?.profile.name as string)
+                  }
                   className="cursor-pointer"
                 >
                   profile
                 </DropdownItem>
                 {canAccessRoute(
-                  (panelRoutes.invoices as RouteGroup)?.all?.name as string,
+                  (panelRoutes?.invoices as RouteGroup)?.all?.name as string,
                 ) && (
                   <DropdownItem
                     onClick={() =>
                       navigateTo(
-                        (panelRoutes.invoices as RouteGroup)?.all
+                        (panelRoutes?.invoices as RouteGroup)?.all
                           ?.name as string,
                       )
                     }

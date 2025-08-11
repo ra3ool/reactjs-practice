@@ -118,7 +118,7 @@ function LoginView() {
               </div>
 
               <Link
-                to={authRoutes.forgotPassword?.path as string}
+                to={authRoutes?.forgotPassword?.path as string}
                 className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
                 aria-label="Forgot your password?"
               >
@@ -141,7 +141,7 @@ function LoginView() {
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
             Don&apos;t have an account?{' '}
             <Link
-              to={authRoutes.register.path as string}
+              to={authRoutes?.register?.path as string}
               className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
               aria-label="Navigate to sign up page"
             >

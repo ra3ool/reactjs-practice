@@ -6,28 +6,28 @@ import { Header } from '@/components';
 
 const sideBarItems: SidebarItem[] = [
   {
-    title: componentsRoutes.input.label as string,
-    path: componentsRoutes.input.path as string,
+    title: componentsRoutes?.input?.label as string,
+    path: componentsRoutes?.input?.path as string,
   },
   {
-    title: componentsRoutes.button.label as string,
-    path: componentsRoutes.button.path as string,
+    title: componentsRoutes?.button?.label as string,
+    path: componentsRoutes?.button?.path as string,
   },
   {
-    title: componentsRoutes.table.label as string,
-    path: componentsRoutes.table.path as string,
+    title: componentsRoutes?.table?.label as string,
+    path: componentsRoutes?.table?.path as string,
   },
   {
-    title: componentsRoutes.toggle.label as string,
-    path: componentsRoutes.toggle.path as string,
+    title: componentsRoutes?.toggle?.label as string,
+    path: componentsRoutes?.toggle?.path as string,
   },
   {
-    title: componentsRoutes.dropdown.label as string,
-    path: componentsRoutes.dropdown.path as string,
+    title: componentsRoutes?.dropdown?.label as string,
+    path: componentsRoutes?.dropdown?.path as string,
   },
   {
-    title: componentsRoutes.expansionPanel.label as string,
-    path: componentsRoutes.expansionPanel.path as string,
+    title: componentsRoutes?.expansionPanel?.label as string,
+    path: componentsRoutes?.expansionPanel?.path as string,
   },
 ];
 

@@ -139,7 +139,7 @@ function RegisterView() {
                 >
                   I agree to the {/*TODO add right to left modal later*/}
                   <Link
-                    to={authRoutes.terms?.path as string}
+                    to={authRoutes?.terms?.path as string}
                     className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
                     aria-label="View terms of service"
                   >
@@ -147,7 +147,7 @@ function RegisterView() {
                   </Link>{' '}
                   and
                   <Link
-                    to={authRoutes.privacy?.path as string}
+                    to={authRoutes?.privacy?.path as string}
                     className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
                     aria-label="View privacy policy"
                   >
@@ -177,7 +177,7 @@ function RegisterView() {
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
             Already have an account?{' '}
             <Link
-              to={authRoutes.login.path as string}
+              to={authRoutes?.login?.path as string}
               className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
               aria-label="Navigate to sign in page"
             >

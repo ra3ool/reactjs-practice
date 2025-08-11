@@ -1,10 +1,19 @@
+import { User } from '../user';
+
 export interface Invoice {
-  id: string | number;
-  customer: string;
+  id: number;
+  customer: User;
   amount: number;
-  status: 'paid' | 'unpaid' | 'overdue';
   date: string;
+  reference: string;
+  items: InvoiceItems[];
   [key: string]: unknown;
+}
+
+export interface InvoiceItems {
+  id: number;
+  qt: number;
+  sku: string;
 }
 
 export interface InvoiceStore {
@@ -14,10 +23,10 @@ export interface InvoiceStore {
   isLoading: boolean;
 
   fetchInvoices: (data: object) => Promise<void>;
-  getInvoiceById: (id: string) => Promise<void>;
+  getInvoiceById: (id: number) => Promise<void>;
   createInvoice: (invoice: Invoice) => Promise<void>;
   updateInvoice: (invoice: Invoice) => Promise<void>;
-  deleteInvoice: (id: string) => Promise<void>;
+  deleteInvoice: (id: number) => Promise<void>;
   clearCurrentInvoice: () => void;
   clearInvoiceList: () => void;
 }
