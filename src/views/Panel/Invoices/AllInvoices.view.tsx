@@ -1,7 +1,7 @@
-import { CustomTable } from '@/components';
+import { CustomTable, Pagination } from '@/components';
 import { useInvoiceStore } from '@/stores';
 import { TableHeader } from '@/types';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 const tableHeaders: TableHeader[] = [
   {
@@ -43,10 +43,13 @@ const tableHeaders: TableHeader[] = [
 ];
 
 export default function AllInvoicesView() {
-  const { invoices, fetchInvoices, isLoading } = useInvoiceStore();
+  const { invoices, meta, fetchInvoices, isLoading } = useInvoiceStore();
+
+  const [currentPage, setCurrentPage] = useState(1); //TODO complete this
+  console.log('currentPage :', currentPage);
 
   useEffect(() => {
-    fetchInvoices({});
+    fetchInvoices({}); //TODO add react query
   }, [fetchInvoices]);
 
   return (
@@ -58,6 +61,12 @@ export default function AllInvoicesView() {
         sort
         loading={isLoading}
         emptyText="No invoices found."
+      />
+      <Pagination
+        totalItems={meta?.pagination?.total}
+        itemsPerPage={meta?.pagination?.limit}
+        currentPage={meta?.pagination?.page}
+        onPageChange={(page) => setCurrentPage(page)}
       />
     </div>
   );

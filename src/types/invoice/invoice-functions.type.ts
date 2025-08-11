@@ -1,11 +1,18 @@
 import { Invoice } from './store.type';
 
 export interface invoiceRepositoryTypes {
-  fetchInvoices: (payload: FetchInvoicePayload) => Promise<Invoice[]>;
+  fetchInvoices: (
+    payload?: FetchInvoicePayload,
+  ) => Promise<FetchInvoicesResponse>;
   // getInvoiceById: (payload: GetByIdPayload) => Promise<Invoice>;
   // createInvoice: (payload: createInvoice) => Promise<Invoice>;
   // updateInvoice: (payload: updateInvoice) => Promise<Invoice>;
   // deleteInvoice: (payload: deleteInvoice) => Promise<Invoice>;
+}
+
+export interface FetchInvoicesResponse {
+  data: Invoice[];
+  meta: object;
 }
 
 export interface FetchInvoicePayload {
