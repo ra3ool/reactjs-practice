@@ -2,11 +2,19 @@ import { User } from '../user';
 
 export interface InvoiceStore {
   invoices: Invoice[];
-  meta: object;
+  meta: {
+    date?: string;
+    pagination?: {
+      limit: number;
+      page: number;
+      total: number;
+      totalPage: number;
+    };
+  };
   currentInvoice: Invoice | null;
   isLoading: boolean;
 
-  fetchInvoices: (data: object) => Promise<void>;
+  fetchInvoices: (data?: object) => Promise<void>;
   getInvoiceById: (id: number) => Promise<void>;
   createInvoice: (invoice: Invoice) => Promise<void>;
   updateInvoice: (invoice: Invoice) => Promise<void>;

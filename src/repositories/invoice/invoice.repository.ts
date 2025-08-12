@@ -1,10 +1,10 @@
 import { api } from '@/clients';
 import { invoiceRepositoryTypes } from '@/types';
 
-const invoiceRepository: invoiceRepositoryTypes = {
+export const invoiceRepository: invoiceRepositoryTypes = {
   fetchInvoices: async (payload) => {
     const response = await api.get('invoices', {
-      data: payload,
+      params: payload,
     });
     return response.data;
   },
@@ -29,5 +29,3 @@ const invoiceRepository: invoiceRepositoryTypes = {
   //   return response.data;
   // },
 };
-
-export { invoiceRepository };

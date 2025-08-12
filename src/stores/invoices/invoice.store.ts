@@ -10,8 +10,10 @@ export const useInvoiceStore = create<InvoiceStore>((set, get) => ({
 
   fetchInvoices: async (payload) => {
     set({ isLoading: true });
-    const { data, meta } = await invoiceService.fetchInvoices(payload);
-    set({ invoices: data, meta, isLoading: false });
+    const { data: invoices, meta } = await invoiceService.fetchInvoices(
+      payload,
+    );
+    set({ invoices, meta, isLoading: false });
   },
 
   getInvoiceById: async (id) => {

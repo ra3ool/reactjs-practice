@@ -46,11 +46,13 @@ export default function AllInvoicesView() {
   const { invoices, meta, fetchInvoices, isLoading } = useInvoiceStore();
 
   const [currentPage, setCurrentPage] = useState(1); //TODO complete this
-  console.log('currentPage :', currentPage);
 
   useEffect(() => {
-    fetchInvoices({}); //TODO add react query
-  }, [fetchInvoices]);
+    fetchInvoices({
+      limit: 3, //TODO implement filters
+      page: currentPage,
+    }); //TODO add react query
+  }, [currentPage, fetchInvoices]);
 
   return (
     <div className="p-4">
@@ -63,9 +65,9 @@ export default function AllInvoicesView() {
         emptyText="No invoices found."
       />
       <Pagination
-        totalItems={meta?.pagination?.total}
-        itemsPerPage={meta?.pagination?.limit}
-        currentPage={meta?.pagination?.page}
+        totalItems={meta?.pagination?.total || 0}
+        itemsPerPage={meta?.pagination?.limit || 10}
+        currentPage={currentPage}
         onPageChange={(page) => setCurrentPage(page)}
       />
     </div>
