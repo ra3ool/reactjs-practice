@@ -5,10 +5,9 @@ import {
   Pagination,
 } from '@/components';
 import { invoiceService } from '@/services';
-import { useInvoiceStore } from '@/stores';
 import { FetchInvoicesResponse, TableHeader } from '@/types';
 import { useQuery } from '@tanstack/react-query';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 
 const tableHeaders: TableHeader[] = [
   {
@@ -48,123 +47,105 @@ const tableHeaders: TableHeader[] = [
 ];
 
 export default function AllInvoicesView() {
-  const { invoices, meta, isLoading, clearInvoiceList } = useInvoiceStore();
-
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [filters, setFilters] = useState({
+    minAmount: '',
+    maxAmount: '',
+    startDate: '',
+    endDate: '',
+  });
 
-  // Applied filters used by query
-  const [minAmount, setMinAmount] = useState<string>('');
-  const [maxAmount, setMaxAmount] = useState<string>('');
-  const [startDate, setStartDate] = useState<string>('');
-  const [endDate, setEndDate] = useState<string>('');
-
-  // Form inputs (pending changes until submit)
-  const [minAmountInput, setMinAmountInput] = useState<string>('');
-  const [maxAmountInput, setMaxAmountInput] = useState<string>('');
-  const [startDateInput, setStartDateInput] = useState<string>('');
-  const [endDateInput, setEndDateInput] = useState<string>('');
-  const [limitInput, setLimitInput] = useState<string>(String(limit));
+  // Form inputs (separate from applied filters)
+  const [formInputs, setFormInputs] = useState({
+    ...filters,
+    limit: String(limit),
+  });
 
   const applyFilters = () => {
     setCurrentPage(1);
-    setStartDate(startDateInput || '');
-    setEndDate(endDateInput || '');
-    setMinAmount(minAmountInput);
-    setMaxAmount(maxAmountInput);
+    setFilters({
+      minAmount: formInputs.minAmount,
+      maxAmount: formInputs.maxAmount,
+      startDate: formInputs.startDate,
+      endDate: formInputs.endDate,
+    });
 
-    const parsedLimit = Number(limitInput);
+    const parsedLimit = Number(formInputs.limit);
     if (!Number.isNaN(parsedLimit) && parsedLimit > 0) {
       setLimit(parsedLimit);
     }
   };
 
-  // Build query params memoized
+  const updateFormInput = (key: string, value: string) => {
+    setFormInputs((prev) => ({ ...prev, [key]: value }));
+  };
+
   const queryParams = useMemo(
     () => ({
       page: currentPage,
       limit,
-      startDate: startDate || undefined,
-      endDate: endDate || undefined,
-      minAmount: minAmount ? Number(minAmount) : undefined,
-      maxAmount: maxAmount ? Number(maxAmount) : undefined,
+      startDate: filters.startDate || undefined,
+      endDate: filters.endDate || undefined,
+      minAmount: filters.minAmount ? Number(filters.minAmount) : undefined,
+      maxAmount: filters.maxAmount ? Number(filters.maxAmount) : undefined,
     }),
-    [currentPage, limit, startDate, endDate, minAmount, maxAmount],
+    [currentPage, limit, filters],
   );
 
-  // React Query fetch
-  const { data, isLoading: isQueryLoading } = useQuery<
-    FetchInvoicesResponse,
-    Error
-  >({
+  const { data, isLoading } = useQuery<FetchInvoicesResponse, Error>({
     queryKey: ['invoices', queryParams],
-    queryFn: () => invoiceService.fetchInvoices(queryParams),
+    queryFn: () => invoiceService.fetchInvoices(queryParams), //TODO use store
     staleTime: 60_000,
     placeholderData: (previousData) => previousData,
   });
 
-  // Sync query loading state to store
-  useEffect(() => {
-    useInvoiceStore.setState({ isLoading: isQueryLoading });
-  }, [isQueryLoading]);
-
-  // Sync query result into store for component consumption and other views
-  useEffect(() => {
-    if (data?.data) {
-      useInvoiceStore.setState({ invoices: data.data, meta: data.meta });
-    } else {
-      clearInvoiceList();
-    }
-  }, [data, clearInvoiceList]);
-
-  const totalItems =
-    data?.meta?.pagination?.total || meta?.pagination?.total || 0;
+  const invoices = data?.data || [];
+  const totalItems = data?.meta?.pagination?.total || 0;
   const itemsPerPage = data?.meta?.pagination?.limit || limit;
 
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">Invoices</h2>
 
-      <div className="mb-2 grid grid-cols-1 md:grid-cols-5 gap-3">
+      <div className="mb-2 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 gap-3">
         <CustomInput
           name="startDate"
           label="Start Date"
           type="date"
-          value={startDateInput}
-          onChange={setStartDateInput}
+          value={formInputs.startDate}
+          onChange={(value) => updateFormInput('startDate', value)}
         />
         <CustomInput
           name="endDate"
           label="End Date"
           type="date"
-          value={endDateInput}
-          onChange={setEndDateInput}
+          value={formInputs.endDate}
+          onChange={(value) => updateFormInput('endDate', value)}
         />
         <CustomInput
           name="minAmount"
           label="Min Amount"
           type="number"
-          value={minAmountInput}
-          onChange={setMinAmountInput}
+          value={formInputs.minAmount}
+          onChange={(value) => updateFormInput('minAmount', value)}
         />
         <CustomInput
           name="maxAmount"
           label="Max Amount"
           type="number"
-          value={maxAmountInput}
-          onChange={setMaxAmountInput}
+          value={formInputs.maxAmount}
+          onChange={(value) => updateFormInput('maxAmount', value)}
         />
         <CustomInput
           name="limit"
           label="Items per page"
           type="number"
-          value={limitInput}
-          onChange={setLimitInput}
+          value={formInputs.limit}
+          onChange={(value) => updateFormInput('limit', value)}
         />
-      </div>
 
-      <div className="mb-4 flex justify-end">
-        <CustomButton onClick={applyFilters} className="w-auto">
+        <CustomButton onClick={applyFilters} className="h-11 self-end">
           Apply Filters
         </CustomButton>
       </div>
@@ -173,7 +154,7 @@ export default function AllInvoicesView() {
         headers={tableHeaders}
         data={invoices}
         sort
-        loading={isLoading || isQueryLoading}
+        loading={isLoading}
         emptyText="No invoices found."
       />
 
@@ -182,7 +163,7 @@ export default function AllInvoicesView() {
           totalItems={totalItems}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
-          onPageChange={(page) => setCurrentPage(page)}
+          onPageChange={setCurrentPage}
         />
       </div>
     </div>
