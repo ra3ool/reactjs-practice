@@ -12,7 +12,7 @@ export default memo(function Pagination({
   const paginationRange = usePagination({
     currentPage,
     totalItems,
-    itemsPerPage,
+    itemsPerPage, //TODO add change itemsPerPage
   });
 
   if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {

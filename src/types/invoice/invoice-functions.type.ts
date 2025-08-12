@@ -16,7 +16,12 @@ export interface FetchInvoicesResponse {
 }
 
 export interface FetchInvoicePayload {
+  page?: number;
   limit?: number;
+  startDate?: string; // ISO date or YYYY-MM-DD
+  endDate?: string; // ISO date or YYYY-MM-DD
+  minAmount?: number;
+  maxAmount?: number;
 }
 
 // export interface GetByIdPayload {
