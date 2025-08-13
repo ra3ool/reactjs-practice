@@ -1,94 +1,142 @@
-import { cookieStorage } from '@/services';
-import { useAuthStore } from '@/stores/auth/auth.store';
 import { authRepository } from '@/repositories';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { authService, cookieStorage } from '@/services';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from 'axios';
 
-const api = axios.create({
+/**
+ * Extended Axios config to track retry state
+ */
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  _retry?: boolean;
+}
+
+/**
+ * Create API instance
+ */
+const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_AUTH_BASE_URL,
-  timeout: 10000, // 10 second timeout
+  timeout: 10000,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
 });
 
-// Request interceptor
+// =========================================================
+// Refresh Token Queue (prevents multiple refresh requests)
+// =========================================================
+let isRefreshing = false;
+let refreshSubscribers: ((token: string) => void)[] = [];
+
+const subscribeTokenRefresh = (cb: (token: string) => void) => {
+  refreshSubscribers.push(cb);
+};
+
+const onTokenRefreshed = (token: string) => {
+  refreshSubscribers.forEach((cb) => cb(token));
+  refreshSubscribers = [];
+};
+
+// =========================================================
+// Request Interceptor: Attach access token
+// =========================================================
 api.interceptors.request.use(
   (config) => {
     const token = cookieStorage.get('accessToken');
-    if (token) {
+    if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(error),
 );
 
-// Response interceptor
+// =========================================================
+// Response Interceptor: Handle errors & token refresh
+// =========================================================
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as AxiosError['config'] & {
-      _retry?: boolean;
-    };
+    const originalRequest = error.config as CustomAxiosRequestConfig;
 
-    // Handle 401 Unauthorized errors
+    // ============================
+    // Handle 401 Unauthorized
+    // ============================
     if (error.response?.status === 401 && !originalRequest?._retry) {
-      if (originalRequest) {
-        originalRequest._retry = true;
+      const refreshToken = cookieStorage.get('refreshToken');
+
+      if (!refreshToken) {
+        authService.logout();
+        return Promise.reject(error);
       }
 
+      if (isRefreshing) {
+        // Wait for ongoing refresh
+        return new Promise((resolve) => {
+          subscribeTokenRefresh((token: string) => {
+            if (originalRequest.headers) {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+            }
+            resolve(api(originalRequest));
+          });
+        });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
       try {
-        const refreshToken = cookieStorage.get('refreshToken');
+        const { accessToken, refreshToken: newRefreshToken } =
+          await authRepository.refreshToken(refreshToken);
 
-        if (!refreshToken) {
-          // No refresh token available, logout user
-          useAuthStore.getState().logout();
-          return Promise.reject(error);
-        }
-
-        // Attempt to refresh the token
-        const response = await authRepository.refreshToken(refreshToken);
-
-        const { accessToken, refreshToken: newRefreshToken } = response;
-
-        // Store new tokens
+        // Store tokens
         cookieStorage.set('accessToken', accessToken, {
-          expires: 1, // 1 day
+          expires: 1,
           secure: true,
           sameSite: 'strict',
         });
 
         if (newRefreshToken) {
           cookieStorage.set('refreshToken', newRefreshToken, {
-            expires: 7, // 7 days
+            expires: 7,
             secure: true,
             sameSite: 'strict',
           });
         }
 
-        // Update authorization header
-        api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        if (originalRequest?.headers) {
-          originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+        // Notify queued requests
+        onTokenRefreshed(accessToken);
+
+        if (originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         }
 
-        // Retry the original request
         return api(originalRequest);
       } catch (refreshError) {
-        // Refresh failed, logout user
-        useAuthStore.getState().logout();
+        authService.logout();
         return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
 
-    // Handle other errors
-    if (error.response?.status === 403) {
-      // Forbidden - user doesn't have permission
-      console.error('Access forbidden:', error.response.data);
-    } else if (error.response?.status && error.response.status >= 500) {
-      // Server errors
-      console.error('Server error:', error.response.data);
-    } else if (!error.response) {
-      // Network errors
+    // ============================
+    // Other Errors
+    // ============================
+    if (error.response) {
+      const status = error.response.status;
+      if (status === 403) {
+        console.error('Forbidden:', error.response.data);
+      } else if (status >= 500) {
+        console.error('Server error:', error.response.data);
+      }
+    } else if (error.code === 'ECONNABORTED') {
+      console.error('Request timeout');
+    } else {
       console.error('Network error:', error.message);
     }
 
