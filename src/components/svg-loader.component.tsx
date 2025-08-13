@@ -1,38 +1,35 @@
 import { SvgLoaderProps } from '@/types';
-import { FC, lazy, memo, Suspense, SVGProps, useMemo } from 'react';
+import { FC, lazy, memo, Suspense, SVGProps } from 'react';
 
-const svgCache = new Map<
-  string,
-  Promise<{ default: FC<SVGProps<SVGSVGElement>> }>
->();
+// Cache stores lazy components
+const svgComponentCache = new Map<string, FC<SVGProps<SVGSVGElement>>>();
 
-// Function to get or create an SVG import promise
-const getSvgComponent = (name: string) => {
-  if (!svgCache.has(name)) {
-    const svgPromise = import(`@/assets/svg/${name}.svg?react`).then(
-      (module) => ({
-        default: module.default as FC<SVGProps<SVGSVGElement>>,
-      }),
-    );
-    svgCache.set(name, svgPromise);
-    return svgPromise;
+// Internal: Creates or returns existing lazy component
+const getLazySvgComponent = (name: string) => {
+  if (!svgComponentCache.has(name)) {
+    const LazyComp = lazy(async () => {
+      const module = await import(`@/assets/svg/${name}.svg?react`);
+      return { default: module.default as FC<SVGProps<SVGSVGElement>> };
+    });
+    svgComponentCache.set(name, LazyComp);
   }
-  return svgCache.get(name)!;
+  return svgComponentCache.get(name)!;
 };
 
-const SvgRenderer = memo(
-  ({
-    name,
-    width = 20,
-    height = 20,
-    color = 'currentColor',
-    className,
-  }: SvgLoaderProps) => {
-    const SvgComponent = useMemo(
-      () => lazy(() => getSvgComponent(name)),
-      [name],
+// Preload function: loads and caches immediately
+const preloadSvg = async (name: string) => {
+  if (!svgComponentCache.has(name)) {
+    const module = await import(`@/assets/svg/${name}.svg?react`);
+    const Comp: FC<SVGProps<SVGSVGElement>> = (props) => (
+      <module.default {...props} />
     );
-    //FIXME think about fix refetching
+    svgComponentCache.set(name, Comp);
+  }
+};
+
+const SvgRenderer: FC<SvgLoaderProps> = memo(
+  ({ name, width = 20, height = 20, color = 'currentColor', className }) => {
+    const SvgComponent = getLazySvgComponent(name);
     return (
       <Suspense fallback={null}>
         <SvgComponent
@@ -46,17 +43,25 @@ const SvgRenderer = memo(
       </Suspense>
     );
   },
-  // Memo comparison to prevent re-renders
-  (prevProps, nextProps) =>
-    prevProps.name === nextProps.name &&
-    prevProps.width === nextProps.width &&
-    prevProps.height === nextProps.height &&
-    prevProps.color === nextProps.color &&
-    prevProps.className === nextProps.className,
+  (prev, next) =>
+    prev.name === next.name &&
+    prev.width === next.width &&
+    prev.height === next.height &&
+    prev.color === next.color &&
+    prev.className === next.className,
 );
 
-const SvgLoader = (props: SvgLoaderProps) => {
-  return <SvgRenderer {...props} />;
-};
+// Extended type for static preload
+interface SvgLoaderComponent extends FC<SvgLoaderProps> {
+  preload: (name: string) => Promise<void>;
+}
 
-export default memo(SvgLoader);
+// Memoize first, then cast safely to SvgLoaderComponent
+const SvgLoader = memo((props: SvgLoaderProps) => (
+  <SvgRenderer {...props} />
+)) as unknown as SvgLoaderComponent;
+
+// Attach the preload method
+SvgLoader.preload = preloadSvg;
+
+export default SvgLoader;

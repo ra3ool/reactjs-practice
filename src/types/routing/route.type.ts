@@ -51,3 +51,11 @@ export interface ProtectedRouteProps {
   routMeta?: RouteMeta;
   routeName?: string;
 }
+
+export interface NavigationOptions {
+  by?: navigateBy;
+  replace?: boolean;
+  state?: Record<string, unknown>;
+  params?: Record<string, string>;
+  query?: Record<string, string>;
+}
