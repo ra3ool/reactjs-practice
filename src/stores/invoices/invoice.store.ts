@@ -3,17 +3,16 @@ import { InvoiceStore } from '@/types';
 import { create } from 'zustand';
 
 export const useInvoiceStore = create<InvoiceStore>((set, get) => ({
-  invoices: [],
+  invoices: [], //TODO remove this
   meta: {},
   currentInvoice: null,
   isLoading: false,
 
   fetchInvoices: async (payload) => {
     set({ isLoading: true });
-    const { data: invoices, meta } = await invoiceService.fetchInvoices(
-      payload,
-    );
-    set({ invoices, meta, isLoading: false });
+    const response = await invoiceService.fetchInvoices(payload);
+    set({ invoices: response.data, meta: response.meta, isLoading: false });
+    return response;
   },
 
   getInvoiceById: async (id) => {

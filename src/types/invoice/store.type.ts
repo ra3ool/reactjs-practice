@@ -1,3 +1,4 @@
+import { FetchInvoicesResponse } from '@/types';
 import { User } from '../user';
 
 export interface InvoiceStore {
@@ -14,7 +15,7 @@ export interface InvoiceStore {
   currentInvoice: Invoice | null;
   isLoading: boolean;
 
-  fetchInvoices: (data?: object) => Promise<void>;
+  fetchInvoices: (data?: object) => Promise<FetchInvoicesResponse>;
   getInvoiceById: (id: number) => Promise<void>;
   createInvoice: (invoice: Invoice) => Promise<void>;
   updateInvoice: (invoice: Invoice) => Promise<void>;

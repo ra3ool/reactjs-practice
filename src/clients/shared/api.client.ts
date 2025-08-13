@@ -1,5 +1,6 @@
 import { authRepository } from '@/repositories';
-import { authService, cookieStorage } from '@/services';
+import { cookieStorage } from '@/services';
+import { useAuthStore } from '@/stores';
 import axios, {
   AxiosError,
   AxiosInstance,
@@ -70,7 +71,7 @@ api.interceptors.response.use(
       const refreshToken = cookieStorage.get('refreshToken');
 
       if (!refreshToken) {
-        authService.logout();
+        useAuthStore.getState().logout();
         return Promise.reject(error);
       }
 
@@ -117,7 +118,7 @@ api.interceptors.response.use(
 
         return api(originalRequest);
       } catch (refreshError) {
-        authService.logout();
+        useAuthStore.getState().logout();
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

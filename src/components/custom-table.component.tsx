@@ -20,6 +20,7 @@ export default function CustomTable(props: CustomTableProps) {
     headers,
     data,
     className,
+    tableClassName,
     rowClassName,
     cellClassName,
     loading,
@@ -57,9 +58,9 @@ export default function CustomTable(props: CustomTableProps) {
   const isEmpty = !data || !data.length;
 
   return (
-    <div className="overflow-x-auto">
+    <div className={`overflow-x-auto ${className}`}>
       <table
-        className={`w-full border-separate border border-gray-300 dark:border-gray-600 text-left ${className}`}
+        className={`w-full border-separate border border-gray-300 dark:border-gray-600 text-left ${tableClassName}`}
         role="table"
       >
         <thead className="text-xs text-gray-900 dark:text-gray-100 uppercase bg-neutral-200 dark:bg-neutral-800">

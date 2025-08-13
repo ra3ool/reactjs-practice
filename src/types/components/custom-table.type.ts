@@ -15,6 +15,7 @@ export interface CustomTableProps {
   headers: TableHeader[];
   data: TableRow[];
   className?: string;
+  tableClassName?: string;
   rowClassName?: string;
   cellClassName?: string;
   onRowClick?: (row: TableRow) => void;

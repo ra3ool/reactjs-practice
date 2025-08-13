@@ -65,7 +65,7 @@ export default function PanelLayout() {
           />
         }
       >
-        <div className="grow-1 px-1 flex flex-col gap-6">
+        <div className="h-full grow-1 px-1 flex flex-col gap-6">
           <Breadcrumb />
           <Outlet />
         </div>

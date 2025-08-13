@@ -45,7 +45,7 @@ export default function ComponentsLayout() {
           activeItemClassName="bg-neutral-200 dark:bg-neutral-700"
         />
       </div>
-      <div className="grow-1 px-1 flex flex-col gap-6">
+      <div className="h-full grow-1 px-1 flex flex-col gap-6">
         <Breadcrumb />
         <Outlet />
       </div>

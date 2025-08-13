@@ -4,7 +4,7 @@ import {
   CustomTable,
   Pagination,
 } from '@/components';
-import { invoiceService } from '@/services';
+import { useInvoiceStore } from '@/stores';
 import { FetchInvoicesResponse, TableHeader } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import { ReactNode, useMemo, useState } from 'react';
@@ -93,9 +93,10 @@ export default function AllInvoicesView() {
     [currentPage, limit, filters],
   );
 
+  const fetchInvoices = useInvoiceStore((state) => state.fetchInvoices);
   const { data, isLoading } = useQuery<FetchInvoicesResponse, Error>({
     queryKey: ['invoices', queryParams],
-    queryFn: () => invoiceService.fetchInvoices(queryParams), //TODO use store
+    queryFn: () => fetchInvoices(queryParams),
     staleTime: 60_000,
     placeholderData: (previousData) => previousData,
   });
@@ -105,7 +106,7 @@ export default function AllInvoicesView() {
   const itemsPerPage = data?.meta?.pagination?.limit || limit;
 
   return (
-    <div className="p-4">
+    <div className="h-full flex flex-col">
       <h2 className="text-2xl font-bold mb-4">Invoices</h2>
 
       <div className="mb-2 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 gap-3">
@@ -156,6 +157,7 @@ export default function AllInvoicesView() {
         sort
         loading={isLoading}
         emptyText="No invoices found."
+        className="grow w-full overflow-auto"
       />
 
       <div className="mt-3">
