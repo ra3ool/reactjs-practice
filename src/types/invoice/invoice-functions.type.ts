@@ -1,4 +1,4 @@
-import { Invoice, InvoiceStore } from './store.type';
+import { Invoice } from './store.type';
 
 export interface invoiceRepositoryTypes {
   fetchInvoices: (
@@ -12,7 +12,15 @@ export interface invoiceRepositoryTypes {
 
 export interface FetchInvoicesResponse {
   data: Invoice[];
-  meta: InvoiceStore['meta'];
+  meta: {
+    date?: string;
+    pagination?: {
+      limit: number;
+      page: number;
+      total: number;
+      totalPage: number;
+    };
+  };
 }
 
 export interface FetchInvoicePayload {

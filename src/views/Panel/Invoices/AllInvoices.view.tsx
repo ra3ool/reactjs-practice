@@ -95,20 +95,24 @@ export default function AllInvoicesView() {
     [currentPage, limit, filters],
   );
 
+  // use selector (getting store function) - for React Query
   const fetchInvoices = useInvoiceStore((state) => state.fetchInvoices);
-  const { data, isLoading } = useQuery<FetchInvoicesResponse, Error>({
+  const { data, isLoading, isFetching } = useQuery<
+    FetchInvoicesResponse,
+    Error
+  >({
     queryKey: ['invoices', queryParams],
     queryFn: () => fetchInvoices(queryParams),
     staleTime: 60_000,
-    placeholderData: (previousData) => previousData,
   });
 
   const invoices = data?.data || [];
   const totalItems = data?.meta?.pagination?.total || 0;
   const itemsPerPage = data?.meta?.pagination?.limit || limit;
 
+  // use getState (getting store function) - for fire-and-forget action
   const goToInvoiceDetails = (invoice: unknown) => {
-    useInvoiceStore.getState().currentInvoice = invoice as Invoice;
+    useInvoiceStore.getState().setCurrentInvoice(invoice as Invoice);
     navigateTo('get-invoice', {
       params: { id: (invoice as Invoice).id.toString() },
     });
@@ -155,7 +159,11 @@ export default function AllInvoicesView() {
           onChange={(value) => updateFormInput('limit', value)}
         />
 
-        <CustomButton onClick={applyFilters} className="h-11 self-end">
+        <CustomButton
+          onClick={applyFilters}
+          loading={isLoading || isFetching}
+          className="h-11 self-end"
+        >
           Apply Filters
         </CustomButton>
       </div>

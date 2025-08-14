@@ -1,55 +1,57 @@
 import { invoiceService } from '@/services';
-import { InvoiceStore } from '@/types';
+import { Invoice, InvoiceStore } from '@/types';
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
-export const useInvoiceStore = create<InvoiceStore>((set, get) => ({
-  invoices: [], //TODO remove this
-  meta: {},
-  currentInvoice: null,
-  isLoading: false,
+export const useInvoiceStore = create<InvoiceStore>()(
+  persist(
+    (set) => ({
+      currentInvoice: null,
 
-  fetchInvoices: async (payload) => {
-    set({ isLoading: true });
-    const response = await invoiceService.fetchInvoices(payload);
-    set({ invoices: response.data, meta: response.meta, isLoading: false });
-    return response;
-  },
+      fetchInvoices: async (payload) => {
+        const response = await invoiceService.fetchInvoices(payload);
+        return response;
+      },
 
-  getInvoiceById: async (id) => {
-    set({ isLoading: true });
-    await new Promise((res) => setTimeout(res, 300));
-    const found = get().invoices.find((inv) => inv.id === id) ?? null;
-    set({ currentInvoice: found, isLoading: false });
-  },
+      // update this later
+      getInvoiceById: async (id) => {
+        await new Promise((res) => setTimeout(res, 300));
+        console.log('id :', id);
+        set({ currentInvoice: {} as Invoice });
+      },
 
-  createInvoice: async (invoice) => {
-    await new Promise((res) => setTimeout(res, 300));
-    set((state) => ({
-      invoices: [...state.invoices, invoice],
-    }));
-  },
+      // update this later
+      createInvoice: async (invoice) => {
+        await new Promise((res) => setTimeout(res, 300));
+        console.log('invoice :', invoice);
+      },
 
-  updateInvoice: async (invoice) => {
-    await new Promise((res) => setTimeout(res, 300));
-    set((state) => ({
-      invoices: state.invoices.map((inv) =>
-        inv.id === invoice.id ? invoice : inv,
-      ),
-    }));
-  },
+      // update this later
+      updateInvoice: async (invoice) => {
+        await new Promise((res) => setTimeout(res, 300));
+        console.log('invoice :', invoice);
+      },
 
-  deleteInvoice: async (id) => {
-    await new Promise((res) => setTimeout(res, 300));
-    set((state) => ({
-      invoices: state.invoices.filter((inv) => inv.id !== id),
-    }));
-  },
+      // update this later
+      deleteInvoice: async (id) => {
+        await new Promise((res) => setTimeout(res, 300));
+        console.log('id :', id);
+      },
 
-  clearCurrentInvoice: () => {
-    set({ currentInvoice: null });
-  },
-
-  clearInvoiceList: () => {
-    set({ invoices: [], meta: {} });
-  },
-}));
+      setCurrentInvoice: (invoice: Invoice | null) => {
+        set({ currentInvoice: invoice });
+      },
+      clearCurrentInvoice: () => {
+        set({ currentInvoice: null });
+      },
+    }),
+    {
+      name: 'invoice-store',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        currentInvoice: state.currentInvoice,
+        // Add other fields to persist
+      }),
+    },
+  ),
+);
