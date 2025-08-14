@@ -1,6 +1,6 @@
-import { memo } from 'react';
 import { SvgLoader } from '@/components';
 import { CustomButtonProps } from '@/types';
+import { memo } from 'react';
 
 const baseButtonClasses =
   'flex w-full items-center justify-center gap-2 rounded-md font-medium focus:outline-none focus:ring-2 transition-colors duration-200 disabled:cursor-not-allowed cursor-pointer';
@@ -23,7 +23,8 @@ function CustomButton({
   children,
   variant = 'primary',
   size = 'md',
-  icon,
+  prependIcon,
+  appendIcon,
   className = '',
   disabled = false,
   loading = false,
@@ -38,9 +39,15 @@ function CustomButton({
       type={type}
       {...otherProps}
     >
-      {icon && !loading && <SvgLoader name={icon} />}
-      {children}
-      {loading && <SvgLoader name="spinner" />}
+      {loading ? (
+        <SvgLoader width={24} height={24} name="spinner" />
+      ) : (
+        <>
+          {prependIcon && <SvgLoader name={prependIcon} />}
+          {children}
+          {appendIcon && <SvgLoader name={appendIcon} />}
+        </>
+      )}
     </button>
   );
 }

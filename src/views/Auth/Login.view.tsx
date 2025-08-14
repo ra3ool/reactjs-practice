@@ -1,4 +1,4 @@
-import { CustomButton, CustomInput } from '@/components';
+import { CustomButton, CustomInput, SvgLoader } from '@/components';
 import { authRoutes } from '@/constants';
 import { authSchema } from '@/schemas';
 import { useAuthStore } from '@/stores';
@@ -11,6 +11,8 @@ import { Link } from 'react-router';
 import { toast } from 'react-toastify';
 
 function LoginView() {
+  SvgLoader.preload('spinner');
+
   const {
     handleSubmit,
     control,

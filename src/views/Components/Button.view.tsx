@@ -82,6 +82,14 @@ export default function ButtonView() {
             <label htmlFor="">disabled</label>
             <CustomButton disabled>button</CustomButton>
           </div>
+          <div className="flex flex-col">
+            <label htmlFor="">prepend icon</label>
+            <CustomButton prependIcon="chevron-right">button</CustomButton>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="">append icon</label>
+            <CustomButton appendIcon="chevron-right">button</CustomButton>
+          </div>
         </div>
       </div>
     </>

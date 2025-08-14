@@ -5,7 +5,8 @@ export interface CustomButtonProps {
   onClick?: () => void;
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
-  icon?: string;
+  prependIcon?: string;
+  appendIcon?: string;
   className?: string;
   loading?: boolean;
   disabled?: boolean;
