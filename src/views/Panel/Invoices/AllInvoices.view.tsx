@@ -4,8 +4,9 @@ import {
   CustomTable,
   Pagination,
 } from '@/components';
+import { useRouteNavigation } from '@/hooks';
 import { useInvoiceStore } from '@/stores';
-import { FetchInvoicesResponse, TableHeader } from '@/types';
+import { FetchInvoicesResponse, Invoice, TableHeader } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import { ReactNode, useMemo, useState } from 'react';
 
@@ -47,6 +48,8 @@ const tableHeaders: TableHeader[] = [
 ];
 
 export default function AllInvoicesView() {
+  const { navigateTo } = useRouteNavigation();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [filters, setFilters] = useState({
@@ -56,7 +59,6 @@ export default function AllInvoicesView() {
     endDate: '',
   });
 
-  // Form inputs (separate from applied filters)
   const [formInputs, setFormInputs] = useState({
     ...filters,
     limit: String(limit),
@@ -104,6 +106,13 @@ export default function AllInvoicesView() {
   const invoices = data?.data || [];
   const totalItems = data?.meta?.pagination?.total || 0;
   const itemsPerPage = data?.meta?.pagination?.limit || limit;
+
+  const goToInvoiceDetails = (invoice: unknown) => {
+    useInvoiceStore.getState().currentInvoice = invoice as Invoice;
+    navigateTo('get-invoice', {
+      params: { id: (invoice as Invoice).id.toString() },
+    });
+  };
 
   return (
     <div className="h-full flex flex-col">
@@ -158,6 +167,7 @@ export default function AllInvoicesView() {
         loading={isLoading}
         emptyText="No invoices found."
         className="grow w-full overflow-auto"
+        onRowClick={goToInvoiceDetails}
       />
 
       <div className="mt-3">
