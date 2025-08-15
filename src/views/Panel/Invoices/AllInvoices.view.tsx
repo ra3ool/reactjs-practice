@@ -175,6 +175,7 @@ export default function AllInvoicesView() {
         loading={isLoading}
         emptyText="No invoices found."
         className="grow w-full overflow-auto"
+        rowClassName="cursor-pointer hover:bg-gray-100"
         onRowClick={goToInvoiceDetails}
       />
 
