@@ -165,7 +165,6 @@ function RegisterView() {
             <div>
               <CustomButton
                 type="submit"
-                className="text-sm"
                 aria-label="Create a new account"
                 loading={isPending}
               >

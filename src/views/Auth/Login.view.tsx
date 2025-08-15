@@ -132,7 +132,6 @@ function LoginView() {
             <div>
               <CustomButton
                 type="submit"
-                className="text-sm"
                 aria-label="Sign in to your account"
                 loading={isPending}
               >
