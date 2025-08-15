@@ -42,7 +42,7 @@ const panelRoutes: RouteGroup = Object.freeze({
     get: {
       label: 'Get invoice',
       name: 'get-invoice',
-      path: 'get/:id',
+      path: ':id',
       meta: {
         title: 'Get invoice',
         description: 'get user invoice',

@@ -1,26 +1,33 @@
-import { Invoice } from './store.type';
+import { Invoice } from '@/types';
 
 export interface invoiceRepositoryTypes {
   fetchInvoices: (
     payload?: FetchInvoicePayload,
   ) => Promise<FetchInvoicesResponse>;
-  // getInvoiceById: (payload: GetByIdPayload) => Promise<Invoice>;
+  getInvoiceById: (id: number) => Promise<FetchInvoiceByIdResponse>;
   // createInvoice: (payload: createInvoice) => Promise<Invoice>;
   // updateInvoice: (payload: updateInvoice) => Promise<Invoice>;
   // deleteInvoice: (payload: deleteInvoice) => Promise<Invoice>;
 }
 
+export interface Meta {
+  date?: string;
+  pagination?: {
+    limit: number;
+    page: number;
+    total: number;
+    totalPage: number;
+  };
+}
+
 export interface FetchInvoicesResponse {
   data: Invoice[];
-  meta: {
-    date?: string;
-    pagination?: {
-      limit: number;
-      page: number;
-      total: number;
-      totalPage: number;
-    };
-  };
+  meta: Meta;
+}
+
+export interface FetchInvoiceByIdResponse {
+  data: Invoice;
+  meta: Meta;
 }
 
 export interface FetchInvoicePayload {
@@ -31,10 +38,6 @@ export interface FetchInvoicePayload {
   minAmount?: number;
   maxAmount?: number;
 }
-
-// export interface GetByIdPayload {
-//   id?: number;
-// }
 
 // export interface createInvoice {
 //   foo?: string;

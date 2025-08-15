@@ -1,11 +1,11 @@
-import { FetchInvoicesResponse } from '@/types';
 import { User } from '../user';
+import { invoiceRepositoryTypes } from './invoice-functions.type';
 
 export interface InvoiceStore {
   currentInvoice: Invoice | null;
 
-  fetchInvoices: (data?: object) => Promise<FetchInvoicesResponse>;
-  getInvoiceById: (id: number) => Promise<void>;
+  fetchInvoices: invoiceRepositoryTypes['fetchInvoices'];
+  getInvoiceById: invoiceRepositoryTypes['getInvoiceById'];
   createInvoice: (invoice: Invoice) => Promise<void>;
   updateInvoice: (invoice: Invoice) => Promise<void>;
   deleteInvoice: (id: number) => Promise<void>;

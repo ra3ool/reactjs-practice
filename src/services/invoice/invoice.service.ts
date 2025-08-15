@@ -7,10 +7,10 @@ export const invoiceService: invoiceRepositoryTypes = {
     return result;
   },
 
-  // getInvoiceById: async (data) => {
-  //   const result = await invoiceRepository.getInvoiceById(data);
-  //   return result;
-  // },
+  getInvoiceById: async (data) => {
+    const result = await invoiceRepository.getInvoiceById(data);
+    return result;
+  },
 
   // createInvoice: async (data) => {
   //   const result = await invoiceRepository.createInvoice(data);

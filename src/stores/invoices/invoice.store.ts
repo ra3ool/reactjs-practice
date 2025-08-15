@@ -13,11 +13,10 @@ export const useInvoiceStore = create<InvoiceStore>()(
         return response;
       },
 
-      // update this later
       getInvoiceById: async (id) => {
-        await new Promise((res) => setTimeout(res, 300));
-        console.log('id :', id);
-        set({ currentInvoice: {} as Invoice });
+        const response = await invoiceService.getInvoiceById(id);
+        set({ currentInvoice: response.data });
+        return response;
       },
 
       // update this later

@@ -9,10 +9,10 @@ export const invoiceRepository: invoiceRepositoryTypes = {
     return response.data;
   },
 
-  // getInvoiceById: async (payload) => {
-  //   const response = await api.post('', payload);
-  //   return response.data;
-  // },
+  getInvoiceById: async (id) => {
+    const response = await api.get(`invoices/${id}`);
+    return response.data;
+  },
 
   // createInvoice: async (payload) => {
   //   const response = await api.post('', payload);
