@@ -1,95 +1,68 @@
 import { authService, cookieStorage } from '@/services';
-import {
-  AuthStore,
-  LoginFormData,
-  LoginResponse,
-  RegisterFormData,
-  User,
-} from '@/types';
+import { AuthStore, LoginResponse } from '@/types';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 export const useAuthStore = create<AuthStore>()(
   persist(
-    (set, get) => ({
+    (set, get) => {
+      const clearAuth = () => {
+        cookieStorage.remove('accessToken');
+        cookieStorage.remove('refreshToken');
+        set({ user: null, isAuthenticated: false });
+      };
+
+      const checkIsAuthenticated = (): boolean => {
+        const token = cookieStorage.get('accessToken');
+        //TODO use jwt-decode later
+        return !(!token || token.split('.').length !== 3);
+      };
+
+      return {
         user: null,
-        isAuthenticated: (() => {
-          try {
-            const token = cookieStorage.get('accessToken');
-            if (!token || token.split('.').length !== 3) {
-              cookieStorage.remove('accessToken');
-              // set({ user: null }); //TODO fix this error (override store)
-              return false;
-            }
-            return true;
-          } catch {
-            cookieStorage.remove('accessToken');
-            // set({ user: null });
-            return false;
-          }
-        })(),
+        isAuthenticated: false,
 
-        login: async (credentials: LoginFormData) => {
-          try {
-            const data = await authService.login(credentials);
-            get().setLoginData(data);
-            return data;
-          } catch (error) {
-            console.log('error :', error);
-          }
+        login: async (credentials) => {
+          const data: LoginResponse = await authService.login(credentials);
+          get().setLoginData(data);
+          return data;
         },
 
-        register: async (credentials: RegisterFormData) => {
-          try {
-            const data = await authService.register(credentials);
-            get().setLoginData(data);
-            return data;
-          } catch (error) {
-            console.log('error :', error);
-          }
+        register: async (credentials) => {
+          const data: LoginResponse = await authService.register(credentials);
+          get().setLoginData(data);
+          return data;
         },
 
-        setLoginData: (data: LoginResponse) => {
-          set({ isAuthenticated: true });
-          get().updateUser(data.user);
-
-          cookieStorage.set('accessToken', data.accessToken, {
-            expires: 1,
-            secure: true,
-            sameSite: 'strict',
-          });
-
+        setLoginData: (data) => {
+          set({ isAuthenticated: true, user: data.user });
+          cookieStorage.set('accessToken', data.accessToken, { expires: 1 });
           if (data.refreshToken) {
             cookieStorage.set('refreshToken', data.refreshToken, {
               expires: 7,
-              secure: true,
-              sameSite: 'strict',
             });
           }
         },
 
-        updateUser: (user: User) => {
-          set({ user });
-        },
+        updateUser: (user) => set({ user }),
 
         getCurrentUser: async () => {
-          try {
-            const response = await authService.getCurrentUser();
-            set({ user: response, isAuthenticated: true });
-            return response;
-          } catch (error) {
-            console.log('error :', error);
-          }
+          const response = await authService.getCurrentUser();
+          set({ user: response, isAuthenticated: true });
+          return response;
         },
 
         logout: async () => {
-          // const response = await authService.logout();
-          cookieStorage.remove('accessToken');
-          cookieStorage.remove('refreshToken');
-          set({ user: null, isAuthenticated: false });
+          clearAuth();
           return { status: 'ok', message: 'you logged out successfully' };
         },
-    }),
+
+        restoreAuth: () => {
+          if (checkIsAuthenticated()) set({ isAuthenticated: true });
+          else clearAuth();
+        },
+      };
+    },
     {
       //TODO add hash with crypto-js later, if needed :)
       name: 'auth',
@@ -99,6 +72,15 @@ export const useAuthStore = create<AuthStore>()(
         // add other fields to persist or remove to persist all states
         // default: (state) => state
       }),
+      onRehydrateStorage: (state) => {
+        return (_rehydratedState, error) => {
+          if (error) {
+            console.error('Rehydration failed:', error);
+          } else {
+            state.restoreAuth();
+          }
+        };
+      },
     },
   ),
 );

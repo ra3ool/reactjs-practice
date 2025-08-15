@@ -13,4 +13,5 @@ export interface AuthStore {
   updateUser: (user: User) => void;
   getCurrentUser: () => Promise<User | undefined>;
   logout: () => Promise<{ status: string; message: string }>;
+  restoreAuth: () => void;
 }
