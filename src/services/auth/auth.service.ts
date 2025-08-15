@@ -1,7 +1,7 @@
 import { authMappers } from '@/mappers';
 import { authRepository } from '@/repositories';
 import { authSchema } from '@/schemas';
-import { LoginFormData, RegisterFormData } from '@/types';
+import { LoginFormData, LoginResponse, RegisterFormData, User } from '@/types';
 
 export const authService = {
   login: async (data: LoginFormData) => {
@@ -9,7 +9,7 @@ export const authService = {
     const payload = authMappers.toLoginPayload(credentials);
     const response = await authRepository.login(payload);
     const result = authSchema.responseSchema.parse(response);
-    return result;
+    return result as LoginResponse;
   },
 
   register: async (data: RegisterFormData) => {
@@ -17,10 +17,10 @@ export const authService = {
     const payload = authMappers.toRegisterPayload(credentials);
     const response = await authRepository.register(payload);
     const result = authSchema.responseSchema.parse(response);
-    return result;
+    return result as LoginResponse;
   },
 
-  getCurrentUser: async () => {
+  getCurrentUser: async (): Promise<User> => {
     return await authRepository.getCurrentUser();
   },
 

@@ -1,7 +1,7 @@
 import { invoiceService } from '@/services';
 import { Invoice, InvoiceStore } from '@/types';
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 export const useInvoiceStore = create<InvoiceStore>()(
   persist(
@@ -46,12 +46,7 @@ export const useInvoiceStore = create<InvoiceStore>()(
       },
     }),
     {
-      name: 'invoice-store',
-      storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({
-        currentInvoice: state.currentInvoice,
-        // Add other fields to persist
-      }),
+      name: 'invoice',
     },
   ),
 );
