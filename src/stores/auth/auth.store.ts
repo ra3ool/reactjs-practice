@@ -1,7 +1,8 @@
+import { cryptoStorage } from '@/lib';
 import { authService, cookieStorage } from '@/services';
 import { AuthStore, LoginResponse } from '@/types';
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 export const useAuthStore = create<AuthStore>()(
   persist(
@@ -14,7 +15,7 @@ export const useAuthStore = create<AuthStore>()(
 
       const checkIsAuthenticated = (): boolean => {
         const token = cookieStorage.get('accessToken');
-        //TODO use jwt-decode later
+        //TODO use jwt-decode checker later
         return !(!token || token.split('.').length !== 3);
       };
 
@@ -64,9 +65,9 @@ export const useAuthStore = create<AuthStore>()(
       };
     },
     {
-      //TODO add hash with crypto-js later, if needed :)
       name: 'auth',
-      storage: createJSONStorage(() => localStorage), //default localStorage
+      // storage: createJSONStorage(() => localStorage), //default localStorage
+      storage: cryptoStorage(import.meta.env.VITE_PERSIST_SECRET),
       partialize: (state) => ({
         user: state.user,
         // add other fields to persist or remove to persist all states
