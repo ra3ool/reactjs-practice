@@ -73,14 +73,9 @@ export const useAuthStore = create<AuthStore>()(
         // add other fields to persist or remove to persist all states
         // default: (state) => state
       }),
-      onRehydrateStorage: (state) => {
-        return (_rehydratedState, error) => {
-          if (error) {
-            console.error('Rehydration failed:', error);
-          } else {
-            state.restoreAuth();
-          }
-        };
+      onRehydrateStorage: (state) => (_, error) => {
+        if (error) console.error('Rehydration failed:', error);
+        state.restoreAuth();
       },
     },
   ),
