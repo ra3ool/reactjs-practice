@@ -27,7 +27,7 @@ export default function Sidebar({
               <NavLink
                 key={item.path}
                 to={item.path}
-                end
+                end={item.end}
                 className={({ isActive }) =>
                   `${DEFAULT_ITEM_CLASS} ${itemClassName} ${
                     isActive ? activeItemClassName : ''

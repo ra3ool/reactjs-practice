@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export interface SidebarItem {
   title: string;
   path?: string;
+  end?: boolean;
   component?: ReactNode;
   className?: string;
   actions?: object;

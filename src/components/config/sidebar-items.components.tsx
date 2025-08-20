@@ -67,6 +67,7 @@ export function useSidebarItems(): SidebarItem[] {
           group: [
             {
               title: panelRoutes?.root?.label as string,
+              end: true,
               path: panelRoutes?.root?.path as string,
             },
             {
