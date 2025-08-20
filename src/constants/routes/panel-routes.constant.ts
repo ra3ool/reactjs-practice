@@ -7,6 +7,9 @@ const panelRoutes: RouteGroup = Object.freeze({
     label: 'Panel',
     path: '/',
     name: 'panel',
+    meta: {
+      requiresAuth: true,
+    },
   },
   index: {
     label: 'Panel',

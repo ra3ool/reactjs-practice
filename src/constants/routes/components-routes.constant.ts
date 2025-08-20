@@ -7,6 +7,9 @@ const componentsRoutes: RouteGroup = Object.freeze({
     label: 'Components',
     path: '/',
     name: 'components',
+    meta: {
+      requiresAuth: true,
+    },
   },
   index: {
     label: 'Components',
