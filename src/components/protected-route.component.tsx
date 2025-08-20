@@ -10,7 +10,7 @@ export default function ProtectedRoute({
   routMeta,
   routeName,
 }: ProtectedRouteProps) {
-  const { isAuthenticated } = useAuthStore();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   // const { currentPath } = useRouteNavigation();
   const acl = useAcl();
 
@@ -25,7 +25,6 @@ export default function ProtectedRoute({
   }
 
   if (!acl.canAccessRoute(routeName)) {
-    // return <Navigate to="/" replace />;
     return <AccessDeniedView />;
   }
 

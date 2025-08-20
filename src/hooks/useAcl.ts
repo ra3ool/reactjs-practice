@@ -2,7 +2,7 @@ import { defineAclRules } from '@/constants';
 import { useAuthStore } from '@/stores';
 
 export const useAcl = () => {
-  const { user } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
   const userRole = user && user.role ? user.role : 'guest'; //TODO add roles to constants
   const rules = defineAclRules[userRole];
 

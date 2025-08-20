@@ -4,7 +4,7 @@ import { useAuthStore } from '@/stores';
 import { useEffect } from 'react';
 
 export default function ProfileView() {
-  const { user } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
   const { setHeaderTitle } = useHeader();
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { useAuthBridge } from '@/bridges';
 import { CustomButton } from '@/components';
 import { useRouteNavigation } from '@/hooks';
 import { useAuthStore } from '@/stores';
@@ -5,14 +6,17 @@ import { User, UserRole } from '@/types';
 
 export default function DemoView() {
   const { navigateTo, isCurrentRoute } = useRouteNavigation();
-  const { user, isAuthenticated, logout, updateUser } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const updateUser = useAuthStore((s) => s.updateUser);
+  const { logoutWithToast } = useAuthBridge();
 
   const handleLogin = () => {
     navigateTo('login');
   };
 
   const handleLogout = async () => {
-    await logout();
+    await logoutWithToast();
     navigateTo('home', { replace: true });
   };
 

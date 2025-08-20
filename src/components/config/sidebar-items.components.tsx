@@ -1,3 +1,4 @@
+import { useAuthBridge } from '@/bridges';
 import { CustomToggle } from '@/components';
 import {
   authRoutes,
@@ -5,25 +6,16 @@ import {
   componentsRoutes,
   panelRoutes,
 } from '@/constants';
-import { useAcl, useRouteNavigation, useTheme } from '@/hooks';
+import { useAcl, useTheme } from '@/hooks';
 import { useAuthStore } from '@/stores';
 import { RouteGroup, SidebarItem } from '@/types';
-import { useCallback, useMemo } from 'react';
-import { toast } from 'react-toastify';
+import { useMemo } from 'react';
 
 export function useSidebarItems(): SidebarItem[] {
   const { isDarkMode, toggleTheme } = useTheme();
-  const { isAuthenticated, logout } = useAuthStore();
-  const { navigateTo } = useRouteNavigation();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const { logoutWithToast } = useAuthBridge();
   const { canAccessRoute } = useAcl();
-
-  const handleLogout = useCallback(async () => {
-    const response = await logout();
-    if (response.status) {
-      toast.success(response.message);
-      navigateTo(baseRoutes?.home?.name as string, { replace: true });
-    }
-  }, [logout, navigateTo]);
 
   return useMemo(() => {
     const items: SidebarItem[] = [
@@ -78,7 +70,8 @@ export function useSidebarItems(): SidebarItem[] {
               path: panelRoutes?.root?.path as string,
             },
             {
-              title: (panelRoutes?.invoices as RouteGroup)?.all?.label as string,
+              title: (panelRoutes?.invoices as RouteGroup)?.all
+                ?.label as string,
               path: (panelRoutes?.invoices as RouteGroup)?.all?.path as string,
             },
           ],
@@ -102,11 +95,17 @@ export function useSidebarItems(): SidebarItem[] {
         className:
           'cursor-pointer text-red-500 hover:bg-red-200 dark:hover:bg-red-950',
         actions: {
-          onClick: handleLogout,
+          onClick: logoutWithToast,
         },
       });
     }
 
     return items;
-  }, [canAccessRoute, handleLogout, isAuthenticated, isDarkMode, toggleTheme]);
+  }, [
+    canAccessRoute,
+    logoutWithToast,
+    isAuthenticated,
+    isDarkMode,
+    toggleTheme,
+  ]);
 }

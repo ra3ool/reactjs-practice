@@ -9,7 +9,7 @@ type PanelData = {
 };
 
 export default function Panel() {
-  const { user } = useAuthStore(); // assuming you have user info here
+  const user = useAuthStore((s) => s.user);
   const [data, setData] = useState<PanelData>({
     users: 0,
     invoices: 0,

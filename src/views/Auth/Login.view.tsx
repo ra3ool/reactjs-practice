@@ -26,7 +26,7 @@ function LoginView() {
     },
   });
 
-  const login = useAuthStore((state) => state.login);
+  const login = useAuthStore((s) => s.login);
   const { mutate, isPending } = useMutation({
     mutationFn: login,
     onSuccess: () => {

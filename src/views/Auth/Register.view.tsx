@@ -19,8 +19,9 @@ function RegisterView() {
     resolver: zodResolver(authSchema.registerSchema),
   });
 
+  const register = useAuthStore((s) => s.register);
   const { mutate, isPending } = useMutation({
-    mutationFn: useAuthStore.getState().register,
+    mutationFn: register,
     onSuccess: () => {
       toast.success('You are signing up!');
     },
