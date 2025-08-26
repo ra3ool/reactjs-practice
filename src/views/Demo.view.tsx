@@ -1,5 +1,6 @@
 import { useAuthBridge } from '@/bridges';
 import { CustomButton } from '@/components';
+import { userRoles } from '@/constants';
 import { useRouteNavigation } from '@/hooks';
 import { useAuthStore } from '@/stores';
 import { User, UserRole } from '@/types';
@@ -48,20 +49,26 @@ export default function DemoView() {
             {isAuthenticated && (
               <div className="flex gap-2">
                 <CustomButton
-                  variant={'guest' === user?.role ? 'primary' : 'outline'}
-                  onClick={() => handleRoleChanges('guest')}
+                  variant={
+                    userRoles.guest === user?.role ? 'primary' : 'outline'
+                  }
+                  onClick={() => handleRoleChanges(userRoles.guest)}
                 >
                   guest
                 </CustomButton>
                 <CustomButton
-                  variant={'user' === user?.role ? 'primary' : 'outline'}
-                  onClick={() => handleRoleChanges('user')}
+                  variant={
+                    userRoles.user === user?.role ? 'primary' : 'outline'
+                  }
+                  onClick={() => handleRoleChanges(userRoles.user)}
                 >
                   user
                 </CustomButton>
                 <CustomButton
-                  variant={'admin' === user?.role ? 'primary' : 'outline'}
-                  onClick={() => handleRoleChanges('admin')}
+                  variant={
+                    userRoles.admin === user?.role ? 'primary' : 'outline'
+                  }
+                  onClick={() => handleRoleChanges(userRoles.admin)}
                 >
                   admin
                 </CustomButton>
@@ -97,7 +104,7 @@ export default function DemoView() {
           <h2 className="text-xl font-semibold mb-4">Access Control (ACL)</h2>
           <div className="space-y-3">
             <p>Components section requires admin role</p>
-            {isAuthenticated && user?.role === 'admin' ? (
+            {isAuthenticated && user?.role === userRoles.admin ? (
               <CustomButton onClick={handleAdminRoute}>
                 Access Admin Route
               </CustomButton>

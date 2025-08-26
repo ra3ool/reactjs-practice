@@ -1,9 +1,9 @@
-import { defineAclRules } from '@/constants';
+import { defineAclRules, userRoles } from '@/constants';
 import { useAuthStore } from '@/stores';
 
 export const useAcl = () => {
   const user = useAuthStore((s) => s.user);
-  const userRole = user && user.role ? user.role : 'guest'; //TODO add roles to constants
+  const userRole = user && user.role ? user.role : userRoles.guest;
   const rules = defineAclRules[userRole];
 
   const canAccessRoute = (routeName?: string): boolean => {
