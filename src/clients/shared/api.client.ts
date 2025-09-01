@@ -1,4 +1,4 @@
-import { setupInterceptors } from '@/lib/axios';
+import { setupInterceptors } from '@/libs/axios';
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 
 /**

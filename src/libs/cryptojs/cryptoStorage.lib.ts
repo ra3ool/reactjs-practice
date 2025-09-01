@@ -1,4 +1,4 @@
-import { cryptoSerializer } from '@/lib';
+import { cryptoSerializer } from '@/libs';
 import { PersistStorage, StorageValue } from 'zustand/middleware';
 
 const cryptoStorage = <T>(secret: string): PersistStorage<T> => {

@@ -1,4 +1,4 @@
-import { cryptoStorage } from '@/lib';
+import { cryptoStorage } from '@/libs';
 import { authService, cookieStorage } from '@/services';
 import { AuthStore, LoginResponse } from '@/types';
 import { create } from 'zustand';
