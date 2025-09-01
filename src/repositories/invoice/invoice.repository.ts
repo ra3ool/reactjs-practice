@@ -1,31 +1,31 @@
-import repositoryApi from '@/lib/axios';
+import { apiClient } from '@/clients';
 import { invoiceRepositoryTypes } from '@/types';
 
 export const invoiceRepository: invoiceRepositoryTypes = {
   fetchInvoices: async (payload) => {
-    const response = await repositoryApi.get('invoices', {
+    const response = await apiClient.get('invoices', {
       params: payload,
     });
     return response.data;
   },
 
   getInvoiceById: async (id) => {
-    const response = await repositoryApi.get(`invoices/${id}`);
+    const response = await apiClient.get(`invoices/${id}`);
     return response.data;
   },
 
   // createInvoice: async (payload) => {
-  //   const response = await repositoryApi.post('', payload);
+  //   const response = await apiClient.post('', payload);
   //   return response.data;
   // },
 
   // updateInvoice: async (payload) => {
-  //   const response = await repositoryApi.post('', payload);
+  //   const response = await apiClient.post('', payload);
   //   return response.data;
   // },
 
   // deleteInvoice: async (payload) => {
-  //   const response = await repositoryApi.post('', payload);
+  //   const response = await apiClient.post('', payload);
   //   return response.data;
   // },
 };
