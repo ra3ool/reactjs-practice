@@ -6,7 +6,7 @@ const cryptoStorage = <T>(secret: string): PersistStorage<T> => {
 
   return {
     getItem: (name): StorageValue<T> | null => {
-      const raw = localStorage.getItem(name);
+      const raw = localStorage.getItem(name); //TODO make it dynamic depend on zustand storage driver
       if (!raw) return null;
       try {
         return deserialize(raw) as StorageValue<T>;
