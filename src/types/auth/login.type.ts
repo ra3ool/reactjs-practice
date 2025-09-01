@@ -1,9 +1,10 @@
 import { User } from '../user';
 
-export enum IdentifierType {
-  EMAIL = 'email',
-  USERNAME = 'username',
-}
+export const IdentifierType = Object.freeze({
+  EMAIL: 'email' as const,
+  USERNAME: 'username' as const,
+});
+
 export interface LoginFormData {
   identifier: string; // email or username
   password: string;

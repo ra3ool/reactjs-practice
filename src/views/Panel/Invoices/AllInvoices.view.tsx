@@ -50,6 +50,7 @@ const tableHeaders: TableHeader[] = [
 export default function AllInvoicesView() {
   const { navigateTo } = useRouteNavigation();
 
+  //TODO use useActionState instead useState
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [filters, setFilters] = useState({
