@@ -1,14 +1,11 @@
 import { CustomTable, Pagination } from '@/components';
 import { paginateData } from '@/helpers';
 import { useTable } from '@/hooks';
-import { TableCell, TableHeader, TableRow } from '@/types';
+import { FetchData, TableCell, TableHeader, TableRow } from '@/types';
 import { ReactNode, useCallback } from 'react';
 
 const ITEMS_PER_PAGE = 4;
-const getTableData = (
-  currentPage?: number,
-  itemsPerPage?: number,
-): Promise<{ result: TableRow[]; totalLength: number }> => {
+const getTableData: FetchData<TableRow> = (currentPage, itemsPerPage) => {
   const items = [
     { id: 1, name: 'Ada Lovelace', email: 'ada.lovelace@example.com' },
     { id: 2, name: 'Alan Turing', email: 'alan.turing@example.com' },
@@ -115,9 +112,10 @@ export default function TableView() {
   });
 
   const fetchPaginatedData = useCallback(
-    (page: number, itemsPerPage: number) => getTableData(page, itemsPerPage),
+    (page?: number, itemsPerPage?: number) => getTableData(page, itemsPerPage),
     [],
   );
+
   const {
     data: paginatedData,
     loading: loadingPaginatedData,
@@ -127,7 +125,7 @@ export default function TableView() {
   } = useTable({
     fetchData: fetchPaginatedData,
     itemsPerPage: ITEMS_PER_PAGE,
-    isServerSide: true,
+    isServerSidePagination: true,
   });
 
   return (
