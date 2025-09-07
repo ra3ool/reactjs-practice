@@ -8,6 +8,7 @@ export default function Layout() {
   const { isDarkMode } = useTheme();
   const sideBarItems = useSidebarItems();
 
+  //FIXME fix responsive
   return (
     <>
       <main className="mail-layout min-h-full flex p-6 gap-6">
