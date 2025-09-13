@@ -13,7 +13,7 @@ export default function Header({
     <div className="flex flex-col gap-6 h-full">
       {headerComponent}
       <div
-        className={`grow-1 w-full bg-bg-primary text-text-primary shadow p-3 rounded-xl ${className}`}
+        className={`grow w-full bg-bg-primary text-text-primary shadow p-3 rounded-xl ${className}`}
       >
         {children}
       </div>

@@ -24,7 +24,7 @@ export default function Toggle({
         }`}
         onClick={toggleActivity}
       >
-        <span className={`duration-300 ${isActive ? 'grow-1' : ''}`}></span>
+        <span className={`duration-300 ${isActive ? 'grow' : ''}`}></span>
         <span
           className={`flex rounded-full aspect-square duration-300 ${
             isActive

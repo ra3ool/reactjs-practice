@@ -1,8 +1,7 @@
-import { Outlet } from 'react-router';
-import { Breadcrumb, LayoutContent, Sidebar } from '@/components';
+import { Breadcrumb, Header, LayoutContent, Sidebar } from '@/components';
 import { componentsRoutes } from '@/constants';
 import { SidebarItem } from '@/types';
-import { Header } from '@/components';
+import { Outlet } from 'react-router';
 
 const sideBarItems: SidebarItem[] = [
   {
@@ -45,7 +44,7 @@ export default function ComponentsLayout() {
           activeItemClassName="bg-neutral-200 dark:bg-neutral-700"
         />
       </div>
-      <div className="h-full grow-1 px-1 flex flex-col gap-6">
+      <div className="h-full grow px-1 flex flex-col gap-6">
         <Breadcrumb />
         <Outlet />
       </div>
