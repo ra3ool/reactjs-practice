@@ -163,15 +163,14 @@ function RegisterView() {
               )}
             </div>
 
-            <div>
-              <CustomButton
-                type="submit"
-                aria-label="Create a new account"
-                loading={isPending}
-              >
-                Create account
-              </CustomButton>
-            </div>
+            <CustomButton
+            className='w-full'
+              type="submit"
+              aria-label="Create a new account"
+              loading={isPending}
+            >
+              Create account
+            </CustomButton>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">

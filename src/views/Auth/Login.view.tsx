@@ -129,15 +129,14 @@ function LoginView() {
               </Link>
             </div>
 
-            <div>
-              <CustomButton
-                type="submit"
-                aria-label="Sign in to your account"
-                loading={isPending}
-              >
-                Sign in
-              </CustomButton>
-            </div>
+            <CustomButton
+              className="w-full"
+              type="submit"
+              aria-label="Sign in to your account"
+              loading={isPending}
+            >
+              Sign in
+            </CustomButton>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
