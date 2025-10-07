@@ -11,8 +11,25 @@ export default function DemoView() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const updateUser = useAuthStore((s) => s.updateUser);
   const { logoutWithToast } = useAuthBridge();
+  const setLoginData = useAuthStore((s) => s.setLoginData);
 
   const handleLogin = () => navigateTo('login');
+  const loginTestUser = () => {
+    const testUser = {
+      user: {
+        id: 1,
+        name: 'rasool',
+        username: 'rasool',
+        email: 'rasool@gmail.com',
+        role: 'admin' as UserRole,
+      },
+      accessToken: 'part1.part2.part3',
+    };
+    //don't do this ever!!!
+    //this is just for times the auth server is down and just for testing!
+    setLoginData(testUser);
+    navigateTo('home');
+  };
   const handleLogout = async () => {
     await logoutWithToast();
     navigateTo('home', { replace: true });
@@ -89,6 +106,9 @@ export default function DemoView() {
           ) : (
             <CustomButton onClick={handleLogout}>Logout</CustomButton>
           )}
+          <CustomButton variant="secondary" onClick={loginTestUser}>
+            Login as test user (if server does not response)
+          </CustomButton>
         </section>
 
         {/* ACL Demo */}
