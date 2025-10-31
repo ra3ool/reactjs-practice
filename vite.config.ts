@@ -9,6 +9,7 @@ import { pwaConfig } from './pwa.config';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), svgr(), VitePWA(pwaConfig)],
+  base: '/reactjs-practice',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

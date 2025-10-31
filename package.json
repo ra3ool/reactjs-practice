@@ -3,6 +3,7 @@
   "private": true,
   "version": "2.1.12",
   "type": "module",
+  "homepage": "/reactjs-practice",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
