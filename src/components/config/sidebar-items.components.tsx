@@ -31,6 +31,10 @@ export function useSidebarItems(): SidebarItem[] {
         title: baseRoutes.demo.label as string,
         path: baseRoutes.demo.path as string,
       },
+      {
+        title: baseRoutes.chat.label as string,
+        path: baseRoutes.chat.path as string,
+      },
     ];
 
     if (canAccessRoute(componentsRoutes?.root?.name as string)) {

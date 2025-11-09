@@ -33,6 +33,15 @@ const baseRoutes: RouteGroup = Object.freeze({
       breadcrumb: true,
     },
   },
+  chat: {
+    label: 'Chat',
+    path: 'chat',
+    name: 'chat',
+    meta: {
+      title: 'Chat',
+      description: 'chat app',
+    },
+  },
 });
 
 export default createRoutesGroup(prefix, baseRoutes);
