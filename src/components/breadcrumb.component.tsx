@@ -6,10 +6,10 @@ import { useMemo } from 'react';
 import { Link } from 'react-router';
 
 export default function Breadcrumb() {
-  const { currentPath } = useRouteNavigation();
+  const { currentRoute } = useRouteNavigation();
 
   const breadcrumbs = useMemo(() => {
-    const pathSegments = currentPath.split('/').filter(Boolean);
+    const pathSegments = currentRoute?.path?.split('/')?.filter(Boolean) || [];
     const crumbs: RouteType[] = [];
     let accumulatedPath = '';
 
@@ -28,9 +28,9 @@ export default function Breadcrumb() {
     }
 
     return crumbs.filter(Boolean);
-  }, [currentPath]);
+  }, [currentRoute]);
 
-  if (breadcrumbs.length <= 1) return null;
+  if (!currentRoute?.meta?.breadcrumb || breadcrumbs.length <= 1) return null;
 
   return (
     <nav
