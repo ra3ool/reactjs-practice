@@ -1,4 +1,3 @@
-import { LayoutContent } from '@/components';
 import ChatComponent from '@/components/ChatComponent';
 import { SocketProvider } from '@/contexts/SocketContext';
 
@@ -13,10 +12,8 @@ const socketOptions = {
 
 export default function AboutView() {
   return (
-    <LayoutContent className="chat">
-      <SocketProvider url={socketUrl} options={socketOptions}>
-        <ChatComponent />
-      </SocketProvider>
-    </LayoutContent>
+    <SocketProvider url={socketUrl} options={socketOptions}>
+      <ChatComponent />
+    </SocketProvider>
   );
 }

@@ -22,7 +22,7 @@ export default function DemoView() {
     updateUser({ ...user, role } as User);
 
   return (
-    <div className="flex flex-col w-full mx-auto p-6 bg-bg-primary text-text-primary rounded-3xl shadow-2xl md:shadow">
+    <>
       <h1 className="text-3xl font-bold mb-8">
         React Router Best Practices Demo
       </h1>
@@ -132,6 +132,6 @@ export default function DemoView() {
           <li>✅ Document title updates</li>
         </ul>
       </section>
-    </div>
+    </>
   );
 }

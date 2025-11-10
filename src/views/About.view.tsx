@@ -1,8 +1,6 @@
-import { LayoutContent } from '@/components';
-
 export default function AboutView() {
   return (
-    <LayoutContent className="about">
+    <>
       <h1>About Us</h1>
       <p>
         This application is designed to demonstrate the use of React with Vite.
@@ -14,6 +12,6 @@ export default function AboutView() {
         navigation bar.
       </p>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </LayoutContent>
+    </>
   );
 }

@@ -1,5 +1,12 @@
-import { CustomButton, Sidebar } from '@/components';
+import {
+  Breadcrumb,
+  CustomButton,
+  Header,
+  LayoutContent,
+  Sidebar,
+} from '@/components';
 import { useSidebarItems } from '@/components/config/sidebar-items.components';
+import { HeaderContext } from '@/contexts';
 import { useTheme } from '@/hooks';
 import { useState } from 'react';
 import { Outlet } from 'react-router';
@@ -9,6 +16,7 @@ export default function Layout() {
   const { isDarkMode } = useTheme();
   const sideBarItems = useSidebarItems();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [headerTitle, setHeaderTitle] = useState('panel header');
 
   return (
     <>
@@ -65,7 +73,14 @@ export default function Layout() {
           />
         </div>
         <div className="grow flex flex-col">
-          <Outlet />
+          <HeaderContext.Provider value={{ setHeaderTitle }}>
+            <LayoutContent headerComponent={<Header title={headerTitle} />}>
+              <div className="h-full grow px-1 flex flex-col gap-6">
+                <Breadcrumb />
+                <Outlet />
+              </div>
+            </LayoutContent>
+          </HeaderContext.Provider>
         </div>
       </main>
       <ToastContainer theme={isDarkMode ? 'dark' : 'light'} stacked draggable />

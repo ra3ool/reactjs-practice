@@ -1,4 +1,4 @@
-import { Breadcrumb, Header, LayoutContent, Sidebar } from '@/components';
+import { LayoutContent, Sidebar } from '@/components';
 import { componentsRoutes } from '@/constants';
 import { SidebarItem } from '@/types';
 import { Outlet } from 'react-router';
@@ -32,10 +32,7 @@ const sideBarItems: SidebarItem[] = [
 
 export default function ComponentsLayout() {
   return (
-    <LayoutContent
-      className="component-layout flex"
-      headerComponent={<Header title="components header" />}
-    >
+    <LayoutContent className="component-layout flex p-0 rounded-none shadow-none">
       <div className="h-full w-56 shrink-0">
         <Sidebar
           items={sideBarItems}
@@ -45,7 +42,6 @@ export default function ComponentsLayout() {
         />
       </div>
       <div className="h-full grow px-1 flex flex-col gap-6">
-        <Breadcrumb />
         <Outlet />
       </div>
     </LayoutContent>

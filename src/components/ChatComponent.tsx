@@ -73,7 +73,7 @@ const AnimatedChatComponent: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/30">
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/30 h-full flex flex-col">
       {/* Header with connection indicator */}
       <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center space-x-4">
@@ -136,7 +136,7 @@ const AnimatedChatComponent: React.FC = () => {
       )}
 
       {/* Messages area */}
-      <div className="h-96 overflow-y-auto mb-6 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+      <div className="flex-1 overflow-y-auto mb-6 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-gray-400 dark:text-gray-500">
             <div className="w-20 h-20 mb-4 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
@@ -165,7 +165,7 @@ const AnimatedChatComponent: React.FC = () => {
                 className={`p-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
                   msg.type === 'system'
                     ? 'bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800'
-                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-gray-900/50'
+                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow h-full flex flex-col-sm dark:shadow-gray-900/50'
                 }`}
               >
                 <div className="flex justify-between items-start mb-2">
