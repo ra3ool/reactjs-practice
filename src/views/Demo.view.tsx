@@ -17,7 +17,7 @@ export default function DemoView() {
     await logoutWithToast();
     navigateTo('home', { replace: true });
   };
-  const handleAdminRoute = () => navigateTo('components.input');
+  const handleAdminRoute = () => navigateTo('invoices-list');
   const handleRoleChanges = (role: UserRole) =>
     updateUser({ ...user, role } as User);
 
