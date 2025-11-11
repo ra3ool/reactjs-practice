@@ -33,9 +33,9 @@ export default function GetInvoiceView() {
   }
 
   return (
-    <div>
+    <>
       <h1>Invoice Details</h1>
       <div>{JSON.stringify(invoice, null, 2)}</div>
-    </div>
+    </>
   );
 }

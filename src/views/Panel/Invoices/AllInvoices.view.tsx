@@ -120,7 +120,7 @@ export default function AllInvoicesView() {
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <>
       <h2 className="text-2xl font-bold mb-4">Invoices</h2>
 
       <div className="mb-2 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 gap-3">
@@ -188,6 +188,6 @@ export default function AllInvoicesView() {
           onPageChange={setCurrentPage}
         />
       </div>
-    </div>
+    </>
   );
 }

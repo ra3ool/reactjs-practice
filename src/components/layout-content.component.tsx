@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export default function Header({
+export default function LayoutContent({
   className,
   children,
   headerComponent = undefined,

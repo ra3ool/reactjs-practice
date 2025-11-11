@@ -73,7 +73,7 @@ const AnimatedChatComponent: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/30 h-full flex flex-col">
+    <div className="p-4 h-full flex flex-col">
       {/* Header with connection indicator */}
       <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center space-x-4">

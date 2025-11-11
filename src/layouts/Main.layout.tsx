@@ -80,8 +80,8 @@ export default function Layout() {
             <LayoutContent
               headerComponent={<Header title={headerTitleChildren} />}
             >
-              <div className="h-full grow px-1 flex flex-col gap-6">
-                <Breadcrumb />
+              <div className="h-full flex flex-col">
+                <Breadcrumb className="mb-5" />
                 <Outlet />
               </div>
             </LayoutContent>

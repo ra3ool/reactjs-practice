@@ -5,7 +5,7 @@ import { RouteType } from '@/types';
 import { useMemo } from 'react';
 import { Link } from 'react-router';
 
-export default function Breadcrumb() {
+export default function Breadcrumb({ className }: { className?: string }) {
   const { currentRoute } = useRouteNavigation();
 
   const breadcrumbs = useMemo(() => {
@@ -34,7 +34,7 @@ export default function Breadcrumb() {
 
   return (
     <nav
-      className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+      className={`flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 ${className}`}
       aria-label="Breadcrumb"
     >
       {breadcrumbs.map((breadcrumb, index) => (

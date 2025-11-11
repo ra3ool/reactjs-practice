@@ -129,7 +129,7 @@ export default function TableView() {
   });
 
   return (
-    <div className="w-full">
+    <>
       <div className="mb-4">
         <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
           Client-side pagination and sorting. The component fetches all data,
@@ -168,6 +168,6 @@ export default function TableView() {
           onPageChange={(page) => setCurrentPage(page)}
         />
       </div>
-    </div>
+    </>
   );
 }
