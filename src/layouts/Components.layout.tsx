@@ -1,4 +1,4 @@
-import { LayoutContent, Sidebar } from '@/components';
+import { Sidebar } from '@/components';
 import { componentsRoutes } from '@/constants';
 import { SidebarItem } from '@/types';
 import { Outlet } from 'react-router';
@@ -32,18 +32,20 @@ const sideBarItems: SidebarItem[] = [
 
 export default function ComponentsLayout() {
   return (
-    <LayoutContent className="component-layout flex p-0 rounded-none shadow-none">
-      <div className="h-full w-56 shrink-0">
-        <Sidebar
-          items={sideBarItems}
-          className="p-2"
-          itemClassName="hover:bg-neutral-200 dark:hover:bg-neutral-700"
-          activeItemClassName="bg-neutral-200 dark:bg-neutral-700"
-        />
+    <div className="layout-content flex flex-col gap-6 h-full">
+      <div className={`flex grow w-full bg-bg-primary text-text-primary gap-2`}>
+        <div className="h-full w-56 shrink-0">
+          <Sidebar
+            items={sideBarItems}
+            className="p-2"
+            itemClassName="hover:bg-neutral-200 dark:hover:bg-neutral-700"
+            activeItemClassName="bg-neutral-200 dark:bg-neutral-700"
+          />
+        </div>
+        <div className="h-full grow flex flex-col">
+          <Outlet />
+        </div>
       </div>
-      <div className="h-full grow flex flex-col">
-        <Outlet />
-      </div>
-    </LayoutContent>
+    </div>
   );
 }

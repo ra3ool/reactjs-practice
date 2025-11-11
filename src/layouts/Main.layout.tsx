@@ -1,10 +1,4 @@
-import {
-  Breadcrumb,
-  CustomButton,
-  Header,
-  LayoutContent,
-  Sidebar,
-} from '@/components';
+import { Breadcrumb, CustomButton, Header, Sidebar } from '@/components';
 import { useSidebarItems } from '@/components/config/sidebar-items.components';
 import { HeaderContext } from '@/contexts';
 import { useTheme } from '@/hooks';
@@ -77,14 +71,13 @@ export default function Layout() {
         </div>
         <div className="grow flex flex-col">
           <HeaderContext.Provider value={{ setHeaderTitle }}>
-            <LayoutContent
-              headerComponent={<Header title={headerTitleChildren} />}
-            >
-              <div className="h-full flex flex-col">
+            <div className="layout-content flex flex-col gap-6 h-full">
+              <Header title={headerTitleChildren} />
+              <div className="flex flex-col grow w-full bg-bg-primary text-text-primary shadow p-3 rounded-xl">
                 <Breadcrumb className="mb-5" />
                 <Outlet />
               </div>
-            </LayoutContent>
+            </div>
           </HeaderContext.Provider>
         </div>
       </main>
