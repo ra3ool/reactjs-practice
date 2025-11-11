@@ -17,6 +17,7 @@ const componentsRoutes: RouteGroup = Object.freeze({
     name: 'components.index',
     meta: {
       title: 'Components',
+      headerTitle: 'Components page',
       description: 'UI Components showcase',
       breadcrumb: true,
     },
@@ -27,6 +28,7 @@ const componentsRoutes: RouteGroup = Object.freeze({
     name: 'components.input',
     meta: {
       title: 'Input Component',
+      headerTitle: 'Input Component page',
       description: 'Form input components',
       breadcrumb: true,
     },
@@ -37,6 +39,7 @@ const componentsRoutes: RouteGroup = Object.freeze({
     name: 'components.button',
     meta: {
       title: 'Button Component',
+      headerTitle: 'Button Component page',
       description: 'Button components',
       breadcrumb: true,
     },
@@ -47,6 +50,7 @@ const componentsRoutes: RouteGroup = Object.freeze({
     name: 'components.table',
     meta: {
       title: 'Table Component',
+      headerTitle: 'Table Component page',
       description: 'Data table components',
       breadcrumb: true,
     },
@@ -57,6 +61,7 @@ const componentsRoutes: RouteGroup = Object.freeze({
     name: 'components.toggle',
     meta: {
       title: 'Toggle Component',
+      headerTitle: 'Toggle Component page',
       description: 'Toggle switch components',
       breadcrumb: true,
     },
@@ -67,6 +72,7 @@ const componentsRoutes: RouteGroup = Object.freeze({
     name: 'components.dropdown',
     meta: {
       title: 'Dropdown Component',
+      headerTitle: 'Dropdown Component page',
       description: 'Dropdown menu components',
       breadcrumb: true,
     },
@@ -77,6 +83,7 @@ const componentsRoutes: RouteGroup = Object.freeze({
     name: 'components.expansion-panel',
     meta: {
       title: 'Expansion Panel Component',
+      headerTitle: 'Expansion Panel Component page',
       description: 'Collapsible content panels',
       breadcrumb: true,
     },

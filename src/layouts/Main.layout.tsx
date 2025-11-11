@@ -1,16 +1,23 @@
 import { Breadcrumb, CustomButton, Header, Sidebar } from '@/components';
 import { useSidebarItems } from '@/components/config/sidebar-items.components';
 import { HeaderContext } from '@/contexts';
-import { useTheme } from '@/hooks';
-import { useState } from 'react';
+import { useRouteNavigation, useTheme } from '@/hooks';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 
 export default function Layout() {
   const { isDarkMode } = useTheme();
   const sideBarItems = useSidebarItems();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [headerTitle, setHeaderTitle] = useState('panel header');
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const [headerTitle, setHeaderTitle] = useState<string>('');
+  const { currentRoute } = useRouteNavigation();
+
+  useEffect(() => {
+    setHeaderTitle(
+      (currentRoute?.meta?.headerTitle as string) || 'panel header',
+    );
+  }, [currentRoute]);
 
   const headerTitleChildren = (
     <>

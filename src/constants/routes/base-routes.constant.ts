@@ -10,6 +10,7 @@ const baseRoutes: RouteGroup = Object.freeze({
     meta: {
       title: 'Home',
       description: 'Welcome to the application',
+      headerTitle: 'Home page',
       breadcrumb: true,
     },
   },
@@ -20,6 +21,7 @@ const baseRoutes: RouteGroup = Object.freeze({
     meta: {
       title: 'About',
       description: 'About our application',
+      headerTitle: 'About page',
       breadcrumb: true,
     },
   },
@@ -30,6 +32,7 @@ const baseRoutes: RouteGroup = Object.freeze({
     meta: {
       title: 'Demo',
       description: 'Routing system demo',
+      headerTitle: 'Demo page',
       breadcrumb: true,
     },
   },
@@ -40,6 +43,7 @@ const baseRoutes: RouteGroup = Object.freeze({
     meta: {
       title: 'Chat',
       description: 'chat app',
+      headerTitle: 'Chat page',
     },
   },
 });

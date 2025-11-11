@@ -17,6 +17,7 @@ const panelRoutes: RouteGroup = Object.freeze({
     name: 'panel',
     meta: {
       title: 'Panel',
+      headerTitle: 'Panel page',
       description: 'panel page',
       breadcrumb: true,
     },
@@ -27,6 +28,7 @@ const panelRoutes: RouteGroup = Object.freeze({
     path: 'profile',
     meta: {
       title: 'Profile',
+      headerTitle: 'Profile page',
       description: 'profile and user info',
       breadcrumb: true,
     },
@@ -38,6 +40,7 @@ const panelRoutes: RouteGroup = Object.freeze({
       path: '/',
       meta: {
         title: 'Invoices',
+        headerTitle: 'Invoices page',
         description: 'all user invoice',
         breadcrumb: true,
       },
@@ -48,6 +51,7 @@ const panelRoutes: RouteGroup = Object.freeze({
       path: ':id',
       meta: {
         title: 'Get invoice',
+        headerTitle: 'Get invoice page',
         description: 'get user invoice',
         breadcrumb: true,
       },
@@ -58,6 +62,7 @@ const panelRoutes: RouteGroup = Object.freeze({
       path: 'add',
       meta: {
         title: 'Add invoice',
+        headerTitle: 'Add invoice page',
         description: 'add user invoice',
         breadcrumb: true,
       },
@@ -68,6 +73,7 @@ const panelRoutes: RouteGroup = Object.freeze({
       path: 'delete/:id',
       meta: {
         title: 'Delete invoice',
+        headerTitle: 'Delete invoice page',
         description: 'delete user invoice',
         breadcrumb: true,
       },
@@ -78,6 +84,7 @@ const panelRoutes: RouteGroup = Object.freeze({
       path: 'edit/:id',
       meta: {
         title: 'Edit invoice',
+        headerTitle: 'Edit invoice page',
         description: 'edit user invoice',
         breadcrumb: true,
       },

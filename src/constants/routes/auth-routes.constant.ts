@@ -9,6 +9,7 @@ const authRoutes: RouteGroup = Object.freeze({
     name: 'auth',
     meta: {
       title: 'Authentication',
+      headerTitle: 'Authentication page',
       description: 'User authentication pages',
     },
   },
@@ -18,6 +19,7 @@ const authRoutes: RouteGroup = Object.freeze({
     name: 'login',
     meta: {
       title: 'Login',
+      headerTitle: 'Login page',
       description: 'Sign in to your account',
     },
   },
@@ -27,6 +29,7 @@ const authRoutes: RouteGroup = Object.freeze({
     name: 'register',
     meta: {
       title: 'Register',
+      headerTitle: 'Register page',
       description: 'Create a new account',
     },
   },
