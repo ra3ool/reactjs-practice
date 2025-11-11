@@ -2,6 +2,6 @@ import { ReactNode } from 'react';
 
 export interface HeaderProps {
   className?: string;
-  title: string;
+  title: ReactNode;
   action?: ReactNode;
 }

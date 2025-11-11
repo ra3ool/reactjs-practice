@@ -18,40 +18,43 @@ export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [headerTitle, setHeaderTitle] = useState('panel header');
 
+  const headerTitleChildren = (
+    <>
+      <div className="hidden md:block">{headerTitle}</div>
+      <CustomButton
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="md:hidden"
+        aria-label="Toggle sidebar"
+      >
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          {sidebarOpen ? (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          ) : (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          )}
+        </svg>
+      </CustomButton>
+    </>
+  );
+
   return (
     <>
-      <main className="mail-layout min-h-full flex p-6 gap-6 relative">
-        {!sidebarOpen && (
-          <CustomButton
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="fixed md:hidden z-10 shadow-md"
-            aria-label="Toggle sidebar"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {sidebarOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </CustomButton>
-        )}
-
+      <main className="mail-layout flex p-6 gap-6 relative">
         {sidebarOpen && (
           <div
             className="fixed inset-0 z-20 md:hidden"
@@ -74,7 +77,9 @@ export default function Layout() {
         </div>
         <div className="grow flex flex-col">
           <HeaderContext.Provider value={{ setHeaderTitle }}>
-            <LayoutContent headerComponent={<Header title={headerTitle} />}>
+            <LayoutContent
+              headerComponent={<Header title={headerTitleChildren} />}
+            >
               <div className="h-full grow px-1 flex flex-col gap-6">
                 <Breadcrumb />
                 <Outlet />
