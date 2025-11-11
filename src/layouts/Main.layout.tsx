@@ -17,6 +17,7 @@ export default function Layout() {
     setHeaderTitle(
       (currentRoute?.meta?.headerTitle as string) || 'panel header',
     );
+    setSidebarOpen(false);
   }, [currentRoute]);
 
   const headerTitleChildren = (
@@ -55,7 +56,7 @@ export default function Layout() {
 
   return (
     <>
-      <main className="mail-layout flex p-6 gap-6 relative">
+      <main className="mail-layout flex flex-1 p-6 gap-6 relative">
         {sidebarOpen && (
           <div
             className="fixed inset-0 z-20 md:hidden"
