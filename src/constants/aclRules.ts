@@ -13,6 +13,10 @@ const componentsRouteNames = Object.keys(
 );
 const panelRouteNames = Object.keys(flattenRoutes(panelRoutes, 'name'));
 
+const dropExactRoutes = (routes: string[], exceptRoutes: string[]) => {
+  return routes.filter((route) => !exceptRoutes.includes(route));
+};
+
 export const defineAclRules: AclRuleType = {
   admin: {
     routes: [...publicRouteNames, ...componentsRouteNames, ...panelRouteNames],
@@ -20,7 +24,7 @@ export const defineAclRules: AclRuleType = {
   },
   user: {
     routes: [
-      ...publicRouteNames,
+      ...dropExactRoutes(publicRouteNames, [baseRoutes?.chat?.name as string]),
       ...componentsRouteNames,
       panelRoutes?.index?.name as string,
       panelRoutes?.profile?.name as string, //TODO fine better way to declare
@@ -28,7 +32,9 @@ export const defineAclRules: AclRuleType = {
     actions: [],
   },
   guest: {
-    routes: publicRouteNames,
+    routes: dropExactRoutes(publicRouteNames, [
+      baseRoutes?.chat?.name as string,
+    ]),
     actions: [],
   },
 };

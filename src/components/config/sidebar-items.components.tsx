@@ -31,10 +31,6 @@ export function useSidebarItems(): SidebarItem[] {
         title: baseRoutes.demo.label as string,
         path: baseRoutes.demo.path as string,
       },
-      {
-        title: baseRoutes.chat.label as string,
-        path: baseRoutes.chat.path as string,
-      },
     ];
 
     if (canAccessRoute(componentsRoutes?.root?.name as string)) {
@@ -60,7 +56,7 @@ export function useSidebarItems(): SidebarItem[] {
       });
     }
 
-    if (isAuthenticated && canAccessRoute(panelRoutes?.root?.name as string)) {
+    if (canAccessRoute(panelRoutes?.root?.name as string)) {
       if (
         canAccessRoute(
           (panelRoutes?.invoices as RouteGroup)?.all?.name as string,
@@ -87,6 +83,13 @@ export function useSidebarItems(): SidebarItem[] {
           path: panelRoutes?.root?.path as string,
         });
       }
+    }
+
+    if (canAccessRoute(baseRoutes?.chat?.name as string)) {
+      items.push({
+        title: baseRoutes?.chat?.label as string,
+        path: baseRoutes?.chat?.path as string,
+      });
     }
 
     items.push({
