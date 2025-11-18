@@ -36,6 +36,23 @@ const baseRoutes: RouteGroup = Object.freeze({
       breadcrumb: true,
     },
   },
+  lists: createRoutesGroup('lists', {
+    root: {
+      label: 'Lists',
+      path: 'lists',
+    },
+    comments: {
+      label: 'Comments',
+      path: 'comments',
+      name: 'comments',
+      meta: {
+        title: 'Comments',
+        description: 'comments demo page',
+        headerTitle: 'Comments page',
+        breadcrumb: true,
+      },
+    },
+  }),
   chat: {
     label: 'Chat',
     path: 'chat',

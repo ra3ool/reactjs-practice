@@ -31,6 +31,15 @@ export function useSidebarItems(): SidebarItem[] {
         title: baseRoutes.demo.label as string,
         path: baseRoutes.demo.path as string,
       },
+      {
+        title: (baseRoutes?.lists as RouteGroup)?.root?.label as string,
+        group: [
+          {
+            title: (baseRoutes?.lists as RouteGroup)?.comments?.label as string,
+            path: (baseRoutes?.lists as RouteGroup)?.comments?.path as string,
+          },
+        ],
+      },
     ];
 
     if (canAccessRoute(componentsRoutes?.root?.name as string)) {
