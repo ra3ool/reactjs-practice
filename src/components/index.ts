@@ -1,4 +1,5 @@
 export { default as Breadcrumb } from './breadcrumb.component';
+export { default as CommentsList } from './comments-list';
 export { default as CustomButton } from './custom-button.component';
 export {
   default as CustomDropdown,
