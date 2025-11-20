@@ -6,7 +6,7 @@ import { lazy } from 'react';
 const HomeView = lazy(() => import('@/views/Home.view'));
 const AboutView = lazy(() => import('@/views/About.view'));
 const DemoView = lazy(() => import('@/views/Demo.view'));
-const CommentView = lazy(() => import('@/views/Lists/Comments/Comments.view'));
+const CommentView = lazy(() => import('@/views/Lists/Comments.view'));
 const ChatView = lazy(() => import('@/views/Chat.view'));
 
 // Define routes using the route builder
