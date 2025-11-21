@@ -35,8 +35,23 @@ export function useSidebarItems(): SidebarItem[] {
         title: (baseRoutes?.lists as RouteGroup)?.root?.label as string,
         group: [
           {
-            title: (baseRoutes?.lists as RouteGroup)?.comments?.label as string,
-            path: (baseRoutes?.lists as RouteGroup)?.comments?.path as string,
+            title: (baseRoutes?.lists as RouteGroup)?.comments1?.label as string,
+            path: (baseRoutes?.lists as RouteGroup)?.comments1?.path as string,
+          },
+          {
+            title: (baseRoutes?.lists as RouteGroup)?.comments2
+              ?.label as string,
+            path: (baseRoutes?.lists as RouteGroup)?.comments2?.path as string,
+          },
+          {
+            title: (baseRoutes?.lists as RouteGroup)?.comments3
+              ?.label as string,
+            path: (baseRoutes?.lists as RouteGroup)?.comments3?.path as string,
+          },
+          {
+            title: (baseRoutes?.lists as RouteGroup)?.comments4
+              ?.label as string,
+            path: (baseRoutes?.lists as RouteGroup)?.comments4?.path as string,
           },
         ],
       },
