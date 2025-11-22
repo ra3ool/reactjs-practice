@@ -48,7 +48,7 @@ const baseRoutes: RouteGroup = Object.freeze({
       meta: {
         title: 'Comments1',
         description: 'comments1 demo page',
-        headerTitle: 'Comments1 with tanstack infinity scroll',
+        headerTitle: 'Infinity scroll comments + Virtual List + react query',
         breadcrumb: true,
       },
     },
@@ -59,7 +59,8 @@ const baseRoutes: RouteGroup = Object.freeze({
       meta: {
         title: 'Comments2',
         description: 'comments2 demo page',
-        headerTitle: 'Comments with infinity scroll',
+        headerTitle:
+          'Infinity scroll comments + Virtual List (no library) + fetch',
         breadcrumb: true,
       },
     },
@@ -70,7 +71,7 @@ const baseRoutes: RouteGroup = Object.freeze({
       meta: {
         title: 'Comments3',
         description: 'comments3 demo page',
-        headerTitle: 'Comments with infinity scroll',
+        headerTitle: 'Infinity scroll comments + react query',
         breadcrumb: true,
       },
     },
@@ -81,7 +82,7 @@ const baseRoutes: RouteGroup = Object.freeze({
       meta: {
         title: 'Comments4',
         description: 'comments4 demo page',
-        headerTitle: 'Comments with infinity scroll',
+        headerTitle: 'Infinity scroll comments + fetch + body scroll',
         breadcrumb: true,
       },
     },

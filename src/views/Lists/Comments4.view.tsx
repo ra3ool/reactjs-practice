@@ -10,7 +10,8 @@ function InfiniteScrollComments() {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const observerTarget = useRef(null);
+  const observerTarget = useRef<HTMLDivElement>(null);
+  const hasFetchedInitial = useRef<boolean>(false);
 
   const fetchComments = async (pageNum: number) => {
     try {
@@ -32,14 +33,17 @@ function InfiniteScrollComments() {
 
       setComments((prev) => [...prev, ...data]);
       setLoading(false);
-    } catch (err) {
-      setError((err.message as string) || null);
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'An error occurred');
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchComments(0);
+    if (!hasFetchedInitial.current) {
+      hasFetchedInitial.current = true;
+      fetchComments(0);
+    }
   }, []);
 
   useEffect(() => {
@@ -83,60 +87,52 @@ function InfiniteScrollComments() {
 
   return (
     <div className="min-h-screen py-8">
-      <div className="">
-        <div></div>
+      {loading && comments.length === 0 && (
+        <div className="flex items-center justify-center py-20">loading...</div>
+      )}
 
-        {loading && comments.length === 0 && (
-          <div className="flex items-center justify-center py-20">
+      <div className="space-y-4">
+        {comments.map((comment) => (
+          <div
+            key={comment.id}
+            className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex-shrink-0 flex items-center justify-center text-white font-semibold">
+                {comment.id}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-semibold text-slate-800 truncate">
+                    {comment.name}
+                  </h3>
+                </div>
+                <p className="text-sm text-blue-600 mb-2 truncate">
+                  {comment.email}
+                </p>
+                <p className="text-slate-600 leading-relaxed">{comment.body}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div
+        ref={observerTarget}
+        className="flex flex-col items-center justify-center py-8"
+      >
+        {loading && comments.length > 0 && (
+          <div className="flex items-center gap-2 text-blue-500">
             loading...
+            <span>Loading more comments...</span>
           </div>
         )}
 
-        <div className="space-y-4">
-          {comments.map((comment) => (
-            <div
-              key={comment.id}
-              className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex-shrink-0 flex items-center justify-center text-white font-semibold">
-                  {comment.id}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-slate-800 truncate">
-                      {comment.name}
-                    </h3>
-                  </div>
-                  <p className="text-sm text-blue-600 mb-2 truncate">
-                    {comment.email}
-                  </p>
-                  <p className="text-slate-600 leading-relaxed">
-                    {comment.body}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div
-          ref={observerTarget}
-          className="flex flex-col items-center justify-center py-8"
-        >
-          {loading && comments.length > 0 && (
-            <div className="flex items-center gap-2 text-blue-500">
-              loading...
-              <span>Loading more comments...</span>
-            </div>
-          )}
-
-          {!hasMore && comments.length > 0 && (
-            <div className="text-slate-500 font-medium">
-              🎉 All done! Loaded all {comments.length} comments.
-            </div>
-          )}
-        </div>
+        {!hasMore && comments.length > 0 && (
+          <div className="text-slate-500 font-medium">
+            🎉 All done! Loaded all {comments.length} comments.
+          </div>
+        )}
       </div>
     </div>
   );

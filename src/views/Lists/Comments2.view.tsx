@@ -10,7 +10,7 @@ import React, {
 interface CommentItemProps {
   comment: Comment & { actualIndex: number; top: number };
   style: React.CSSProperties;
-  formatText: (text: string, maxLength?: number) => string;
+  onHeightChange: (index: number, height: number) => void;
 }
 
 interface VisibleComment extends Comment {
@@ -26,33 +26,96 @@ const CommentsVirtualList: React.FC = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [lastFetchIndex, setLastFetchIndex] = useState<number>(0);
 
-  const ITEM_HEIGHT = 120;
+  // Dynamic height tracking
+  const [itemHeights, setItemHeights] = useState<Map<number, number>>(
+    new Map(),
+  );
+  const ESTIMATED_ITEM_HEIGHT = 140; // Initial estimate
   const BUFFER_ITEMS = 3;
   const BATCH_SIZE = 100;
+  const GAP = 50; // Gap between items
+
   const containerRef = useRef<HTMLDivElement>(null);
   const isFetchingRef = useRef<boolean>(false);
+  const hasFetchedInitial = useRef<boolean>(false);
+  const rafRef = useRef<number>(null);
 
-  const { visibleComments, totalHeight } = useMemo(() => {
-    const startIndex = Math.max(
-      0,
-      Math.floor(scrollTop / ITEM_HEIGHT) - BUFFER_ITEMS,
-    );
-    const visibleItemCount =
-      Math.ceil(containerHeight / ITEM_HEIGHT) + 2 * BUFFER_ITEMS;
-    const endIndex = Math.min(comments.length, startIndex + visibleItemCount);
+  // Calculate positions based on actual heights
+  const itemPositions = useMemo(() => {
+    const positions: number[] = [];
+    let currentTop = 0;
+
+    comments.forEach((_, index) => {
+      positions.push(currentTop);
+      const height = itemHeights.get(index) || ESTIMATED_ITEM_HEIGHT;
+      currentTop += height + GAP;
+    });
+
+    return positions;
+  }, [comments, itemHeights]);
+
+  const totalHeight = useMemo(() => {
+    if (itemPositions.length === 0) return 0;
+    const lastIndex = itemPositions.length - 1;
+    const lastHeight = itemHeights.get(lastIndex) || ESTIMATED_ITEM_HEIGHT;
+    return itemPositions[lastIndex] + lastHeight;
+  }, [itemPositions, itemHeights]);
+
+  // Find visible items using binary search for performance
+  const { visibleComments, startIndex, endIndex } = useMemo(() => {
+    if (itemPositions.length === 0) {
+      return { visibleComments: [], startIndex: 0, endIndex: 0 };
+    }
+
+    // Binary search for start index
+    let start = 0;
+    let end = itemPositions.length - 1;
+    const viewportTop = scrollTop;
+    const viewportBottom = scrollTop + containerHeight;
+
+    while (start < end) {
+      const mid = Math.floor((start + end) / 2);
+      if (itemPositions[mid] < viewportTop) {
+        start = mid + 1;
+      } else {
+        end = mid;
+      }
+    }
+
+    const startIndex = Math.max(0, start - BUFFER_ITEMS);
+
+    // Find end index
+    let endIdx = startIndex;
+    while (
+      endIdx < itemPositions.length &&
+      itemPositions[endIdx] < viewportBottom
+    ) {
+      endIdx++;
+    }
+    const endIndex = Math.min(itemPositions.length, endIdx + BUFFER_ITEMS);
 
     const visibleComments: VisibleComment[] = comments
       .slice(startIndex, endIndex)
       .map((comment, index) => ({
         ...comment,
         actualIndex: startIndex + index,
-        top: (startIndex + index) * ITEM_HEIGHT,
+        top: itemPositions[startIndex + index],
       }));
 
-    const totalHeight = comments.length * ITEM_HEIGHT;
+    return { visibleComments, startIndex, endIndex };
+  }, [comments, scrollTop, containerHeight, itemPositions]);
 
-    return { visibleComments, totalHeight };
-  }, [comments, scrollTop, containerHeight]);
+  // Callback when item height is measured
+  const handleHeightChange = useCallback((index: number, height: number) => {
+    setItemHeights((prev) => {
+      const newMap = new Map(prev);
+      if (newMap.get(index) !== height) {
+        newMap.set(index, height);
+        return newMap;
+      }
+      return prev;
+    });
+  }, []);
 
   const fetchComments = useCallback(
     async (startId: number = 1): Promise<void> => {
@@ -101,21 +164,30 @@ const CommentsVirtualList: React.FC = () => {
   );
 
   useEffect(() => {
-    fetchComments(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!hasFetchedInitial.current) {
+      hasFetchedInitial.current = true;
+      fetchComments(1);
+    }
+  }, [fetchComments]);
 
   const handleScroll = useCallback(
     (e: React.UIEvent<HTMLDivElement>) => {
       const scrollTop = e.currentTarget.scrollTop;
-      setScrollTop(scrollTop);
+
+      // Cancel previous RAF
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+
+      // Use RAF for smooth updates
+      rafRef.current = requestAnimationFrame(() => {
+        setScrollTop(scrollTop);
+      });
 
       if (loading || !hasMore || isFetchingRef.current) return;
 
       const scrollBottom = scrollTop + containerHeight;
-      const totalHeight = comments.length * ITEM_HEIGHT;
-
-      const triggerThreshold = 0.8 * containerHeight;
+      const triggerThreshold = containerHeight * 0.8;
 
       if (scrollBottom >= totalHeight - triggerThreshold) {
         const nextStartId = comments.length + 1;
@@ -132,6 +204,7 @@ const CommentsVirtualList: React.FC = () => {
       loading,
       fetchComments,
       lastFetchIndex,
+      totalHeight,
     ],
   );
 
@@ -143,110 +216,134 @@ const CommentsVirtualList: React.FC = () => {
     };
 
     updateContainerHeight();
-
     window.addEventListener('resize', updateContainerHeight);
 
     return () => {
       window.removeEventListener('resize', updateContainerHeight);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
   }, []);
-
-  const formatText = useCallback(
-    (text: string, maxLength: number = 100): string => {
-      if (text.length <= maxLength) return text;
-      return text.substring(0, maxLength) + '...';
-    },
-    [],
-  );
 
   return (
     <div
       ref={containerRef}
-      className="h-[700px] overflow-auto relative  border-gray-200"
+      className="h-[700px] overflow-auto relative bg-gray-50"
       onScroll={handleScroll}
     >
       <div className="relative w-full" style={{ height: `${totalHeight}px` }}>
-        {visibleComments.map((comment, index) => (
+        {visibleComments.map((comment) => (
           <CommentItem
             key={comment.id}
             comment={comment}
             style={{
               position: 'absolute',
-              top: `${comment.top + (index + 1) * 10}px`,
-              height: `${ITEM_HEIGHT}px`,
+              top: `${comment.top}px`,
               width: 'calc(100% - 2rem)',
               left: '1rem',
               right: '1rem',
             }}
-            formatText={formatText}
+            onHeightChange={handleHeightChange}
           />
         ))}
       </div>
 
       {loading && (
-        <div className="sticky bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 w-fit mx-auto">
-          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />{' '}
-          loading comments...
+        <div className="fixed bottom-8 left-1/2 transform bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 z-50">
+          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          <span className="font-medium">Loading comments...</span>
         </div>
       )}
 
       {!hasMore && comments.length > 0 && (
-        <div className="sticky bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg w-fit mx-auto">
-          end of list! ({comments.length.toLocaleString()} comments)
+        <div className="fixed bottom-8 left-1/2 transform bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+          🎉 All {comments.length} comments loaded!
         </div>
       )}
+
+      {/* Debug info */}
+      <div className="fixed top-4 right-4 bg-white p-3 rounded shadow text-xs font-mono z-50">
+        <div>Rendered: {visibleComments.length} items</div>
+        <div>
+          Range: {startIndex} - {endIndex}
+        </div>
+        <div>Total: {comments.length} items</div>
+        <div>Heights cached: {itemHeights.size}</div>
+      </div>
     </div>
   );
 };
 
+// Dynamic height measurement component
 const CommentItem: React.FC<CommentItemProps> = React.memo(
-  ({ comment, style, formatText }) => (
-    <div
-      className="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200 hover:border-blue-300"
-      style={style}
-      data-comment-id={comment.id}
-    >
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-3">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
-            #{comment.id}
+  ({ comment, style, onHeightChange }) => {
+    const itemRef = useRef<HTMLDivElement>(null);
+    const resizeObserverRef = useRef<ResizeObserver | null>(null);
+
+    useEffect(() => {
+      if (!itemRef.current) return;
+
+      // Create ResizeObserver to watch height changes
+      resizeObserverRef.current = new ResizeObserver((entries) => {
+        const entry = entries[0];
+        if (entry) {
+          const height = entry.contentRect.height;
+          onHeightChange(comment.actualIndex, height);
+        }
+      });
+
+      resizeObserverRef.current.observe(itemRef.current);
+
+      return () => {
+        if (resizeObserverRef.current) {
+          resizeObserverRef.current.disconnect();
+        }
+      };
+    }, [comment.actualIndex, onHeightChange]);
+
+    return (
+      <div
+        ref={itemRef}
+        className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200 hover:border-blue-300"
+        style={style}
+      >
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-3">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
+              #{comment.id}
+            </span>
+            <h3 className="text-sm font-semibold text-gray-800 break-words">
+              {comment.name}
+            </h3>
+          </div>
+          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded break-all">
+            {comment.email}
           </span>
-          <h3 className="text-sm font-semibold text-gray-800 break-words">
-            {formatText(comment.name, 40)}
-          </h3>
         </div>
-        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded break-all">
-          {comment.email}
-        </span>
-      </div>
 
-      <div className="mb-3">
-        <p className="text-sm text-gray-700 leading-relaxed">
-          {formatText(comment.body)}
-        </p>
-      </div>
+        <div className="mb-3">
+          <p className="text-sm text-gray-700 leading-relaxed">
+            {comment.body}
+          </p>
+        </div>
 
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded w-fit">
-          پست: {comment.postId}
-        </span>
-        <div className="flex gap-2">
-          <button
-            className="p-1 hover:bg-red-50 rounded transition-colors duration-200"
-            aria-label="لایک"
-          >
-            <span className="text-lg">❤️</span>
-          </button>
-          <button
-            className="p-1 hover:bg-blue-50 rounded transition-colors duration-200"
-            aria-label="پاسخ"
-          >
-            <span className="text-lg">↩️</span>
-          </button>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded w-fit">
+            Post: {comment.postId}
+          </span>
+          <div className="flex gap-2">
+            <button className="p-1 hover:bg-red-50 rounded transition-colors duration-200">
+              <span className="text-lg">❤️</span>
+            </button>
+            <button className="p-1 hover:bg-blue-50 rounded transition-colors duration-200">
+              <span className="text-lg">↩️</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  ),
+    );
+  },
 );
 
 CommentItem.displayName = 'CommentItem';
