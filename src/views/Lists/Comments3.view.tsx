@@ -86,7 +86,7 @@ function InfiniteScrollComments() {
             {page.comments?.map((comment: Comment) => (
               <div
                 key={comment.id}
-                className="rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
+                className="rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow shadow-gray-300 dark:shadow-gray-700"
               >
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex-shrink-0 flex items-center justify-center text-white font-semibold">

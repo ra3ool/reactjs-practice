@@ -229,7 +229,7 @@ const CommentsVirtualList: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="h-[700px] overflow-auto relative bg-gray-50"
+      className="h-[700px] overflow-auto relative"
       onScroll={handleScroll}
     >
       <div className="relative w-full" style={{ height: `${totalHeight}px` }}>
@@ -263,7 +263,7 @@ const CommentsVirtualList: React.FC = () => {
       )}
 
       {/* Debug info */}
-      <div className="fixed top-4 right-4 bg-white p-3 rounded shadow text-xs font-mono z-50">
+      <div className="fixed top-4 right-4 bg-bg-primary p-3 rounded shadow text-xs font-mono z-50">
         <div>Rendered: {visibleComments.length} items</div>
         <div>
           Range: {startIndex} - {endIndex}
@@ -305,7 +305,7 @@ const CommentItem: React.FC<CommentItemProps> = React.memo(
     return (
       <div
         ref={itemRef}
-        className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200 hover:border-blue-300"
+        className="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200 hover:border-blue-300"
         style={style}
       >
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-3">
@@ -313,23 +313,23 @@ const CommentItem: React.FC<CommentItemProps> = React.memo(
             <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
               #{comment.id}
             </span>
-            <h3 className="text-sm font-semibold text-gray-800 break-words">
+            <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 break-words">
               {comment.name}
             </h3>
           </div>
-          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded break-all">
+          <span className="text-xs text-gray-500 dark:text-gray-400 px-2 py-1 rounded break-all">
             {comment.email}
           </span>
         </div>
 
         <div className="mb-3">
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
             {comment.body}
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded w-fit">
+          <span className="text-xs text-gray-500 dark:text-gray-300 px-2 py-1 rounded w-fit">
             Post: {comment.postId}
           </span>
           <div className="flex gap-2">

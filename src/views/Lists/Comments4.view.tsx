@@ -92,10 +92,10 @@ function InfiniteScrollComments() {
       )}
 
       <div className="space-y-4">
-        {comments.map((comment) => (
+        {comments?.map((comment: Comment) => (
           <div
             key={comment.id}
-            className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
+            className="rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow shadow-gray-300 dark:shadow-gray-700"
           >
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex-shrink-0 flex items-center justify-center text-white font-semibold">
@@ -103,14 +103,16 @@ function InfiniteScrollComments() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-semibold text-slate-800 truncate">
+                  <h3 className="font-semibold text-slate-800 dark:text-slate-200 truncate">
                     {comment.name}
                   </h3>
                 </div>
                 <p className="text-sm text-blue-600 mb-2 truncate">
                   {comment.email}
                 </p>
-                <p className="text-slate-600 leading-relaxed">{comment.body}</p>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {comment.body}
+                </p>
               </div>
             </div>
           </div>
