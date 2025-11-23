@@ -1,7 +1,7 @@
 {
   "name": "react",
   "private": true,
-  "version": "2.2.12",
+  "version": "2.2.13",
   "type": "module",
   "homepage": "/reactjs-practice",
   "scripts": {
