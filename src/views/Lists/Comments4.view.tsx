@@ -11,68 +11,60 @@ function InfiniteScrollComments() {
   const [error, setError] = useState<string | null>(null);
 
   const observerTarget = useRef<HTMLDivElement>(null);
-  const hasFetchedInitial = useRef<boolean>(false);
+  const hasFetchedInitial = useRef(false);
+  const isFetching = useRef(false);
 
-  const fetchComments = async (pageNum: number) => {
-    try {
-      setLoading(true);
-      setError(null);
+  useEffect(() => {
+    if (page === 0 && hasFetchedInitial.current) return;
+    if (page === 0) hasFetchedInitial.current = true;
+    if (isFetching.current) return;
 
-      const start = pageNum * ITEMS_PER_PAGE;
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/comments?_start=${start}&_limit=${ITEMS_PER_PAGE}`,
-      );
+    isFetching.current = true;
 
-      if (!response.ok) throw new Error('Failed to fetch');
+    const fetchComments = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-      const data = await response.json();
+        const start = page * ITEMS_PER_PAGE;
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/comments?_start=${start}&_limit=${ITEMS_PER_PAGE}`,
+        );
 
-      if (data.length < ITEMS_PER_PAGE) {
-        setHasMore(false);
+        if (!response.ok) throw new Error('Failed to fetch');
+
+        const data = await response.json();
+
+        if (data.length < ITEMS_PER_PAGE) setHasMore(false);
+
+        setComments((prev) => [...prev, ...data]);
+      } catch (error: unknown) {
+        setError(error instanceof Error ? error.message : 'An error occurred');
+      } finally {
+        setLoading(false);
+        isFetching.current = false;
       }
+    };
 
-      setComments((prev) => [...prev, ...data]);
-      setLoading(false);
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : 'An error occurred');
-      setLoading(false);
-    }
-  };
+    fetchComments();
+  }, [page]);
 
   useEffect(() => {
-    if (!hasFetchedInitial.current) {
-      hasFetchedInitial.current = true;
-      fetchComments(0);
-    }
-  }, []);
+    const target = observerTarget.current;
+    if (!target) return;
 
-  useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !loading) {
+      ([entry]) => {
+        if (entry.isIntersecting && hasMore && !loading) {
           setPage((prev) => prev + 1);
         }
       },
       { threshold: 0.1 },
     );
 
-    const currentTarget = observerTarget.current;
-    if (currentTarget) {
-      observer.observe(currentTarget);
-    }
-
-    return () => {
-      if (currentTarget) {
-        observer.unobserve(currentTarget);
-      }
-    };
+    observer.observe(target);
+    return () => observer.disconnect();
   }, [hasMore, loading]);
-
-  useEffect(() => {
-    if (page > 0) {
-      fetchComments(page);
-    }
-  }, [page]);
 
   if (error && comments.length === 0) {
     return (

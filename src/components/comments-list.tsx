@@ -15,12 +15,11 @@ export default function CommentsList({ pageSize }: { pageSize?: number }) {
     [data],
   );
 
-  const rowCount = allComments.length;
+  const rowCount = hasNextPage ? allComments.length + 1 : allComments.length;
 
   const rowVirtualizer = useVirtualizer({
     count: rowCount,
     getScrollElement: () => parentRef.current,
-    // Estimate size includes the item height + the gap below it.
     estimateSize: () => 140, // 120 for comment + 20 for gap
     overscan: 5,
   });
@@ -31,27 +30,19 @@ export default function CommentsList({ pageSize }: { pageSize?: number }) {
     const lastItem = virtualItems[virtualItems.length - 1];
     if (!lastItem) return;
 
-    // Trigger fetch when the last item comes into view
-    const shouldLoadMore =
+    if (
       lastItem.index >= allComments.length - 1 &&
       hasNextPage &&
-      !isFetchingNextPage;
-
-    if (shouldLoadMore) {
+      !isFetchingNextPage
+    ) {
       fetchNextPage();
     }
-  }, [
-    virtualItems,
-    allComments.length,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-  ]);
+  }, [virtualItems, allComments.length, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isLoading) {
     return (
       <div className="h-[660px] flex items-center justify-center">
-        <div className="text-gray-600">Loading comments...</div>
+        <div className="text-gray-600">Loading initial comments...</div>
       </div>
     );
   }
@@ -63,17 +54,41 @@ export default function CommentsList({ pageSize }: { pageSize?: number }) {
         <a
           href="https://tanstack.com/virtual/latest/docs/introduction"
           target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:underline"
         >
-          https://tanstack.com/virtual/latest/docs/introduction
+          tanstack.com/virtual
         </a>
       </p>
-      <div ref={parentRef} className="h-[660px] overflow-auto">
+      <div ref={parentRef} className="h-[660px] overflow-auto rounded-lg">
         <div
           style={{ height: `${rowVirtualizer.getTotalSize()}px` }}
           className="w-full relative"
         >
           {virtualItems.map((virtualRow) => {
+            const isLoaderRow = virtualRow.index > allComments.length - 1;
             const comment = allComments[virtualRow.index];
+
+            if (isLoaderRow) {
+              return (
+                <div
+                  key="loader"
+                  style={{ transform: `translateY(${virtualRow.start}px)` }}
+                  className="absolute top-0 right-0 w-full"
+                >
+                  {hasNextPage ? (
+                    <div className="text-center py-4">
+                      Loading more comments...
+                    </div>
+                  ) : (
+                    <div className="text-center text-sm text-gray-500 dark:text-gray-400 py-4">
+                      End of comments ({allComments.length} total)
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             if (!comment) return null;
 
             return (
@@ -86,14 +101,6 @@ export default function CommentsList({ pageSize }: { pageSize?: number }) {
             );
           })}
         </div>
-        {!hasNextPage && allComments.length > 0 && (
-          <div className="text-center text-sm text-gray-500 dark:text-gray-400">
-            End of comments ({allComments.length} total)
-          </div>
-        )}
-        {isFetchingNextPage && (
-          <div className="text-center py-4">Loading more comments...</div>
-        )}
       </div>
     </>
   );
@@ -113,7 +120,7 @@ const CommentRow = memo(
       if (rowRef.current) {
         measureElement(rowRef.current);
       }
-    }, [measureElement]);
+    }, [measureElement, virtual.size]);
 
     const expanded = useCommentsStore((s) => s.expanded[comment.id]);
     const toggle = useCommentsStore((s) => s.toggleExpand);
@@ -129,15 +136,21 @@ const CommentRow = memo(
         style={{ transform: `translateY(${virtual.start}px)` }}
         className="absolute top-0 right-0 w-full"
       >
-        <div className="p-4 border rounded-xl hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors mx-2 mb-5">
+        <div className="p-4 border rounded-xl hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors mx-2 mb-5 shadow-sm">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold truncate">{comment.name}</h3>
+              <h3 className="font-semibold truncate text-gray-800 dark:text-gray-200">
+                {comment.name}
+              </h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                 {comment.email}
               </p>
               <p className="text-gray-700 dark:text-gray-100 whitespace-pre-wrap break-words">
-                {expanded ? comment.body : `${comment.body.slice(0, 50)}...`}
+                {expanded
+                  ? comment.body
+                  : `${comment.body.slice(0, 100)}${
+                      comment.body.length > 100 ? '...' : ''
+                    }`}
               </p>
             </div>
           </div>
@@ -147,7 +160,7 @@ const CommentRow = memo(
             aria-expanded={expanded}
             aria-label={expanded ? 'Collapse comment' : 'Expand comment'}
           >
-            {expanded ? '← Collapse' : 'Expand →'}
+            {expanded ? 'Show Less' : 'Show More'}
           </button>
         </div>
       </div>
