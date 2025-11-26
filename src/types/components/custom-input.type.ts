@@ -9,7 +9,7 @@ export interface CustomInputProps {
   onChange?: (value: string) => void;
   onFocus?: (event: FocusEvent<HTMLInputElement, Element>) => void;
   onBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
-  name: string;
+  name?: string;
   icon?: string;
   autoComplete?: string;
   className?: string;
