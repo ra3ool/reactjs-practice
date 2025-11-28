@@ -1,7 +1,7 @@
 import ChatComponent from '@/components/ChatComponent';
 import { SocketProvider } from '@/contexts/SocketContext';
 
-const socketUrl = import.meta.env.SOCKET_UTL;
+const socketUrl = import.meta.env.VITE_SOCKET_UTL;
 
 const socketOptions = {
   query: {
