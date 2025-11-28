@@ -28,7 +28,6 @@ export default function DemoView() {
     //don't do this ever!!!
     //this is just for times the auth server is down and just for testing!
     setLoginData(testUser);
-    navigateTo('home');
   };
   const handleLogout = async () => {
     await logoutWithToast();
@@ -106,9 +105,11 @@ export default function DemoView() {
           ) : (
             <CustomButton onClick={handleLogout}>Logout</CustomButton>
           )}
-          <CustomButton variant="secondary" onClick={loginTestUser}>
-            Login as test user (if server does not response)
-          </CustomButton>
+          {!isAuthenticated && (
+            <CustomButton variant="secondary" onClick={loginTestUser}>
+              Login as test user (if server does not response)
+            </CustomButton>
+          )}
         </section>
 
         {/* ACL Demo */}
