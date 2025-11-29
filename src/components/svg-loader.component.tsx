@@ -57,11 +57,9 @@ interface SvgLoaderComponent extends FC<SvgLoaderProps> {
 }
 
 // Memoize first, then cast safely to SvgLoaderComponent
-const SvgLoader = memo((props: SvgLoaderProps) => (
+export const SvgLoader = memo((props: SvgLoaderProps) => (
   <SvgRenderer {...props} />
 )) as unknown as SvgLoaderComponent;
 
 // Attach the preload method
 SvgLoader.preload = preloadSvg;
-
-export default SvgLoader;

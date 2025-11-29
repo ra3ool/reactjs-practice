@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { SvgLoader } from '@/components/svg-loader.component';
 import { ExpansionPanelProps } from '@/types';
-import SvgLoader from './svg-loader.component';
+import { useEffect, useRef, useState } from 'react';
 
-export default function ExpansionPanel({
+export function ExpansionPanel({
   title = 'Panel Title',
   children,
   isExpanded: isExpandedProp = false,

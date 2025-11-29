@@ -1,4 +1,6 @@
-import { Loading, NothingFound, Pagination } from '@/components';
+import { Loading } from '@/components/loading.component';
+import { NothingFound } from '@/components/nothing-found.component';
+import { Pagination } from '@/components/pagination.component';
 import { paginateData, sortData } from '@/helpers';
 import { CustomTableProps, TableCell, TableHeader, TableRow } from '@/types';
 import PropTypes from 'prop-types';
@@ -15,7 +17,7 @@ const TableCellRender = ({
   return render ? (render(row) as ReactNode) : (row[key] as TableCell);
 };
 
-export default function CustomTable(props: CustomTableProps) {
+export function CustomTable(props: CustomTableProps) {
   const {
     headers,
     data,

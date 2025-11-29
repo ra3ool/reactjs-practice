@@ -1,4 +1,4 @@
-import ChatComponent from '@/components/ChatComponent';
+import { ChatComponent } from '@/components/chat-component.component';
 import { SocketProvider } from '@/contexts/SocketContext';
 
 const socketUrl = import.meta.env.VITE_SOCKET_UTL;

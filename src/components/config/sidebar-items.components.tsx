@@ -1,5 +1,5 @@
 import { useAuthBridge } from '@/bridges';
-import { CustomToggle } from '@/components';
+import { CustomToggle } from '@/components/custom-toggle.component';
 import {
   authRoutes,
   baseRoutes,
@@ -35,7 +35,8 @@ export function useSidebarItems(): SidebarItem[] {
         title: (baseRoutes?.lists as RouteGroup)?.root?.label as string,
         group: [
           {
-            title: (baseRoutes?.lists as RouteGroup)?.comments1?.label as string,
+            title: (baseRoutes?.lists as RouteGroup)?.comments1
+              ?.label as string,
             path: (baseRoutes?.lists as RouteGroup)?.comments1?.path as string,
           },
           {

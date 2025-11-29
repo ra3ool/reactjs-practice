@@ -9,7 +9,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 type SystemEvent = UserJoinLeaveEvent;
 type AllMessageEvents = SocketMessage | ChatMessageEvent | SystemEvent;
 
-const AnimatedChatComponent: React.FC = () => {
+export const ChatComponent: React.FC = () => {
   const [messages, setMessages] = useState<AllMessageEvents[]>([]);
   const [inputMessage, setInputMessage] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -254,5 +254,3 @@ const AnimatedChatComponent: React.FC = () => {
     </div>
   );
 };
-
-export default AnimatedChatComponent;

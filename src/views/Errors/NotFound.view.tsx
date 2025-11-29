@@ -1,4 +1,4 @@
-import { CustomButton } from '@/components';
+import { CustomButton } from '@/components/custom-button.component';
 import { baseRoutes } from '@/constants';
 import { Link } from 'react-router';
 

@@ -1,6 +1,6 @@
 import { CustomToggleProps } from '@/types';
 
-export default function Toggle({
+export function CustomToggle({
   toggle,
   isActive = true,
   hasBiggerBubble = false,

@@ -1,5 +1,5 @@
 import { useAuthBridge } from '@/bridges';
-import { CustomButton } from '@/components';
+import { CustomButton } from '@/components/custom-button.component';
 import { userRoles } from '@/constants';
 import { useRouteNavigation } from '@/hooks';
 import { useAuthStore } from '@/stores';

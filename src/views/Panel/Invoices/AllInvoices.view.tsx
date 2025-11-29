@@ -1,9 +1,7 @@
-import {
-  CustomButton,
-  CustomInput,
-  CustomTable,
-  Pagination,
-} from '@/components';
+import { CustomButton } from '@/components/custom-button.component';
+import { CustomInput } from '@/components/custom-input.component';
+import { CustomTable } from '@/components/custom-table.component';
+import { Pagination } from '@/components/pagination.component';
 import { useRouteNavigation } from '@/hooks';
 import { useInvoiceStore } from '@/stores';
 import { FetchInvoicesResponse, Invoice, TableHeader } from '@/types';

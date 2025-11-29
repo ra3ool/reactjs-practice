@@ -1,4 +1,4 @@
-import { CommentsList } from '@/components';
+import { CommentsList } from '@/components/comments-list.component';
 import React from 'react';
 
 const CommentsVirtualListView: React.FC = () => {

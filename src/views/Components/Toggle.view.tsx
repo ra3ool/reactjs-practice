@@ -1,4 +1,4 @@
-import { CustomToggle } from '@/components';
+import { CustomToggle } from '@/components/custom-toggle.component';
 import { useState } from 'react';
 
 export default function ToggleView() {

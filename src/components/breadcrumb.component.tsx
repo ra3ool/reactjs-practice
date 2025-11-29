@@ -1,11 +1,11 @@
-import { SvgLoader } from '@/components';
+import { SvgLoader } from '@/components/svg-loader.component';
 import { flatRoutesByPath } from '@/constants';
 import { useRouteNavigation } from '@/hooks';
 import { RouteType } from '@/types';
 import { useMemo } from 'react';
 import { Link } from 'react-router';
 
-export default function Breadcrumb({ className }: { className?: string }) {
+export function Breadcrumb({ className }: { className?: string }) {
   const { currentRoute } = useRouteNavigation();
 
   const breadcrumbs = useMemo(() => {

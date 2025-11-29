@@ -1,4 +1,4 @@
-import Loading from '@/components/loading.component';
+import { Loading } from '@/components/loading.component';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 

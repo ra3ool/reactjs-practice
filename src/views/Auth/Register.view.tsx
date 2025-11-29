@@ -1,4 +1,5 @@
-import { CustomButton, CustomInput } from '@/components';
+import { CustomButton } from '@/components/custom-button.component';
+import { CustomInput } from '@/components/custom-input.component';
 import { authRoutes } from '@/constants';
 import { authSchema } from '@/schemas';
 import { useAuthStore } from '@/stores';
@@ -164,7 +165,7 @@ function RegisterView() {
             </div>
 
             <CustomButton
-            className='w-full'
+              className="w-full"
               type="submit"
               aria-label="Create a new account"
               loading={isPending}

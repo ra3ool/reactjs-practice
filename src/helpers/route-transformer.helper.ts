@@ -1,4 +1,4 @@
-import { RouteWrapper } from '@/components';
+import { RouteWrapper } from '@/components/route-wrapper.component';
 import { RouteConfig } from '@/types';
 import { createElement } from 'react';
 import { Navigate } from 'react-router';

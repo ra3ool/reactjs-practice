@@ -1,4 +1,4 @@
-import { SvgLoader } from '@/components';
+import { SvgLoader } from '@/components/svg-loader.component';
 import { baseRoutes } from '@/constants';
 import { Link } from 'react-router';
 

@@ -1,4 +1,7 @@
-import { CustomDropdown, DropdownItem } from '@/components';
+import {
+  CustomDropdown,
+  DropdownItem,
+} from '@/components/custom-dropdown.component';
 
 export default function DropdownView() {
   return (

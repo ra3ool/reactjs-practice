@@ -1,4 +1,4 @@
-import { SvgLoader } from '@/components';
+import { SvgLoader } from '@/components/svg-loader.component';
 import { CustomInputProps } from '@/types';
 import { FocusEvent, memo, useId, useState } from 'react';
 
@@ -11,115 +11,117 @@ const inputStyles = {
   floatingLabel: 'border px-3 pt-4 pb-2 rounded-md',
 };
 
-function CustomInput({
-  label,
-  id,
-  ref,
-  type = 'text',
-  placeholder = '',
-  name,
-  value = '',
-  className = '',
-  inputClassName = '',
-  disabled = false,
-  inputStyle = 'border',
-  icon,
-  hasError = false,
-  errorText,
-  autoComplete,
-  onChange,
-  onFocus,
-  onBlur,
-}: CustomInputProps) {
-  const randomId = useId();
-  const inputId = id || randomId;
-  const errorId = `${inputId}-error`;
-  const [isFocused, setIsFocused] = useState(false);
+export const CustomInput = memo(
+  ({
+    label,
+    id,
+    ref,
+    type = 'text',
+    placeholder = '',
+    name,
+    value = '',
+    className = '',
+    inputClassName = '',
+    disabled = false,
+    inputStyle = 'border',
+    icon,
+    hasError = false,
+    errorText,
+    autoComplete,
+    onChange,
+    onFocus,
+    onBlur,
+  }: CustomInputProps) => {
+    const randomId = useId();
+    const inputId = id || randomId;
+    const errorId = `${inputId}-error`;
+    const [isFocused, setIsFocused] = useState(false);
 
-  const showLabel = label && inputStyle !== 'floatingLabel';
-  const ariaLabel = !showLabel ? label || placeholder : undefined;
+    const showLabel = label && inputStyle !== 'floatingLabel';
+    const ariaLabel = !showLabel ? label || placeholder : undefined;
 
-  const onChangeHandler = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    if (onChange) onChange(value);
-  };
+    const onChangeHandler = ({
+      target: { value },
+    }: {
+      target: { value: string };
+    }) => {
+      if (onChange) onChange(value);
+    };
 
-  const onFocusHandler = (event: FocusEvent<HTMLInputElement, Element>) => {
-    if (inputStyle === 'floatingLabel' && !event.target.value)
-      setIsFocused(true);
-    if (typeof onFocus === 'function') onFocus(event);
-  };
+    const onFocusHandler = (event: FocusEvent<HTMLInputElement, Element>) => {
+      if (inputStyle === 'floatingLabel' && !event.target.value)
+        setIsFocused(true);
+      if (typeof onFocus === 'function') onFocus(event);
+    };
 
-  const onBlurHandler = (event: FocusEvent<HTMLInputElement, Element>) => {
-    if (inputStyle === 'floatingLabel' && !event.target.value)
-      setIsFocused(false);
-    if (typeof onBlur === 'function') onBlur(event);
-  };
+    const onBlurHandler = (event: FocusEvent<HTMLInputElement, Element>) => {
+      if (inputStyle === 'floatingLabel' && !event.target.value)
+        setIsFocused(false);
+      if (typeof onBlur === 'function') onBlur(event);
+    };
 
-  return (
-    <div className={`flex flex-col space-y-1 select-none ${className}`}>
-      {showLabel && (
-        <label
-          htmlFor={inputId}
-          className="text-sm font-medium text-gray-900 dark:text-gray-100"
-        >
-          {label}
-        </label>
-      )}
-      <div className="relative">
-        {icon && (
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <SvgLoader name={icon} color="currentColor" />
-          </div>
-        )}
-        <input
-          name={name}
-          ref={ref}
-          id={inputId}
-          type={type}
-          placeholder={
-            inputStyle === 'floatingLabel' && !placeholder
-              ? undefined
-              : placeholder
-          }
-          value={value}
-          onChange={onChangeHandler}
-          onFocus={onFocusHandler}
-          onBlur={onBlurHandler}
-          className={`${baseInputClasses} ${inputClassName} ${
-            inputStyles[inputStyle]
-          } ${icon ? 'pl-10' : ''} ${
-            hasError
-              ? 'border-red-500 dark:border-red-400'
-              : 'focus:border-indigo-500'
-          }`}
-          disabled={disabled}
-          aria-invalid={!!hasError}
-          aria-describedby={hasError ? errorId : undefined}
-          aria-label={ariaLabel}
-          autoComplete={autoComplete}
-        />
-        {inputStyle === 'floatingLabel' && (label || placeholder) && (
+    return (
+      <div className={`flex flex-col space-y-1 select-none ${className}`}>
+        {showLabel && (
           <label
             htmlFor={inputId}
-            className={`absolute left-2 top-4 px-1.5 text-sm duration-200 pointer-events-none origin-top-left text-gray-700 dark:text-gray-300 ${
-              isFocused || value || placeholder ? 'scale-75 -translate-y-3' : ''
-            } ${icon ? 'left-10' : ''}`}
+            className="text-sm font-medium text-gray-900 dark:text-gray-100"
           >
-            {label || placeholder}
+            {label}
           </label>
         )}
-        {hasError && (
-          <p id={errorId} className="mt-1 text-sm text-red-500">
-            {errorText ? errorText : DEFAULT_ERROR_TEXT}
-          </p>
-        )}
+        <div className="relative">
+          {icon && (
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <SvgLoader name={icon} color="currentColor" />
+            </div>
+          )}
+          <input
+            name={name}
+            ref={ref}
+            id={inputId}
+            type={type}
+            placeholder={
+              inputStyle === 'floatingLabel' && !placeholder
+                ? undefined
+                : placeholder
+            }
+            value={value}
+            onChange={onChangeHandler}
+            onFocus={onFocusHandler}
+            onBlur={onBlurHandler}
+            className={`${baseInputClasses} ${inputClassName} ${
+              inputStyles[inputStyle]
+            } ${icon ? 'pl-10' : ''} ${
+              hasError
+                ? 'border-red-500 dark:border-red-400'
+                : 'focus:border-indigo-500'
+            }`}
+            disabled={disabled}
+            aria-invalid={!!hasError}
+            aria-describedby={hasError ? errorId : undefined}
+            aria-label={ariaLabel}
+            autoComplete={autoComplete}
+          />
+          {inputStyle === 'floatingLabel' && (label || placeholder) && (
+            <label
+              htmlFor={inputId}
+              className={`absolute left-2 top-4 px-1.5 text-sm duration-200 pointer-events-none origin-top-left text-gray-700 dark:text-gray-300 ${
+                isFocused || value || placeholder
+                  ? 'scale-75 -translate-y-3'
+                  : ''
+              } ${icon ? 'left-10' : ''}`}
+            >
+              {label || placeholder}
+            </label>
+          )}
+          {hasError && (
+            <p id={errorId} className="mt-1 text-sm text-red-500">
+              {errorText ? errorText : DEFAULT_ERROR_TEXT}
+            </p>
+          )}
+        </div>
       </div>
-    </div>
-  );
-}
-
-export default memo(CustomInput);
+    );
+  },
+);

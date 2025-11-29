@@ -1,4 +1,4 @@
-import { ExpansionPanel } from '@/components';
+import { ExpansionPanel } from '@/components/expansion-panel.component';
 
 export default function ExpansionPanelView() {
   return (

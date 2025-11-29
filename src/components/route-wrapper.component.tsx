@@ -1,8 +1,9 @@
-import { Loading, ProtectedRoute } from '@/components';
+import { Loading } from '@/components/loading.component';
+import { ProtectedRoute } from '@/components/protected-route.component';
 import { RouteWrapperProps } from '@/types';
 import { Suspense, useEffect } from 'react';
 
-export default function RouteWrapper({ route, children }: RouteWrapperProps) {
+export function RouteWrapper({ route, children }: RouteWrapperProps) {
   useEffect(() => {
     // Update document title
     document.title = route.meta?.title

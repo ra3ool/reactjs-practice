@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
-export default function ReloadPrompt(): JSX.Element | null {
+export function ReloadPrompt(): JSX.Element | null {
   const {
     offlineReady: [offlineReady, setOfflineReady],
     needRefresh: [needRefresh, setNeedRefresh],

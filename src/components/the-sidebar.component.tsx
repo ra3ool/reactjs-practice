@@ -1,10 +1,10 @@
+import { ExpansionPanel } from '@/components/expansion-panel.component';
 import { SidebarProps } from '@/types';
 import { NavLink } from 'react-router';
-import { ExpansionPanel } from '.';
 
 const DEFAULT_ITEM_CLASS = 'flex justify-between align-middle p-3 rounded-xl';
 
-export default function Sidebar({
+export function TheSidebar({
   title,
   items,
   className,
@@ -40,7 +40,7 @@ export default function Sidebar({
           } else if (item.group) {
             return (
               <ExpansionPanel key={item.title} title={item.title}>
-                <Sidebar
+                <TheSidebar
                   items={item.group}
                   itemClassName={itemClassName}
                   activeItemClassName={activeItemClassName}

@@ -1,4 +1,4 @@
-import { CustomInput } from '@/components';
+import { CustomInput } from '@/components/custom-input.component';
 import { useHeader } from '@/contexts';
 import { useAuthStore } from '@/stores';
 import { useEffect } from 'react';

@@ -1,4 +1,4 @@
-import { CustomInput } from '@/components';
+import { CustomInput } from '@/components/custom-input.component';
 import { useState } from 'react';
 
 export default function InputView() {

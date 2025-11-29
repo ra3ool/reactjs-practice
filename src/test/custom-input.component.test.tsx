@@ -1,7 +1,7 @@
+import { CustomInput } from '@/components/custom-input.component';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import CustomInput from '@/components/custom-input.component';
 
 // Mock SvgLoader
 vi.mock('@/components', () => ({

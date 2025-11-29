@@ -1,4 +1,5 @@
-import { CustomTable, Pagination } from '@/components';
+import { CustomTable } from '@/components/custom-table.component';
+import { Pagination } from '@/components/pagination.component';
 import { paginateData } from '@/helpers';
 import { useTable } from '@/hooks';
 import { FetchData, TableCell, TableHeader, TableRow } from '@/types';

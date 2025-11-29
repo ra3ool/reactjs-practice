@@ -1,4 +1,4 @@
-import { CustomButton } from '@/components';
+import { CustomButton } from '@/components/custom-button.component';
 
 export default function ButtonView() {
   return (

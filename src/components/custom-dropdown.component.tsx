@@ -1,7 +1,7 @@
 import { DropdownItemProps, DropdownProps } from '@/types';
 import { cloneElement, useEffect, useRef, useState } from 'react';
 
-export default function CustomDropdown({
+export function CustomDropdown({
   trigger,
   triggerText = 'dropdown',
   children,

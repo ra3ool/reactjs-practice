@@ -5,7 +5,7 @@ import type { VirtualItem } from '@tanstack/react-virtual';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
-export default function CommentsList({ pageSize }: { pageSize?: number }) {
+export function CommentsList({ pageSize }: { pageSize?: number }) {
   const parentRef = useRef<HTMLDivElement | null>(null);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useCommentsQuery(pageSize);
@@ -37,7 +37,13 @@ export default function CommentsList({ pageSize }: { pageSize?: number }) {
     ) {
       fetchNextPage();
     }
-  }, [virtualItems, allComments.length, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [
+    virtualItems,
+    allComments.length,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  ]);
 
   if (isLoading) {
     return (

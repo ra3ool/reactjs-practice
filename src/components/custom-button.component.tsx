@@ -1,4 +1,4 @@
-import { SvgLoader } from '@/components';
+import { SvgLoader } from '@/components/svg-loader.component';
 import { CustomButtonProps } from '@/types';
 import { memo } from 'react';
 
@@ -19,37 +19,37 @@ const sizeStyles = {
   lg: 'px-6 py-3 text-lg',
 };
 
-function CustomButton({
-  children,
-  variant = 'primary',
-  size = 'md',
-  prependIcon,
-  appendIcon,
-  className = '',
-  disabled = false,
-  loading = false,
-  type = 'button',
-  ...otherProps
-}: CustomButtonProps) {
-  return (
-    <button
-      className={`${baseButtonClasses} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
-      disabled={disabled || loading}
-      aria-busy={loading}
-      type={type}
-      {...otherProps}
-    >
-      {loading ? (
-        <SvgLoader width={24} height={24} name="spinner" />
-      ) : (
-        <>
-          {prependIcon && <SvgLoader name={prependIcon} />}
-          {children}
-          {appendIcon && <SvgLoader name={appendIcon} />}
-        </>
-      )}
-    </button>
-  );
-}
-
-export default memo(CustomButton);
+export const CustomButton = memo(
+  ({
+    children,
+    variant = 'primary',
+    size = 'md',
+    prependIcon,
+    appendIcon,
+    className = '',
+    disabled = false,
+    loading = false,
+    type = 'button',
+    ...otherProps
+  }: CustomButtonProps) => {
+    return (
+      <button
+        className={`${baseButtonClasses} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+        disabled={disabled || loading}
+        aria-busy={loading}
+        type={type}
+        {...otherProps}
+      >
+        {loading ? (
+          <SvgLoader width={24} height={24} name="spinner" />
+        ) : (
+          <>
+            {prependIcon && <SvgLoader name={prependIcon} />}
+            {children}
+            {appendIcon && <SvgLoader name={appendIcon} />}
+          </>
+        )}
+      </button>
+    );
+  },
+);

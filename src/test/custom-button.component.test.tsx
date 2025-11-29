@@ -1,7 +1,7 @@
+import { CustomButton } from '@/components/custom-button.component';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import CustomButton from '@/components/custom-button.component';
 
 // Mock SvgLoader component
 vi.mock('@/components', () => ({

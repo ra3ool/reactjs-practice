@@ -5,7 +5,7 @@ import { ProtectedRouteProps } from '@/types';
 import AccessDeniedView from '@/views/Errors/AccessDenied.view';
 import { Navigate } from 'react-router';
 
-export default function ProtectedRoute({
+export function ProtectedRoute({
   children,
   routMeta,
   routeName,

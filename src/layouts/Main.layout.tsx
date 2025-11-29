@@ -1,5 +1,8 @@
-import { Breadcrumb, CustomButton, Header, Sidebar } from '@/components';
+import { Breadcrumb } from '@/components/breadcrumb.component';
 import { useSidebarItems } from '@/components/config/sidebar-items.components';
+import { CustomButton } from '@/components/custom-button.component';
+import { TheHeader } from '@/components/the-header.component';
+import { TheSidebar } from '@/components/the-sidebar.component';
 import { HeaderContext } from '@/contexts';
 import { useRouteNavigation, useTheme } from '@/hooks';
 import { useEffect, useState } from 'react';
@@ -69,7 +72,7 @@ export default function Layout() {
             sidebarOpen ? 'translate-x-0' : '-translate-x-full left-0'
           } md:translate-x-0`}
         >
-          <Sidebar
+          <TheSidebar
             title="Simple Panel"
             items={sideBarItems}
             className="py-6 px-2 rounded-3xl bg-bg-primary text-text-primary shadow-2xl md:shadow"
@@ -80,7 +83,7 @@ export default function Layout() {
         <div className="grow flex flex-col">
           <HeaderContext.Provider value={{ setHeaderTitle }}>
             <div className="layout-content flex flex-col gap-6 h-full">
-              <Header title={headerTitleChildren} />
+              <TheHeader title={headerTitleChildren} />
               <div className="flex flex-col grow w-full bg-bg-primary text-text-primary shadow p-3 rounded-xl">
                 <Breadcrumb className="mb-5" />
                 <Outlet />

@@ -1,4 +1,6 @@
-import { CustomButton, CustomInput, SvgLoader } from '@/components';
+import { CustomButton } from '@/components/custom-button.component';
+import { CustomInput } from '@/components/custom-input.component';
+import { SvgLoader } from '@/components/svg-loader.component';
 import { authRoutes } from '@/constants';
 import { authSchema } from '@/schemas';
 import { useAuthStore } from '@/stores';
