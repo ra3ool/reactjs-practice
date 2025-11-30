@@ -1,120 +1,58 @@
-import {
-  SocketActions,
-  // SocketEventData,
-  SocketMessage,
-  SocketOptions,
-  SocketState,
-} from '@/types/socket.types';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useSocketContext } from '@/contexts/SocketContext';
+import { useCallback, useEffect, useState } from 'react';
 
-export const useSocket = (
-  url: string,
-  options: SocketOptions = {},
-): SocketState & SocketActions => {
-  const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [lastMessage, setLastMessage] = useState<SocketMessage | null>(null);
+export const useSocket = () => {
+  const socket = useSocketContext();
+  const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastError, setLastError] = useState<Error | null>(null);
-  const socketRef = useRef<Socket | null>(null);
 
-  const connect = useCallback((): void => {
-    try {
-      socketRef.current = io(url, {
-        transports: ['websocket'],
-        autoConnect: false,
-        ...options,
-      });
+  useEffect(() => {
+    const onConnect = () => {
+      setIsConnected(true);
+      setLastError(null);
+    };
 
-      if (!socketRef.current) return;
-
-      socketRef.current.on('connect', () => {
-        setIsConnected(true);
-        setLastError(null);
-        console.log('Socket connected successfully');
-      });
-
-      socketRef.current.on('disconnect', () => {
-        setIsConnected(false);
-        console.log('Socket disconnected');
-      });
-
-      socketRef.current.on('error', (error: Error) => {
-        setLastError(error);
-        console.error('Socket error:', error);
-      });
-
-      socketRef.current.on('connect_error', (error: Error) => {
-        setLastError(error);
-        console.error('Socket connection error:', error);
-      });
-
-      socketRef.current.on('chat message', (message: SocketMessage) => {
-        setLastMessage(message);
-      });
-
-      socketRef.current.connect();
-    } catch (error) {
-      const socketError =
-        error instanceof Error ? error : new Error('Unknown socket error');
-      setLastError(socketError);
-      console.error('Failed to initialize socket:', socketError);
-    }
-  }, [url, options]);
-
-  const disconnect = useCallback((): void => {
-    if (socketRef.current) {
-      socketRef.current.disconnect();
-      socketRef.current = null;
+    const onDisconnect = () => {
       setIsConnected(false);
-      console.log('Socket manually disconnected');
-    }
-  }, []);
+    };
+
+    const onError = (err: unknown) => {
+      setLastError(err instanceof Error ? err : new Error(String(err)));
+    };
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('connect_error', onError);
+    socket.on('error', onError);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('connect_error', onError);
+      socket.off('error', onError);
+    };
+  }, [socket]);
 
   const emit = useCallback(
-    <T = unknown>(event: string, data: T): void => {
-      if (socketRef.current && isConnected) {
-        socketRef.current.emit(event, data);
-      } else {
-        console.warn('Socket not connected. Cannot emit event:', event);
-      }
+    <T>(event: string, payload: T) => {
+      socket.emit(event, payload);
     },
-    [isConnected],
+    [socket],
   );
 
   const on = useCallback(
-    <T = unknown>(event: string, callback: (data: T) => void): void => {
-      if (socketRef.current) {
-        socketRef.current.on(event, callback);
-      }
+    <T>(event: string, callback: (data: T) => void) => {
+      socket.on(event, callback);
     },
-    [],
+    [socket],
   );
 
   const off = useCallback(
-    <T = unknown>(event: string, callback: (data: T) => void): void => {
-      if (socketRef.current) {
-        socketRef.current.off(event, callback);
-      }
+    <T>(event: string, callback: (data: T) => void) => {
+      socket.off(event, callback);
     },
-    [],
+    [socket],
   );
 
-  useEffect(() => {
-    connect();
-
-    return () => {
-      disconnect();
-    };
-  }, [connect, disconnect]);
-
-  return {
-    isConnected,
-    lastMessage,
-    lastError,
-    emit,
-    on,
-    off,
-    connect,
-    disconnect,
-  };
+  return { socket, isConnected, emit, on, off, lastError };
 };
