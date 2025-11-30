@@ -1,25 +1,10 @@
-import { useSocket } from '@/hooks/useSocket';
-import { SocketContextType, SocketProviderProps } from '@/types/socket.types';
-import { createContext, FC, useContext } from 'react';
+import { createContext, useContext } from 'react';
+import { Socket } from 'socket.io-client';
 
-const SocketContext = createContext<SocketContextType | undefined>(undefined);
+export const SocketContext = createContext<Socket | null>(null);
 
-export const useSocketContext = (): SocketContextType => {
-  const context = useContext(SocketContext);
-  if (!context) {
-    throw new Error('useSocketContext must be used within SocketProvider');
-  }
-  return context;
-};
-
-export const SocketProvider: FC<SocketProviderProps> = ({
-  children,
-  url,
-  options = {},
-}) => {
-  const socket = useSocket(url, options);
-
-  return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
-  );
+export const useSocketContext = () => {
+  const ctx = useContext(SocketContext);
+  if (!ctx) throw new Error('SocketContext missing');
+  return ctx;
 };
