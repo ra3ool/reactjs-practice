@@ -1,18 +1,9 @@
 import { ChatComponent } from '@/components/chat-component.component';
-import { SocketProvider } from '@/contexts/SocketContext';
+import { SocketProvider } from '@/contexts/SocketProvider';
 
-const socketUrl = import.meta.env.VITE_SOCKET_UTL;
-
-const socketOptions = {
-  query: {
-    clientType: 'react-app',
-  },
-  transports: ['websocket'],
-};
-
-export default function AboutView() {
+export default function ChatPage() {
   return (
-    <SocketProvider url={socketUrl} options={socketOptions}>
+    <SocketProvider>
       <ChatComponent />
     </SocketProvider>
   );
