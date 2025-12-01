@@ -1,20 +1,21 @@
-import { useSocketContext } from '@/contexts/SocketContext';
+import { socket } from '@/libs/socket';
 import { useCallback, useEffect, useState } from 'react';
 
+//TODO fix ts errors
+
 export const useSocket = () => {
-  const socket = useSocketContext();
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastError, setLastError] = useState<Error | null>(null);
 
   useEffect(() => {
+    if (!socket.connected) socket.connect();
+
     const onConnect = () => {
       setIsConnected(true);
       setLastError(null);
     };
 
-    const onDisconnect = () => {
-      setIsConnected(false);
-    };
+    const onDisconnect = () => setIsConnected(false);
 
     const onError = (err: unknown) => {
       setLastError(err instanceof Error ? err : new Error(String(err)));
@@ -31,28 +32,19 @@ export const useSocket = () => {
       socket.off('connect_error', onError);
       socket.off('error', onError);
     };
-  }, [socket]);
+  }, []);
 
-  const emit = useCallback(
-    <T>(event: string, payload: T) => {
-      socket.emit(event, payload);
-    },
-    [socket],
-  );
+  const emit = useCallback(<T,>(event: string, payload: T) => {
+    socket.emit(event, payload);
+  }, []);
 
-  const on = useCallback(
-    <T>(event: string, callback: (data: T) => void) => {
-      socket.on(event, callback);
-    },
-    [socket],
-  );
+  const on = useCallback(<T,>(event: string, callback: (data: T) => void) => {
+    socket.on(event, callback);
+  }, []);
 
-  const off = useCallback(
-    <T>(event: string, callback: (data: T) => void) => {
-      socket.off(event, callback);
-    },
-    [socket],
-  );
+  const off = useCallback(<T,>(event: string, callback: (data: T) => void) => {
+    socket.off(event, callback);
+  }, []);
 
-  return { socket, isConnected, emit, on, off, lastError };
+  return { isConnected, emit, on, off, lastError };
 };
