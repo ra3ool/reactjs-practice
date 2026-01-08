@@ -1,0 +1,8 @@
+{
+  "helloUser": "سلام {{name}}",
+  "welcome": "خوش آمدید",
+  "logout": "خروج",
+  "profile": {
+    "title": "پروفایل شما"
+  }
+}

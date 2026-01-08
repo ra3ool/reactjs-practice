@@ -1,0 +1,8 @@
+{
+  "helloUser": "Hello {{name}}",
+  "welcome": "Welcome",
+  "logout": "Log out",
+  "profile": {
+    "title": "Your profile"
+  }
+}
