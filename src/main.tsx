@@ -6,6 +6,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router';
 import { ReloadPrompt } from './components/reload-prompt.component';
+import "./i18n";
 
 const queryClient = new QueryClient();
 
