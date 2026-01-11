@@ -2,8 +2,10 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-import en from './locales/en/common.json';
-import fa from './locales/fa/common.json';
+import enCommon from './locales/en/common.json';
+import enAuth from './locales/en/auth.json';
+import faCommon from './locales/fa/common.json';
+import faAuth from './locales/fa/auth.json';
 
 i18n
   .use(LanguageDetector)
@@ -13,11 +15,11 @@ i18n
     debug: false,
 
     resources: {
-      en: { common: en },
-      fa: { common: fa },
+      en: { common: enCommon, auth: enAuth },
+      fa: { common: faCommon, auth: faAuth },
     },
 
-    ns: ['common'],
+    ns: ['common', 'auth'],
     defaultNS: 'common',
 
     interpolation: {
