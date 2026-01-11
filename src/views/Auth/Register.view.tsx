@@ -10,8 +10,11 @@ import { memo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 function RegisterView() {
+  const { t } = useTranslation('auth');
+
   const {
     handleSubmit,
     control,
@@ -24,7 +27,7 @@ function RegisterView() {
   const { mutate, isPending } = useMutation({
     mutationFn: register,
     onSuccess: () => {
-      toast.success('You are signing up!');
+      toast.success(t('register.success'));
     },
     onError: (error: {
       response?: { data?: { message?: string } };
@@ -32,7 +35,9 @@ function RegisterView() {
     }) => {
       console.error('error :', error);
       toast.error(
-        error?.response?.data?.message || error?.message || 'Register failed',
+        error?.response?.data?.message ||
+          error?.message ||
+          t('register.failureFallback'),
       );
     },
   });
@@ -47,10 +52,10 @@ function RegisterView() {
         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-900 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
-              Create your account
+              {t('register.title')}
             </h2>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              Join our community today
+              {t('register.subtitle')}
             </p>
           </div>
 
@@ -63,7 +68,7 @@ function RegisterView() {
                   <CustomInput
                     {...field}
                     inputStyle="floatingLabel"
-                    label="Username"
+                    label={t('register.usernameLabel')}
                     autoComplete="username"
                     hasError={!!errors.username}
                     errorText={errors.username?.message}
@@ -77,7 +82,7 @@ function RegisterView() {
                   <CustomInput
                     {...field}
                     inputStyle="floatingLabel"
-                    label="Email address"
+                    label={t('register.emailLabel')}
                     autoComplete="email"
                     hasError={!!errors.email}
                     errorText={errors.email?.message}
@@ -92,7 +97,7 @@ function RegisterView() {
                     {...field}
                     inputStyle="floatingLabel"
                     type="password"
-                    label="Password"
+                    label={t('register.passwordLabel')}
                     autoComplete="new-password"
                     hasError={!!errors.password}
                     errorText={errors.password?.message}
@@ -107,7 +112,7 @@ function RegisterView() {
                     {...field}
                     inputStyle="floatingLabel"
                     type="password"
-                    label="Password confirmation"
+                    label={t('register.passwordConfirmationLabel')}
                     autoComplete="new-password"
                     hasError={!!errors.confirmPassword}
                     errorText={errors.confirmPassword?.message}
@@ -139,21 +144,22 @@ function RegisterView() {
                   htmlFor="terms"
                   className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
                 >
-                  I agree to the {/*TODO add right to left modal later*/}
+                  {t('register.termsPrefix')}{' '}
+                  {/*TODO add right to left modal later*/}
                   <Link
                     to={authRoutes?.terms?.path as string}
                     className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
-                    aria-label="View terms of service"
+                    aria-label={t('register.aria.terms')}
                   >
-                    Terms
+                    {t('register.termsLink')}
                   </Link>{' '}
-                  and
+                  {t('register.andConnector')}{' '}
                   <Link
                     to={authRoutes?.privacy?.path as string}
                     className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200"
-                    aria-label="View privacy policy"
+                    aria-label={t('register.aria.privacy')}
                   >
-                    Privacy Policy
+                    {t('register.privacyLink')}
                   </Link>
                 </label>
               </div>
@@ -167,21 +173,21 @@ function RegisterView() {
             <CustomButton
               className="w-full"
               type="submit"
-              aria-label="Create a new account"
+              aria-label={t('register.aria.submit')}
               loading={isPending}
             >
-              Create account
+              {t('register.submit')}
             </CustomButton>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-            Already have an account?{' '}
+            {t('register.signinPrompt')}{' '}
             <Link
               to={authRoutes?.login?.path as string}
               className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
-              aria-label="Navigate to sign in page"
+              aria-label={t('register.aria.signinLink')}
             >
-              Sign in
+              {t('register.signinCta')}
             </Link>
           </div>
         </div>

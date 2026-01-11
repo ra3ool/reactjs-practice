@@ -11,9 +11,12 @@ import { memo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 function LoginView() {
   SvgLoader.preload('spinner');
+
+  const { t } = useTranslation('auth');
 
   const {
     handleSubmit,
@@ -32,7 +35,7 @@ function LoginView() {
   const { mutate, isPending } = useMutation({
     mutationFn: login,
     onSuccess: () => {
-      toast.success('You are logged in!');
+      toast.success(t('login.success'));
     },
     onError: (error: {
       response?: { data?: { message?: string } };
@@ -40,7 +43,9 @@ function LoginView() {
     }) => {
       console.error('error :', error);
       toast.error(
-        error?.response?.data?.message || error?.message || 'Login failed',
+        error?.response?.data?.message ||
+          error?.message ||
+          t('login.failureFallback'),
       );
     },
   });
@@ -55,10 +60,10 @@ function LoginView() {
         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-900 p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
-              Welcome back
+              {t('login.title')}
             </h2>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              Sign in to your account
+              {t('login.subtitle')}
             </p>
           </div>
 
@@ -71,7 +76,7 @@ function LoginView() {
                   <CustomInput
                     {...field}
                     inputStyle="floatingLabel"
-                    label="Email or Username"
+                    label={t('login.identifierLabel')}
                     autoComplete="username"
                     hasError={!!errors.identifier}
                     errorText={errors.identifier?.message}
@@ -86,7 +91,7 @@ function LoginView() {
                     {...field}
                     inputStyle="floatingLabel"
                     type="password"
-                    label="Password"
+                    label={t('login.passwordLabel')}
                     autoComplete="current-password"
                     hasError={!!errors.password}
                     errorText={errors.password?.message}
@@ -118,37 +123,37 @@ function LoginView() {
                   htmlFor="remember-me"
                   className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
                 >
-                  Remember me
+                  {t('login.rememberMe')}
                 </label>
               </div>
 
               <Link
                 to={authRoutes?.forgotPassword?.path as string}
                 className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
-                aria-label="Forgot your password?"
+                aria-label={t('login.aria.forgotPassword')}
               >
-                Forgot password?
+                {t('login.forgotPassword')}
               </Link>
             </div>
 
             <CustomButton
               className="w-full"
               type="submit"
-              aria-label="Sign in to your account"
+              aria-label={t('login.aria.submit')}
               loading={isPending}
             >
-              Sign in
+              {t('login.submit')}
             </CustomButton>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-            Don&apos;t have an account?{' '}
+            {t('login.signupPrompt')}{' '}
             <Link
               to={authRoutes?.register?.path as string}
               className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200"
-              aria-label="Navigate to sign up page"
+              aria-label={t('login.aria.signupLink')}
             >
-              Sign up
+              {t('login.signupCta')}
             </Link>
           </div>
         </div>
