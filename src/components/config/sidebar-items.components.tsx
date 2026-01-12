@@ -1,5 +1,6 @@
 import { useAuthBridge } from '@/bridges';
 import { CustomToggle } from '@/components/custom-toggle.component';
+import { LanguageSwitcher } from '@/components/language-switcher.component';
 import {
   authRoutes,
   baseRoutes,
@@ -10,12 +11,14 @@ import { useAcl, useTheme } from '@/hooks';
 import { useAuthStore } from '@/stores';
 import { RouteGroup, SidebarItem } from '@/types';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function useSidebarItems(): SidebarItem[] {
   const { isDarkMode, toggleTheme } = useTheme();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const { logoutWithToast } = useAuthBridge();
   const { canAccessRoute } = useAcl();
+  const { t } = useTranslation('common');
 
   return useMemo(() => {
     const items: SidebarItem[] = [
@@ -118,13 +121,18 @@ export function useSidebarItems(): SidebarItem[] {
     }
 
     items.push({
-      title: 'Dark Mode',
+      title: t('navigation.darkMode'),
       component: <CustomToggle isActive={isDarkMode} toggle={toggleTheme} />,
+    });
+
+    items.push({
+      title: t('navigation.language'),
+      component: <LanguageSwitcher />,
     });
 
     if (isAuthenticated) {
       items.push({
-        title: 'logout',
+        title: t('navigation.logout'),
         className:
           'cursor-pointer text-red-500 hover:bg-red-200 dark:hover:bg-red-950',
         actions: {
@@ -140,5 +148,6 @@ export function useSidebarItems(): SidebarItem[] {
     isAuthenticated,
     isDarkMode,
     toggleTheme,
+    t,
   ]);
 }
