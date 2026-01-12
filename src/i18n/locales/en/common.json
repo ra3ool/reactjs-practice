@@ -4,5 +4,15 @@
   "logout": "Log out",
   "profile": {
     "title": "Your profile"
+  },
+  "navigation": {
+    "sidebarTitle": "Simple Panel",
+    "darkMode": "Dark Mode",
+    "logout": "Logout",
+    "language": "Language",
+    "languageOptions": {
+      "en": "English",
+      "fa": "Farsi"
+    }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "layout": {
+    "headerFallback": "پنل",
+    "sidebarTitle": "پنل ساده"
+  },
+  "index": {
+    "welcome": "خوش آمدید، {{name}}",
+    "totalUsers": "تعداد کاربران",
+    "invoices": "فاکتورها",
+    "revenue": "درآمد"
+  },
+  "profile": {
+    "header": "پروفایل",
+    "noUser": "اطلاعات کاربر موجود نیست.",
+    "title": "پروفایل من",
+    "username": "نام کاربری",
+    "email": "ایمیل",
+    "role": "نقش"
+  }
+}

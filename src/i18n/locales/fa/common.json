@@ -4,5 +4,15 @@
   "logout": "خروج",
   "profile": {
     "title": "پروفایل شما"
+  },
+  "navigation": {
+    "sidebarTitle": "پنل ساده",
+    "darkMode": "حالت تیره",
+    "logout": "خروج",
+    "language": "زبان",
+    "languageOptions": {
+      "en": "انگلیسی",
+      "fa": "فارسی"
+    }
   }
 }

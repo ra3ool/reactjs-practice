@@ -1,0 +1,20 @@
+{
+  "layout": {
+    "headerFallback": "Panel",
+    "sidebarTitle": "Simple Panel"
+  },
+  "index": {
+    "welcome": "Welcome, {{name}}",
+    "totalUsers": "Total Users",
+    "invoices": "Invoices",
+    "revenue": "Revenue"
+  },
+  "profile": {
+    "header": "Profile",
+    "noUser": "No user data available.",
+    "title": "My Profile",
+    "username": "Username",
+    "email": "Email",
+    "role": "Role"
+  }
+}
