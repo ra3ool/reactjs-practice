@@ -8,6 +8,7 @@ import { useRouteNavigation, useTheme } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import { ToastContainer } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export default function Layout() {
   const { isDarkMode } = useTheme();
@@ -15,13 +16,15 @@ export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [headerTitle, setHeaderTitle] = useState<string>('');
   const { currentRoute } = useRouteNavigation();
+  const { t } = useTranslation(['common', 'panel']);
 
   useEffect(() => {
     setHeaderTitle(
-      (currentRoute?.meta?.headerTitle as string) || 'panel header',
+      (currentRoute?.meta?.headerTitle as string) ||
+        t('layout.headerFallback', { ns: 'panel' }),
     );
     setSidebarOpen(false);
-  }, [currentRoute]);
+  }, [currentRoute, t]);
 
   const headerTitleChildren = (
     <>
@@ -73,7 +76,7 @@ export default function Layout() {
           } md:translate-x-0`}
         >
           <TheSidebar
-            title="Simple Panel"
+            title={t('navigation.sidebarTitle')}
             items={sideBarItems}
             className="py-6 px-2 rounded-3xl bg-bg-primary text-text-primary shadow-2xl md:shadow"
             itemClassName="hover:bg-neutral-200 dark:hover:bg-neutral-700"
