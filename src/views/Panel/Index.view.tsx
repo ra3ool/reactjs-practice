@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/stores';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type PanelData = {
   users: number;
@@ -9,6 +10,7 @@ type PanelData = {
 
 export default function Panel() {
   const user = useAuthStore((s) => s.user);
+  const { t } = useTranslation('panel');
   const [data, setData] = useState<PanelData>({
     users: 0,
     invoices: 0,
@@ -30,20 +32,20 @@ export default function Panel() {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-text-primary">
-        Welcome, {user?.username} 👋
+        {t('index.welcome', { name: user?.username })}
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div className="rounded-xl p-6 shadow bg-bg-primary text-text-primary">
-          <h2 className="text-lg font-semibold">Total Users</h2>
+          <h2 className="text-lg font-semibold">{t('index.totalUsers')}</h2>
           <p className="text-3xl font-bold mt-2">{data.users}</p>
         </div>
         <div className="rounded-xl p-6 shadow bg-bg-primary text-text-primary">
-          <h2 className="text-lg font-semibold">Invoices</h2>
+          <h2 className="text-lg font-semibold">{t('index.invoices')}</h2>
           <p className="text-3xl font-bold mt-2">{data.invoices}</p>
         </div>
         <div className="rounded-xl p-6 shadow bg-bg-primary text-text-primary">
-          <h2 className="text-lg font-semibold">Revenue</h2>
+          <h2 className="text-lg font-semibold">{t('index.revenue')}</h2>
           <p className="text-3xl font-bold mt-2">
             ${data.revenue.toLocaleString()}
           </p>
