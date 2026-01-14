@@ -1,10 +1,4 @@
 {
-  "helloUser": "سلام {{name}}",
-  "welcome": "خوش آمدید",
-  "logout": "خروج",
-  "profile": {
-    "title": "پروفایل شما"
-  },
   "navigation": {
     "sidebarTitle": "پنل ساده",
     "darkMode": "حالت تیره",

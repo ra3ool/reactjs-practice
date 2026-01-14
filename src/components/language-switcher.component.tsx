@@ -1,4 +1,4 @@
-import { useMemo, ChangeEvent } from 'react';
+import { useMemo, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const AVAILABLE_LANGS = [
@@ -19,9 +19,6 @@ export function LanguageSwitcher() {
 
   return (
     <div className="flex items-center gap-2 w-full">
-      <label htmlFor="language-select" className="text-sm text-text-primary">
-        {t('navigation.language')}
-      </label>
       <select
         id="language-select"
         value={value}

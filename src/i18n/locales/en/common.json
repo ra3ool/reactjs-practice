@@ -1,10 +1,4 @@
 {
-  "helloUser": "Hello {{name}}",
-  "welcome": "Welcome",
-  "logout": "Log out",
-  "profile": {
-    "title": "Your profile"
-  },
   "navigation": {
     "sidebarTitle": "Simple Panel",
     "darkMode": "Dark Mode",
