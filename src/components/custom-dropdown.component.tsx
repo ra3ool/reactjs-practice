@@ -7,6 +7,7 @@ export function CustomDropdown({
   children,
   align = 'left',
   className = '',
+  ListClassName = '',
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -65,11 +66,11 @@ export function CustomDropdown({
     <div className={`relative inline-block ${className}`} ref={dropdownRef}>
       {getTriggerWithProps()}
       <div
-        className={`absolute z-10 mt-2 w-56 rounded-md shadow-lg bg-bg-primary ring-black dark:bg-bg-primary dark:ring-white ring-1 ring-opacity-5 focus:outline-none transition-all duration-100 ${
+        className={`absolute z-10 mt-2 rounded-md shadow-lg bg-bg-primary ring-black dark:bg-bg-primary dark:ring-white ring-1 ring-opacity-5 focus:outline-none transition-all duration-100 ${
           isOpen
             ? 'transform opacity-100 scale-100'
             : 'transform opacity-0 scale-95 pointer-events-none'
-        } ${align === 'right' ? 'right-0' : 'left-0'}`}
+        } ${align === 'right' ? 'right-0' : 'left-0'} ${ListClassName}`}
         role="menu"
         tabIndex={-1}
       >

@@ -6,6 +6,7 @@ export interface DropdownProps {
   children: ReactNode;
   align?: 'left' | 'right';
   className?: string;
+  ListClassName?: string;
 }
 
 export interface DropdownItemProps {

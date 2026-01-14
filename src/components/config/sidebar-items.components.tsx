@@ -126,7 +126,7 @@ export function useSidebarItems(): SidebarItem[] {
     });
 
     items.push({
-      title: t('navigation.language'),
+      title: '',
       component: <LanguageSwitcher />,
     });
 

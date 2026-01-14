@@ -10,6 +10,7 @@ export default function DropdownView() {
         triggerText={
           <span className="px-4 py-2 bg-blue-500 text-white rounded">Menu</span>
         }
+        ListClassName="w-64"
       >
         <DropdownItem onClick={() => console.log('Option 1 clicked')}>
           Option 1
