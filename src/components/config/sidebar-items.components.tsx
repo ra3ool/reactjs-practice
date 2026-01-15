@@ -128,6 +128,7 @@ export function useSidebarItems(): SidebarItem[] {
     items.push({
       title: '',
       component: <LanguageSwitcher />,
+      className: 'p-0!',
     });
 
     if (isAuthenticated) {

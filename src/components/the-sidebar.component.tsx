@@ -49,8 +49,11 @@ export function TheSidebar({
             );
           } else if (item.component) {
             return (
-              <div className={DEFAULT_ITEM_CLASS} key={item.title}>
-                <span>{item.title}</span>
+              <div
+                className={`${DEFAULT_ITEM_CLASS} ${item.className}`}
+                key={item.title}
+              >
+                {item.title && <span>{item.title}</span>}
                 {item.component}
               </div>
             );
