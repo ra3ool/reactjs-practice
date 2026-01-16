@@ -90,7 +90,7 @@ export function DropdownItem({
   return (
     <button
       type="button"
-      className={`block w-full text-left px-4 py-2 text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 ${className}`}
+      className={`block w-full px-4 py-2 text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 ${className}`}
       role="menuitem"
       tabIndex={-1}
       onClick={onClick} //TODO implement close after click
