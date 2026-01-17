@@ -23,38 +23,34 @@ export function useSidebarItems(): SidebarItem[] {
   return useMemo(() => {
     const items: SidebarItem[] = [
       {
-        title: baseRoutes.home.label as string,
+        title: t('navigation.links.home'),
         path: baseRoutes.home.path as string,
       },
       {
-        title: baseRoutes.about.label as string,
+        title: t('navigation.links.about'),
         path: baseRoutes.about.path as string,
       },
       {
-        title: baseRoutes.demo.label as string,
+        title: t('navigation.links.demo'),
         path: baseRoutes.demo.path as string,
       },
       {
-        title: (baseRoutes?.lists as RouteGroup)?.root?.label as string,
+        title: t('navigation.links.lists.root'),
         group: [
           {
-            title: (baseRoutes?.lists as RouteGroup)?.comments1
-              ?.label as string,
+            title: t('navigation.links.lists.list1'),
             path: (baseRoutes?.lists as RouteGroup)?.comments1?.path as string,
           },
           {
-            title: (baseRoutes?.lists as RouteGroup)?.comments2
-              ?.label as string,
+            title: t('navigation.links.lists.list2'),
             path: (baseRoutes?.lists as RouteGroup)?.comments2?.path as string,
           },
           {
-            title: (baseRoutes?.lists as RouteGroup)?.comments3
-              ?.label as string,
+            title: t('navigation.links.lists.list3'),
             path: (baseRoutes?.lists as RouteGroup)?.comments3?.path as string,
           },
           {
-            title: (baseRoutes?.lists as RouteGroup)?.comments4
-              ?.label as string,
+            title: t('navigation.links.lists.list4'),
             path: (baseRoutes?.lists as RouteGroup)?.comments4?.path as string,
           },
         ],
@@ -70,14 +66,14 @@ export function useSidebarItems(): SidebarItem[] {
 
     if (!isAuthenticated) {
       items.push({
-        title: authRoutes?.root?.label as string,
+        title: t('navigation.links.auth.root'),
         group: [
           {
-            title: authRoutes?.login?.label as string,
+            title: t('navigation.links.auth.login'),
             path: authRoutes?.login?.path as string,
           },
           {
-            title: authRoutes?.register?.label as string,
+            title: t('navigation.links.auth.register'),
             path: authRoutes?.register?.path as string,
           },
         ],

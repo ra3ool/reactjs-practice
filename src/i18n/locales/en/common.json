@@ -7,6 +7,23 @@
     "languageOptions": {
       "en": "English",
       "fa": "Farsi"
+    },
+    "links": {
+      "home": "Home",
+      "about": "About",
+      "demo": "Demo",
+      "lists": {
+        "root": "Lists",
+        "list1": "Comments1",
+        "list2": "Comments2",
+        "list3": "Comments3",
+        "list4": "Comments4"
+      },
+      "auth": {
+        "root": "Auth",
+        "login": "Login",
+        "register": "Register"
+      }
     }
   }
 }
