@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { MouseEvent, ReactElement, ReactNode } from 'react';
 
 export interface DropdownProps {
   trigger?: ReactElement;
@@ -11,6 +11,6 @@ export interface DropdownProps {
 
 export interface DropdownItemProps {
   children: ReactNode;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent) => void;
   className?: string;
 }

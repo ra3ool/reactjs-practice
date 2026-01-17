@@ -1,5 +1,12 @@
+import { DropdownContext, useDropdown } from '@/contexts/DropdownContext';
 import { DropdownItemProps, DropdownProps } from '@/types';
-import { cloneElement, useEffect, useRef, useState } from 'react';
+import {
+  cloneElement,
+  MouseEvent as ReactMouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 export function CustomDropdown({
   trigger,
@@ -24,7 +31,7 @@ export function CustomDropdown({
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: globalThis.MouseEvent) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
@@ -53,7 +60,7 @@ export function CustomDropdown({
   const getTriggerWithProps = () => {
     const element = trigger || defaultTrigger;
     return cloneElement(element, {
-      onClick: (e: MouseEvent) => {
+      onClick: (e: ReactMouseEvent) => {
         element.props.onClick?.(e);
         setIsOpen(!isOpen);
       },
@@ -63,22 +70,24 @@ export function CustomDropdown({
   };
 
   return (
-    <div className={`relative inline-block ${className}`} ref={dropdownRef}>
-      {getTriggerWithProps()}
-      <div
-        className={`absolute z-10 mt-2 rounded-md shadow-lg bg-bg-primary ring-black dark:bg-bg-primary dark:ring-white ring-1 ring-opacity-5 focus:outline-none transition-all duration-100 ${
-          isOpen
-            ? 'transform opacity-100 scale-100'
-            : 'transform opacity-0 scale-95 pointer-events-none'
-        } ${align === 'right' ? 'right-0' : 'left-0'} ${ListClassName}`}
-        role="menu"
-        tabIndex={-1}
-      >
-        <div className="py-1" role="none">
-          {children}
+    <DropdownContext.Provider value={{ close: () => setIsOpen(false) }}>
+      <div className={`relative inline-block ${className}`} ref={dropdownRef}>
+        {getTriggerWithProps()}
+        <div
+          className={`absolute z-10 mt-2 rounded-md shadow-lg bg-bg-primary ring-black dark:bg-bg-primary dark:ring-white ring-1 ring-opacity-5 focus:outline-none transition-all duration-100 ${
+            isOpen
+              ? 'transform opacity-100 scale-100'
+              : 'transform opacity-0 scale-95 pointer-events-none'
+          } ${align === 'right' ? 'right-0' : 'left-0'} ${ListClassName}`}
+          role="menu"
+          tabIndex={-1}
+        >
+          <div className="py-1" role="none">
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </DropdownContext.Provider>
   );
 }
 
@@ -87,13 +96,20 @@ export function DropdownItem({
   onClick,
   className = '',
 }: DropdownItemProps) {
+  const { close } = useDropdown();
+
+  const handleClick = (e: ReactMouseEvent<HTMLButtonElement>) => {
+    onClick?.(e);
+    close();
+  };
+
   return (
     <button
       type="button"
       className={`block w-full px-4 py-2 text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 ${className}`}
       role="menuitem"
       tabIndex={-1}
-      onClick={onClick} //TODO implement close after click
+      onClick={handleClick}
     >
       {children}
     </button>
