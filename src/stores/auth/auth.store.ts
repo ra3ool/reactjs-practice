@@ -67,7 +67,7 @@ export const useAuthStore = create<AuthStore>()(
     {
       name: 'auth',
       // storage: createJSONStorage(() => localStorage), //default localStorage
-      storage: cryptoStorage(import.meta.env.VITE_PERSIST_SECRET),
+      storage: cryptoStorage(import.meta.env.VITE_ENCRYPT_KEY),
       partialize: (state) => ({
         user: state.user,
         // add other fields to persist or remove to persist all states
