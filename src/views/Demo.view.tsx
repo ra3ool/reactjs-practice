@@ -13,24 +13,8 @@ export default function DemoView() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const updateUser = useAuthStore((s) => s.updateUser);
   const { logoutWithToast } = useAuthBridge();
-  const setLoginData = useAuthStore((s) => s.setLoginData);
 
   const handleLogin = () => navigateTo('login');
-  const loginTestUser = () => {
-    const testUser = {
-      user: {
-        id: 1,
-        name: 'rasool',
-        username: 'rasool',
-        email: 'rasool@gmail.com',
-        role: 'admin' as UserRole,
-      },
-      accessToken: 'part1.part2.part3',
-    };
-    //don't do this ever!!!
-    //this is just for times the auth server is down and just for testing!
-    setLoginData(testUser);
-  };
   const handleLogout = async () => {
     await logoutWithToast();
     navigateTo('home', { replace: true });
@@ -41,9 +25,7 @@ export default function DemoView() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold mb-8">
-        {t('title')}
-      </h1>
+      <h1 className="text-3xl font-bold mb-8">{t('title')}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <section className="p-6 rounded-2xl bg-bg-secondary shadow-md space-y-4">
@@ -90,23 +72,29 @@ export default function DemoView() {
         <section className="p-6 rounded-2xl bg-bg-secondary shadow-md space-y-4">
           <h2 className="text-xl font-semibold">{t('auth.title')}</h2>
           <p>
-            {t('auth.status')}: {isAuthenticated ? t('auth.authenticated') : t('auth.notAuthenticated')}
+            {t('auth.status')}:{' '}
+            {isAuthenticated
+              ? t('auth.authenticated')
+              : t('auth.notAuthenticated')}
           </p>
           {user && (
             <div className="space-y-1">
-              <p>{t('auth.user')}: {user.username}</p>
-              <p>{t('auth.email')}: {user.email}</p>
-              <p>{t('auth.role')}: {user.role}</p>
+              <p>
+                {t('auth.user')}: {user.username}
+              </p>
+              <p>
+                {t('auth.email')}: {user.email}
+              </p>
+              <p>
+                {t('auth.role')}: {user.role}
+              </p>
             </div>
           )}
           {!isAuthenticated ? (
             <CustomButton onClick={handleLogin}>{t('auth.login')}</CustomButton>
           ) : (
-            <CustomButton onClick={handleLogout}>{t('auth.logout')}</CustomButton>
-          )}
-          {!isAuthenticated && (
-            <CustomButton variant="secondary" onClick={loginTestUser}>
-              {t('auth.loginTestUser')}
+            <CustomButton onClick={handleLogout}>
+              {t('auth.logout')}
             </CustomButton>
           )}
         </section>
@@ -119,18 +107,24 @@ export default function DemoView() {
               {t('acl.accessAdminRoute')}
             </CustomButton>
           ) : (
-            <p className="text-red-500 font-medium">
-              {t('acl.needAdminRole')}
-            </p>
+            <p className="text-red-500 font-medium">{t('acl.needAdminRole')}</p>
           )}
         </section>
 
         <section className="p-6 rounded-2xl bg-bg-secondary shadow-md space-y-3">
           <h2 className="text-xl font-semibold">{t('routeInfo.title')}</h2>
-          <p>{t('routeInfo.home')}: {isCurrentRoute('home') ? '✓' : '✗'}</p>
-          <p>{t('routeInfo.about')}: {isCurrentRoute('about') ? '✓' : '✗'}</p>
-          <p>{t('routeInfo.login')}: {isCurrentRoute('login') ? '✓' : '✗'}</p>
-          <p>{t('routeInfo.register')}: {isCurrentRoute('register') ? '✓' : '✗'}</p>
+          <p>
+            {t('routeInfo.home')}: {isCurrentRoute('home') ? '✓' : '✗'}
+          </p>
+          <p>
+            {t('routeInfo.about')}: {isCurrentRoute('about') ? '✓' : '✗'}
+          </p>
+          <p>
+            {t('routeInfo.login')}: {isCurrentRoute('login') ? '✓' : '✗'}
+          </p>
+          <p>
+            {t('routeInfo.register')}: {isCurrentRoute('register') ? '✓' : '✗'}
+          </p>
         </section>
       </div>
 
