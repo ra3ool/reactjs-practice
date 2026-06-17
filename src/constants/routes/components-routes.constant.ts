@@ -2,7 +2,7 @@ import { createRoutesGroup } from '@/helpers';
 import { RouteGroup } from '@/types';
 
 const prefix = 'components';
-const componentsRoutes: RouteGroup = Object.freeze({
+const componentsRoutes: RouteGroup = {
   root: {
     label: 'Components',
     path: '/',
@@ -88,6 +88,6 @@ const componentsRoutes: RouteGroup = Object.freeze({
       breadcrumb: true,
     },
   },
-});
+} as const;
 
 export default createRoutesGroup(prefix, componentsRoutes);

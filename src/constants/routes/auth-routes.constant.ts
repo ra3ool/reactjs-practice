@@ -2,7 +2,7 @@ import { createRoutesGroup } from '@/helpers';
 import { RouteGroup } from '@/types';
 
 const prefix = 'auth';
-const authRoutes: RouteGroup = Object.freeze({
+const authRoutes: RouteGroup = {
   root: {
     label: 'Auth',
     path: '/',
@@ -33,6 +33,6 @@ const authRoutes: RouteGroup = Object.freeze({
       description: 'Create a new account',
     },
   },
-});
+} as const;
 
 export default createRoutesGroup(prefix, authRoutes);

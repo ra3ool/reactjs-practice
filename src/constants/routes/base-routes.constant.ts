@@ -2,7 +2,7 @@ import { createRoutesGroup } from '@/helpers';
 import { RouteGroup } from '@/types';
 
 const prefix = '';
-const baseRoutes: RouteGroup = Object.freeze({
+const baseRoutes: RouteGroup = {
   home: {
     label: 'Home',
     path: '/',
@@ -97,6 +97,6 @@ const baseRoutes: RouteGroup = Object.freeze({
       headerTitle: 'Chat page',
     },
   },
-});
+} as const;
 
 export default createRoutesGroup(prefix, baseRoutes);

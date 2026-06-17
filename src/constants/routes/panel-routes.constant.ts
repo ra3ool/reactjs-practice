@@ -2,7 +2,7 @@ import { createRoutesGroup } from '@/helpers';
 import { RouteGroup } from '@/types';
 
 const prefix = 'panel';
-const panelRoutes: RouteGroup = Object.freeze({
+const panelRoutes: RouteGroup = {
   root: {
     label: 'Panel',
     path: '/',
@@ -90,6 +90,6 @@ const panelRoutes: RouteGroup = Object.freeze({
       },
     },
   }),
-});
+} as const;
 
 export default createRoutesGroup(prefix, panelRoutes);
