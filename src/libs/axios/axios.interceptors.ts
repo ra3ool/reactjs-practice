@@ -1,3 +1,4 @@
+import { tokenNames } from '@/constants';
 import { authRepository } from '@/repositories/auth';
 import { cookieStorage } from '@/repositories/shared';
 import { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios';
@@ -14,7 +15,7 @@ export function setupInterceptors(api: AxiosInstance) {
   // ============================
   api.interceptors.request.use(
     (config) => {
-      const token = cookieStorage.get('accessToken');
+      const token = cookieStorage.get(tokenNames.accessToken);
       if (token && config.headers) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -33,7 +34,7 @@ export function setupInterceptors(api: AxiosInstance) {
 
       // Handle 401 Unauthorized
       if (error.response?.status === 401 && !originalRequest?._retry) {
-        const refreshToken = cookieStorage.get('refreshToken');
+        const refreshToken = cookieStorage.get(tokenNames.refreshToken);
         if (!refreshToken) {
           // TODO: handle logout
           return Promise.reject(error);
@@ -57,14 +58,14 @@ export function setupInterceptors(api: AxiosInstance) {
           const { accessToken, refreshToken: newRefreshToken } =
             await authRepository.refreshToken(refreshToken);
 
-          cookieStorage.set('accessToken', accessToken, {
+          cookieStorage.set(tokenNames.accessToken, accessToken, {
             expires: 1,
             secure: true,
             sameSite: 'strict',
           });
 
           if (newRefreshToken) {
-            cookieStorage.set('refreshToken', newRefreshToken, {
+            cookieStorage.set(tokenNames.refreshToken, newRefreshToken, {
               expires: 7,
               secure: true,
               sameSite: 'strict',

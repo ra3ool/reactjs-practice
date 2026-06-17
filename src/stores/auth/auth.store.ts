@@ -1,3 +1,4 @@
+import { tokenNames } from '@/constants';
 import { cryptoStorage } from '@/libs';
 import { authService, cookieStorage } from '@/services';
 import { AuthStore, LoginResponse } from '@/types';
@@ -8,13 +9,13 @@ export const useAuthStore = create<AuthStore>()(
   persist(
     (set, get) => {
       const clearAuth = () => {
-        cookieStorage.remove('accessToken');
-        cookieStorage.remove('refreshToken');
+        cookieStorage.remove(tokenNames.accessToken);
+        cookieStorage.remove(tokenNames.refreshToken);
         set({ user: null, isAuthenticated: false });
       };
 
       const checkIsAuthenticated = (): boolean => {
-        const token = cookieStorage.get('accessToken');
+        const token = cookieStorage.get(tokenNames.accessToken);
         //TODO use jwt-decode checker later
         return !(!token || token.split('.').length !== 3);
       };
@@ -37,9 +38,11 @@ export const useAuthStore = create<AuthStore>()(
 
         setLoginData: (data) => {
           set({ isAuthenticated: true, user: data.user });
-          cookieStorage.set('accessToken', data.accessToken, { expires: 1 });
+          cookieStorage.set(tokenNames.accessToken, data.accessToken, {
+            expires: 1,
+          });
           if (data.refreshToken) {
-            cookieStorage.set('refreshToken', data.refreshToken, {
+            cookieStorage.set(tokenNames.refreshToken, data.refreshToken, {
               expires: 7,
             });
           }
