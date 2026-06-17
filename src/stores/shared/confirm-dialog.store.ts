@@ -8,6 +8,9 @@ export interface ConfirmOptions {
   confirmText?: string;
   cancelText?: string;
   variant?: ConfirmVariant;
+  confirmOnEnter?: boolean;
+  cancelByEscape?: boolean;
+  closeOnClickOutside?: boolean;
 }
 
 interface ConfirmDialogStore extends Required<ConfirmOptions> {
@@ -24,6 +27,9 @@ const DEFAULTS: Required<ConfirmOptions> = {
   confirmText: 'Confirm',
   cancelText: 'Cancel',
   variant: 'default',
+  confirmOnEnter: true,
+  cancelByEscape: true,
+  closeOnClickOutside: true,
 };
 
 export const useConfirmDialogStore = create<ConfirmDialogStore>((set, get) => ({

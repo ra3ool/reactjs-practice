@@ -11,6 +11,11 @@ export function ConfirmDialog() {
   const variant = useConfirmDialogStore((s) => s.variant);
   const confirm = useConfirmDialogStore((s) => s.confirm);
   const cancel = useConfirmDialogStore((s) => s.cancel);
+  const confirmOnEnter = useConfirmDialogStore((s) => s.confirmOnEnter);
+  const cancelByEscape = useConfirmDialogStore((s) => s.cancelByEscape);
+  const closeOnClickOutside = useConfirmDialogStore(
+    (s) => s.closeOnClickOutside,
+  );
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -22,12 +27,12 @@ export function ConfirmDialog() {
   useEffect(() => {
     if (!isOpen) return;
     const onKeydown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') cancel();
-      if (e.key === 'Enter') confirm();
+      if (e.key === 'Escape' && cancelByEscape) cancel();
+      if (e.key === 'Enter' && confirmOnEnter) confirm();
     };
     document.addEventListener('keydown', onKeydown);
     return () => document.removeEventListener('keydown', onKeydown);
-  }, [isOpen, confirm, cancel]);
+  }, [isOpen, confirm, cancel, cancelByEscape, confirmOnEnter]);
 
   if (!isOpen) return null;
 
@@ -35,7 +40,9 @@ export function ConfirmDialog() {
     <Portal>
       <div
         className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50"
-        onClick={(e) => e.target === e.currentTarget && cancel()}
+        onClick={(e) =>
+          e.target === e.currentTarget && closeOnClickOutside && cancel()
+        }
       >
         <div
           className="w-[min(400px,90vw)] rounded-lg bg-white p-6"
