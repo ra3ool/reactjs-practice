@@ -1,3 +1,4 @@
 export * from './auth';
 export * from './comments';
 export * from './invoices';
+export * from './shared';

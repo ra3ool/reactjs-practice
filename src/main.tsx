@@ -5,8 +5,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router';
+import { ConfirmDialog } from './components/confirm-dialog.component';
 import { ReloadPrompt } from './components/reload-prompt.component';
-import "./i18n";
+import './i18n';
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
         <RouterProvider router={router} />
       </QueryClientProvider>
       <ReloadPrompt />
+      <ConfirmDialog />
     </ThemeProvider>
   </StrictMode>,
 );

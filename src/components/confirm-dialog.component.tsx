@@ -1,0 +1,72 @@
+import { useConfirmDialogStore } from '@/stores';
+import { useEffect } from 'react';
+import Portal from './portal';
+
+export function ConfirmDialog() {
+  const isOpen = useConfirmDialogStore((s) => s.isOpen);
+  const title = useConfirmDialogStore((s) => s.title);
+  const message = useConfirmDialogStore((s) => s.message);
+  const confirmText = useConfirmDialogStore((s) => s.confirmText);
+  const cancelText = useConfirmDialogStore((s) => s.cancelText);
+  const variant = useConfirmDialogStore((s) => s.variant);
+  const confirm = useConfirmDialogStore((s) => s.confirm);
+  const cancel = useConfirmDialogStore((s) => s.cancel);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') cancel();
+      if (e.key === 'Enter') confirm();
+    };
+    document.addEventListener('keydown', onKeydown);
+    return () => document.removeEventListener('keydown', onKeydown);
+  }, [isOpen, confirm, cancel]);
+
+  if (!isOpen) return null;
+
+  return (
+    <Portal>
+      <div
+        className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50"
+        onClick={(e) => e.target === e.currentTarget && cancel()}
+      >
+        <div
+          className="w-[min(400px,90vw)] rounded-lg bg-white p-6"
+          role="alertdialog"
+          aria-modal="true"
+          aria-label={title}
+        >
+          <h2 className="mb-2 text-lg font-semibold text-gray-900">{title}</h2>
+          <p className="text-gray-600">{message}</p>
+          <div className="mt-5 flex justify-end gap-2">
+            <button
+              type="button"
+              className="rounded-md border border-gray-300 px-4 py-2 font-medium hover:bg-gray-50"
+              onClick={cancel}
+            >
+              {cancelText}
+            </button>
+            <button
+              type="button"
+              className={`rounded-md px-4 py-2 font-medium text-white ${
+                variant === 'danger'
+                  ? 'bg-red-500 hover:bg-red-600'
+                  : 'bg-blue-500 hover:bg-blue-600'
+              }`}
+              onClick={confirm}
+            >
+              {confirmText}
+            </button>
+          </div>
+        </div>
+      </div>
+    </Portal>
+  );
+}
