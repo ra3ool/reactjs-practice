@@ -57,8 +57,9 @@ export const useAuthStore = create<AuthStore>()(
         },
 
         logout: async () => {
+          const data = await authService.logout();
           clearAuth();
-          return { status: 'ok', message: 'you logged out successfully' };
+          return data;
         },
 
         restoreAuth: () => {

@@ -17,10 +17,8 @@ export function useAuthBridge() {
     if (!ok) return;
 
     const response = await logout();
-    if (response.status) {
-      toast.success(response.message);
-      // navigateTo(baseRoutes.home.name as string, { replace: true });
-    }
+    toast.success(response.message);
+    // navigateTo(baseRoutes.home.name as string, { replace: true });
   }, [logout, confirm]);
 
   return { logoutWithToast };

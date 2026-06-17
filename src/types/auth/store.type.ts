@@ -1,5 +1,5 @@
 import { User } from '../user';
-import { LoginFormData, LoginResponse } from './login.type';
+import { LoginFormData, LoginResponse, LogoutResponse } from './login.type';
 import { RegisterFormData } from './register.type';
 
 export interface AuthStore {
@@ -12,6 +12,6 @@ export interface AuthStore {
   setLoginData: (data: LoginResponse) => void;
   updateUser: (user: User) => void;
   getCurrentUser: () => Promise<User | undefined>;
-  logout: () => Promise<{ status: string; message: string }>;
+  logout: () => Promise<LogoutResponse>;
   restoreAuth: () => void;
 }

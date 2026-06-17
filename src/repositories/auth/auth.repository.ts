@@ -9,21 +9,22 @@ import {
 const authRepository = {
   login: async (payload: LoginRequestPayload): Promise<LoginResponse> => {
     const response = await authClient.post('/auth/signin', payload);
-    return response.data;
+    return response?.data;
   },
 
   register: async (payload: registerRequestPayload): Promise<LoginResponse> => {
     const response = await authClient.post('/auth/signup', payload);
-    return response.data;
+    return response?.data;
   },
 
   getCurrentUser: async (): Promise<User> => {
     const response = await authClient.get('/auth/me');
-    return response.data;
+    return response?.data;
   },
 
   logout: async () => {
-    await authClient.post('/auth/logout');
+    const response = await authClient.post('/auth/logout');
+    return response?.data;
   },
 
   refreshToken: async (refreshToken: string) => {

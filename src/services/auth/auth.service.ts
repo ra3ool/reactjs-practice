@@ -1,7 +1,13 @@
 import { authMappers } from '@/mappers';
 import { authRepository } from '@/repositories';
 import { authSchema } from '@/schemas';
-import { LoginFormData, LoginResponse, RegisterFormData, User } from '@/types';
+import type {
+  LoginFormData,
+  LoginResponse,
+  LogoutResponse,
+  RegisterFormData,
+  User,
+} from '@/types';
 
 export const authService = {
   login: async (data: LoginFormData) => {
@@ -25,6 +31,7 @@ export const authService = {
   },
 
   logout: async () => {
-    return await authRepository.logout();
+    const result = await authRepository.logout();
+    return result as LogoutResponse;
   },
 };
