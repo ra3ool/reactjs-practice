@@ -56,7 +56,7 @@ export function setupInterceptors(api: AxiosInstance) {
 
         try {
           const { accessToken, refreshToken: newRefreshToken } =
-            await authRepository.refreshToken();
+            await authRepository.refreshToken(refreshToken);
 
           cookieStorage.set(tokenNames.accessToken, accessToken, {
             expires: 1,

@@ -4,34 +4,45 @@ import type {
   LoginResponse,
   LogoutResponse,
   RefreshTokenResponse,
-  registerRequestPayload,
+  RegisterRequestPayload,
   User,
 } from '@/types';
 
 const authRepository = {
   login: async (payload: LoginRequestPayload): Promise<LoginResponse> => {
-    const response = await authClient.post('/auth/signin', payload);
-    return response?.data;
+    const response = await authClient.post<LoginResponse>(
+      '/auth/signin',
+      payload,
+    );
+    return response.data;
   },
 
-  register: async (payload: registerRequestPayload): Promise<LoginResponse> => {
-    const response = await authClient.post('/auth/signup', payload);
-    return response?.data;
+  register: async (payload: RegisterRequestPayload): Promise<LoginResponse> => {
+    const response = await authClient.post<LoginResponse>(
+      '/auth/signup',
+      payload,
+    );
+    return response.data;
   },
 
   getCurrentUser: async (): Promise<User> => {
-    const response = await authClient.get('/auth/me');
-    return response?.data;
+    const response = await authClient.get<User>('/auth/me');
+    return response.data;
   },
 
-  logout: async (): Promise<LogoutResponse> => {
-    const response = await authClient.post('/auth/logout');
-    return response?.data;
+  logout: async (refreshToken?: string): Promise<LogoutResponse> => {
+    const response = await authClient.post<LogoutResponse>('/auth/logout', {
+      refreshToken,
+    });
+    return response.data;
   },
 
-  refreshToken: async (): Promise<RefreshTokenResponse> => {
-    const response = await authClient.post('/auth/refresh');
-    return response?.data;
+  refreshToken: async (refreshToken: string): Promise<RefreshTokenResponse> => {
+    const response = await authClient.post<RefreshTokenResponse>(
+      '/auth/refresh',
+      { refreshToken },
+    );
+    return response.data;
   },
 };
 

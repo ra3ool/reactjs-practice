@@ -19,7 +19,7 @@ export interface LoginResponse {
 
 export interface LogoutResponse {
   message: string;
-  user: User;
+  user?: User;
 }
 export interface RefreshTokenResponse {
   accessToken: string;

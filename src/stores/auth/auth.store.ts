@@ -16,7 +16,7 @@ export const useAuthStore = create<AuthStore>()(
 
       const checkIsAuthenticated = (): boolean => {
         const token = cookieStorage.get(tokenNames.accessToken);
-        //TODO use jwt-decode checker later
+        // TODO: use jwt-decode checker later
         return !(!token || token.split('.').length !== 3);
       };
 
@@ -40,10 +40,14 @@ export const useAuthStore = create<AuthStore>()(
           set({ isAuthenticated: true, user: data.user });
           cookieStorage.set(tokenNames.accessToken, data.accessToken, {
             expires: 1,
+            secure: true,
+            sameSite: 'strict',
           });
           if (data.refreshToken) {
             cookieStorage.set(tokenNames.refreshToken, data.refreshToken, {
               expires: 7,
+              secure: true,
+              sameSite: 'strict',
             });
           }
         },
@@ -51,20 +55,24 @@ export const useAuthStore = create<AuthStore>()(
         updateUser: (user) => set({ user }),
 
         getCurrentUser: async () => {
-          const response = await authService.getCurrentUser();
-          set({ user: response, isAuthenticated: true });
-          return response;
+          const user = await authService.getCurrentUser();
+          set({ user, isAuthenticated: true });
+          return user;
         },
 
         logout: async () => {
-          const data = await authService.logout();
+          const refreshToken = cookieStorage.get(tokenNames.refreshToken);
+          const result = await authService.logout(refreshToken || undefined);
           clearAuth();
-          return data;
+          return result;
         },
 
         restoreAuth: () => {
-          if (checkIsAuthenticated()) set({ isAuthenticated: true });
-          else clearAuth();
+          if (checkIsAuthenticated()) {
+            set({ isAuthenticated: true });
+          } else {
+            clearAuth();
+          }
         },
       };
     },
@@ -74,8 +82,7 @@ export const useAuthStore = create<AuthStore>()(
       storage: cryptoStorage(import.meta.env.VITE_ENCRYPT_KEY),
       partialize: (state) => ({
         user: state.user,
-        // add other fields to persist or remove to persist all states
-        // default: (state) => state
+        // Only persist user, not auth status (derived from token)
       }),
       onRehydrateStorage: (state) => (_, error) => {
         if (error) console.error('Rehydration failed:', error);

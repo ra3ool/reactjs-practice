@@ -6,4 +6,4 @@ export interface RegisterFormData {
   terms: boolean;
 }
 
-export type registerRequestPayload = Omit<RegisterFormData, 'confirmPassword'>;
+export type RegisterRequestPayload = Omit<RegisterFormData, 'confirmPassword'>;
