@@ -1,9 +1,11 @@
 import { useConfirmDialogStore } from '@/stores';
 import { useEffect } from 'react';
 import Portal from './portal';
+import { SvgLoader } from './svg-loader.component';
 
 export function ConfirmDialog() {
   const isOpen = useConfirmDialogStore((s) => s.isOpen);
+  const isLoading = useConfirmDialogStore((s) => s.isLoading);
   const title = useConfirmDialogStore((s) => s.title);
   const message = useConfirmDialogStore((s) => s.message);
   const confirmText = useConfirmDialogStore((s) => s.confirmText);
@@ -27,12 +29,13 @@ export function ConfirmDialog() {
   useEffect(() => {
     if (!isOpen) return;
     const onKeydown = (e: KeyboardEvent) => {
+      if (isLoading) return;
       if (e.key === 'Escape' && cancelByEscape) cancel();
       if (e.key === 'Enter' && confirmOnEnter) confirm();
     };
     document.addEventListener('keydown', onKeydown);
     return () => document.removeEventListener('keydown', onKeydown);
-  }, [isOpen, confirm, cancel, cancelByEscape, confirmOnEnter]);
+  }, [isOpen, isLoading, confirm, cancel, cancelByEscape, confirmOnEnter]);
 
   if (!isOpen) return null;
 
@@ -55,20 +58,23 @@ export function ConfirmDialog() {
           <div className="mt-5 flex justify-end gap-2">
             <button
               type="button"
-              className="rounded-md border border-gray-300 px-4 py-2 font-medium hover:bg-gray-50"
+              disabled={isLoading}
+              className="rounded-md border border-gray-300 px-4 py-2 font-medium hover:bg-gray-50 disabled:opacity-50"
               onClick={cancel}
             >
               {cancelText}
             </button>
             <button
               type="button"
-              className={`rounded-md px-4 py-2 font-medium text-white ${
+              disabled={isLoading}
+              className={`inline-flex items-center gap-2 rounded-md px-4 py-2 font-medium text-white disabled:opacity-70 ${
                 variant === 'danger'
                   ? 'bg-red-500 hover:bg-red-600'
                   : 'bg-blue-500 hover:bg-blue-600'
               }`}
               onClick={confirm}
             >
+              {isLoading && <SvgLoader width={24} height={24} name="spinner" />}
               {confirmText}
             </button>
           </div>

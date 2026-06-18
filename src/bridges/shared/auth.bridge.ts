@@ -8,17 +8,17 @@ export function useAuthBridge() {
   const { confirm } = useConfirm();
 
   const logoutWithToast = useCallback(async () => {
-    const ok = await confirm({
+    await confirm({
       title: 'Log out?',
       message: "You'll need to sign in again to access your account.",
       confirmText: 'Log out',
       variant: 'danger',
+      onConfirm: async () => {
+        const response = await logout();
+        toast.success(response.message);
+        // navigateTo(baseRoutes.home.name as string, { replace: true });
+      },
     });
-    if (!ok) return;
-
-    const response = await logout();
-    toast.success(response.message);
-    // navigateTo(baseRoutes.home.name as string, { replace: true });
   }, [logout, confirm]);
 
   return { logoutWithToast };
