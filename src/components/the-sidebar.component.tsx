@@ -1,5 +1,6 @@
 import { ExpansionPanel } from '@/components/expansion-panel.component';
 import { SidebarProps } from '@/types';
+import { cn } from '@/utils/cn';
 import { NavLink } from 'react-router';
 
 const DEFAULT_ITEM_CLASS = 'flex justify-between align-middle p-3 rounded-xl';
@@ -13,7 +14,10 @@ export function TheSidebar({
 }: SidebarProps) {
   return (
     <aside
-      className={`h-full w-full flex flex-col gap-6 select-none overflow-auto ${className}`}
+      className={cn(
+        'h-full w-full flex flex-col gap-6 select-none overflow-auto',
+        className,
+      )}
     >
       {title && (
         <h2 className="text-xl font-bold text-blue-600 dark:text-blue-400 px-4">
@@ -29,9 +33,11 @@ export function TheSidebar({
                 to={item.path}
                 end={item.end}
                 className={({ isActive }) =>
-                  `${DEFAULT_ITEM_CLASS} ${itemClassName} ${
-                    isActive ? activeItemClassName : ''
-                  }`
+                  cn(
+                    DEFAULT_ITEM_CLASS,
+                    itemClassName,
+                    isActive ? activeItemClassName : '',
+                  )
                 }
               >
                 {item.title}
@@ -50,7 +56,7 @@ export function TheSidebar({
           } else if (item.component) {
             return (
               <div
-                className={`${DEFAULT_ITEM_CLASS} ${item.className}`}
+                className={cn(DEFAULT_ITEM_CLASS, item.className)}
                 key={item.title}
               >
                 {item.title && <span>{item.title}</span>}
@@ -60,7 +66,7 @@ export function TheSidebar({
           } else if (item.actions) {
             return (
               <div
-                className={`${DEFAULT_ITEM_CLASS} ${item.className}`}
+                className={cn(DEFAULT_ITEM_CLASS, item.className)}
                 key={item.title}
                 {...item.actions}
               >

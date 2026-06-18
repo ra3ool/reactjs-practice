@@ -1,6 +1,7 @@
 import { SvgLoader } from '@/components/svg-loader.component';
 import { LANGUAGES } from '@/constants';
 import { CustomInputProps } from '@/types';
+import { cn } from '@/utils/cn';
 import { FocusEvent, memo, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -65,7 +66,7 @@ export const CustomInput = memo(
     };
 
     return (
-      <div className={`flex flex-col space-y-1 select-none ${className}`}>
+      <div className={cn('flex flex-col space-y-1 select-none', className)}>
         {showLabel && (
           <label
             htmlFor={inputId}
@@ -94,13 +95,15 @@ export const CustomInput = memo(
             onChange={onChangeHandler}
             onFocus={onFocusHandler}
             onBlur={onBlurHandler}
-            className={`${baseInputClasses} ${inputClassName} ${
-              inputStyles[inputStyle]
-            } ${icon ? 'pl-10' : ''} ${
+            className={cn(
+              baseInputClasses,
+              inputClassName,
+              inputStyles[inputStyle],
+              icon ? 'pl-10' : '',
               hasError
                 ? 'border-red-500 dark:border-red-400'
-                : 'focus:border-indigo-500'
-            }`}
+                : 'focus:border-indigo-500',
+            )}
             disabled={disabled}
             aria-invalid={!!hasError}
             aria-describedby={hasError ? errorId : undefined}
@@ -110,11 +113,16 @@ export const CustomInput = memo(
           {inputStyle === 'floatingLabel' && (label || placeholder) && (
             <label
               htmlFor={inputId}
-              className={`absolute px-1.5 text-sm duration-200 pointer-events-none text-gray-700 dark:text-gray-300 ${
+              className={cn(
+                'absolute px-1.5 text-sm duration-200 pointer-events-none text-gray-700 dark:text-gray-300 top-4',
                 isFocused || value || placeholder
                   ? 'scale-75 -translate-y-3'
-                  : ''
-              } ${language === LANGUAGES.en ? 'origin-top-left left-2' : 'origin-top-right right-2'} top-4 ${icon ? 'left-10' : ''}`}
+                  : '',
+                language === LANGUAGES.en
+                  ? 'origin-top-left left-2'
+                  : 'origin-top-right right-2',
+                icon ? 'left-10' : '',
+              )}
             >
               {label || placeholder}
             </label>

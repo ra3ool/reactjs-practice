@@ -1,4 +1,5 @@
 import { LANGUAGES } from '@/constants';
+import { cn } from '@/utils/cn';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomDropdown, DropdownItem } from './custom-dropdown.component';
@@ -40,7 +41,12 @@ export function LanguageSwitcher() {
         <DropdownItem
           key={option.code}
           onClick={() => handleChange(option.code)}
-          className={`${isLanguageEn ? 'text-left' : 'text-right'} ${language === option.code ? 'bg-neutral-200 dark:bg-neutral-700' : ''}`}
+          className={cn(
+            isLanguageEn ? 'text-left' : 'text-right',
+            language === option.code
+              ? 'bg-neutral-200 dark:bg-neutral-700'
+              : '',
+          )}
         >
           {t(option.labelKey)}
         </DropdownItem>

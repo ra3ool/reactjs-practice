@@ -1,5 +1,6 @@
 import { DropdownContext, useDropdown } from '@/contexts/DropdownContext';
 import { DropdownItemProps, DropdownProps } from '@/types';
+import { cn } from '@/utils/cn';
 import {
   cloneElement,
   MouseEvent as ReactMouseEvent,
@@ -71,14 +72,17 @@ export function CustomDropdown({
 
   return (
     <DropdownContext.Provider value={{ close: () => setIsOpen(false) }}>
-      <div className={`relative inline-block ${className}`} ref={dropdownRef}>
+      <div className={cn('relative inline-block', className)} ref={dropdownRef}>
         {getTriggerWithProps()}
         <div
-          className={`absolute z-10 mt-2 rounded-md shadow-lg bg-bg-primary ring-black dark:bg-bg-primary dark:ring-white ring-1 ring-opacity-5 focus:outline-none transition-all duration-100 ${
+          className={cn(
+            'absolute z-10 mt-2 rounded-md shadow-lg bg-bg-primary ring-black dark:bg-bg-primary dark:ring-white ring-1 ring-opacity-5 focus:outline-none transition-all duration-100',
             isOpen
               ? 'transform opacity-100 scale-100'
-              : 'transform opacity-0 scale-95 pointer-events-none'
-          } ${align === 'right' ? 'right-0' : 'left-0'} ${ListClassName}`}
+              : 'transform opacity-0 scale-95 pointer-events-none',
+            align === 'right' ? 'right-0' : 'left-0',
+            ListClassName,
+          )}
           role="menu"
           tabIndex={-1}
         >
@@ -106,7 +110,10 @@ export function DropdownItem({
   return (
     <button
       type="button"
-      className={`block w-full px-4 py-2 text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 ${className}`}
+      className={cn(
+        'block w-full px-4 py-2 text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800',
+        className,
+      )}
       role="menuitem"
       tabIndex={-1}
       onClick={handleClick}

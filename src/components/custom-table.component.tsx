@@ -3,6 +3,7 @@ import { NothingFound } from '@/components/nothing-found.component';
 import { Pagination } from '@/components/pagination.component';
 import { paginateData, sortData } from '@/helpers';
 import { CustomTableProps, TableCell, TableHeader, TableRow } from '@/types';
+import { cn } from '@/utils/cn';
 import PropTypes from 'prop-types';
 import { ReactNode, useCallback, useState } from 'react';
 
@@ -60,9 +61,12 @@ export function CustomTable(props: CustomTableProps) {
   const isEmpty = !data || !data.length;
 
   return (
-    <div className={`overflow-x-auto ${className}`}>
+    <div className={cn('overflow-x-auto', className)}>
       <table
-        className={`w-full border-separate border border-gray-300 dark:border-gray-600 text-left ${tableClassName}`}
+        className={cn(
+          'w-full border-separate border border-gray-300 dark:border-gray-600 text-left',
+          tableClassName,
+        )}
         role="table"
       >
         <thead className="text-xs text-gray-900 dark:text-gray-100 uppercase bg-neutral-200 dark:bg-neutral-800">
@@ -70,10 +74,11 @@ export function CustomTable(props: CustomTableProps) {
             {(headers as TableHeader[]).map((header) => (
               <th
                 key={header.key}
-                className={`p-2 border border-gray-300 dark:border-gray-600 select-none ${
+                className={cn(
+                  'p-2 border border-gray-300 dark:border-gray-600 select-none',
                   sort &&
-                  'cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700'
-                }`}
+                    'cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700',
+                )}
                 {...(sort &&
                   header.sort !== false && {
                     onClick: () => handleSort(header.key),
@@ -124,7 +129,10 @@ export function CustomTable(props: CustomTableProps) {
                 {headers.map((header) => (
                   <td
                     key={header.key}
-                    className={`text-nowrap border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100 ${cellClassName}`}
+                    className={cn(
+                      'text-nowrap border border-gray-300 dark:border-gray-600 p-2 text-gray-900 dark:text-gray-100',
+                      cellClassName,
+                    )}
                     {...(onCellClick && {
                       onClick: () =>
                         onCellClick(row[header.key] as string, row),

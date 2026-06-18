@@ -40,7 +40,7 @@ export default function ComponentsLayout() {
 
   return (
     <div className="layout-content flex flex-col gap-6 h-full">
-      <div className={`flex grow w-full bg-bg-primary text-text-primary gap-2`}>
+      <div className="flex grow w-full bg-bg-primary text-text-primary gap-2">
         <div className="h-full w-56 shrink-0">
           <TheSidebar
             items={sideBarItems}

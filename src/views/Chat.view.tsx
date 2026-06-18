@@ -1,5 +1,6 @@
 import { useSocket } from '@/hooks/useSocket';
 import { ChatMessage } from '@/types/socket';
+import { cn } from '@/utils/cn';
 import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 export default function ChatPage() {
@@ -57,9 +58,10 @@ export default function ChatPage() {
       <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center space-x-3">
           <div
-            className={`w-4 h-4 rounded-full animate-pulse ${
-              isConnected ? 'bg-green-500' : 'bg-red-500'
-            }`}
+            className={cn(
+              'w-4 h-4 rounded-full animate-pulse',
+              isConnected ? 'bg-green-500' : 'bg-red-500',
+            )}
           />
           <div>
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
@@ -106,19 +108,21 @@ export default function ChatPage() {
             {messages.map((msg, index) => (
               <div
                 key={`${msg.timestamp}-${index}`}
-                className={`p-4 rounded-xl transition shadow-sm ${
+                className={cn(
+                  'p-4 rounded-xl transition shadow-sm',
                   msg.type === 'system'
                     ? 'bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700'
-                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
-                }`}
+                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700',
+                )}
               >
                 <div className="flex justify-between mb-1">
                   <span
-                    className={`font-semibold ${
+                    className={cn(
+                      'font-semibold',
                       msg.type === 'system'
                         ? 'text-amber-800 dark:text-amber-300'
-                        : 'text-blue-600 dark:text-blue-400'
-                    }`}
+                        : 'text-blue-600 dark:text-blue-400',
+                    )}
                   >
                     {msg.user}
                   </span>
@@ -172,11 +176,12 @@ export default function ChatPage() {
           Press Enter to send
         </span>
         <span
-          className={`text-xs ${
+          className={cn(
+            'text-xs',
             inputMessage.length > 450
               ? 'text-red-500 dark:text-red-400'
-              : 'text-gray-500 dark:text-gray-400'
-          }`}
+              : 'text-gray-500 dark:text-gray-400',
+          )}
         >
           {inputMessage.length}/500
         </span>

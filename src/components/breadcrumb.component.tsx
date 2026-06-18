@@ -2,6 +2,7 @@ import { SvgLoader } from '@/components/svg-loader.component';
 import { flatRoutesByPath } from '@/constants';
 import { useRouteNavigation } from '@/hooks';
 import { RouteType } from '@/types';
+import { cn } from '@/utils/cn';
 import { useMemo } from 'react';
 import { Link } from 'react-router';
 
@@ -34,7 +35,10 @@ export function Breadcrumb({ className }: { className?: string }) {
 
   return (
     <nav
-      className={`flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 ${className}`}
+      className={cn(
+        'flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400',
+        className,
+      )}
       aria-label="Breadcrumb"
     >
       {breadcrumbs.map((breadcrumb, index) => (

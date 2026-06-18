@@ -1,4 +1,5 @@
 import { useConfirmDialogStore } from '@/stores';
+import { cn } from '@/utils/cn';
 import { useEffect } from 'react';
 import Portal from './portal';
 import { SvgLoader } from './svg-loader.component';
@@ -67,11 +68,12 @@ export function ConfirmDialog() {
             <button
               type="button"
               disabled={isLoading}
-              className={`inline-flex items-center gap-2 rounded-md px-4 py-2 font-medium text-white disabled:opacity-70 ${
+              className={cn(
+                'inline-flex items-center gap-2 rounded-md px-4 py-2 font-medium text-white disabled:opacity-70',
                 variant === 'danger'
                   ? 'bg-red-500 hover:bg-red-600'
-                  : 'bg-blue-500 hover:bg-blue-600'
-              }`}
+                  : 'bg-blue-500 hover:bg-blue-600',
+              )}
               onClick={confirm}
             >
               {isLoading && <SvgLoader width={24} height={24} name="spinner" />}

@@ -5,10 +5,11 @@ import { TheHeader } from '@/components/the-header.component';
 import { TheSidebar } from '@/components/the-sidebar.component';
 import { HeaderContext } from '@/contexts';
 import { useRouteNavigation, useTheme } from '@/hooks';
+import { cn } from '@/utils/cn';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router';
 import { ToastContainer } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
 
 export default function Layout() {
   const { isDarkMode } = useTheme();
@@ -71,9 +72,10 @@ export default function Layout() {
         )}
 
         <div
-          className={`fixed md:sticky md:top-6 md:shrink-0 h-[calc(100vh-theme(space.12))] w-56 z-30 md:z-auto duration-300 ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full left-0'
-          } md:translate-x-0`}
+          className={cn(
+            'fixed md:sticky md:top-6 md:shrink-0 h-[calc(100vh-theme(space.12))] w-56 z-30 md:z-auto duration-300 md:translate-x-0',
+            sidebarOpen ? 'translate-x-0' : '-translate-x-full left-0',
+          )}
         >
           <TheSidebar
             title={t('navigation.sidebarTitle')}

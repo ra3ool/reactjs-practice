@@ -1,5 +1,6 @@
 import { SvgLoader } from '@/components/svg-loader.component';
 import { baseRoutes, LANGUAGES } from '@/constants';
+import { cn } from '@/utils/cn';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
@@ -11,7 +12,10 @@ export default function HomeView() {
     <div className="flex items-center justify-center h-full">
       <div className="max-w-4xl mx-auto rounded-lg shadow-xl overflow-hidden text-center py-12 px-6 sm:px-10">
         <h1
-          className={`text-5xl text-gray-900 dark:text-white mb-4 ${language === LANGUAGES.en ? 'font-extrabold' : 'font-bold'}`}
+          className={cn(
+            'text-5xl text-gray-900 dark:text-white mb-4',
+            language === LANGUAGES.en ? 'font-extrabold' : 'font-bold',
+          )}
         >
           {t('title')}
         </h1>

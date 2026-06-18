@@ -1,5 +1,6 @@
 import { SvgLoader } from '@/components/svg-loader.component';
 import { ExpansionPanelProps } from '@/types';
+import { cn } from '@/utils/cn';
 import { useEffect, useRef, useState } from 'react';
 
 export function ExpansionPanel({
@@ -27,11 +28,12 @@ export function ExpansionPanel({
   const handleToggle = () => setIsExpanded(!isExpanded);
 
   return (
-    <div className={`w-full rounded-lg overflow-hidden ${className}`}>
+    <div className={cn('w-full rounded-lg overflow-hidden', className)}>
       <div
-        className={`${
-          children && isExpanded ? expandedHeaderClassName : ''
-        } ${headerClassName}`}
+        className={cn(
+          children && isExpanded ? expandedHeaderClassName : '',
+          headerClassName,
+        )}
       >
         <div
           className="w-full flex justify-between items-center p-3 text-left focus:outline-none transition-colors duration-200 cursor-pointer select-none"
@@ -40,9 +42,10 @@ export function ExpansionPanel({
         >
           <span className="text-gray-900 dark:text-gray-100">{title}</span>
           <span
-            className={`text-gray-900 dark:text-gray-100 text-sm duration-500 ${
-              isExpanded ? 'rotate-180' : ''
-            }`}
+            className={cn(
+              'text-gray-900 dark:text-gray-100 text-sm duration-500',
+              isExpanded ? 'rotate-180' : '',
+            )}
           >
             <SvgLoader name="chevron-down" />
           </span>

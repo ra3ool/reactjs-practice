@@ -1,5 +1,6 @@
 import { SvgLoader } from '@/components/svg-loader.component';
 import { CustomButtonProps } from '@/types';
+import { cn } from '@/utils/cn';
 import { memo } from 'react';
 
 const baseButtonClasses =
@@ -34,7 +35,12 @@ export const CustomButton = memo(
   }: CustomButtonProps) => {
     return (
       <button
-        className={`${baseButtonClasses} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+        className={cn(
+          baseButtonClasses,
+          variantStyles[variant],
+          sizeStyles[size],
+          className,
+        )}
         disabled={disabled || loading}
         aria-busy={loading}
         type={type}

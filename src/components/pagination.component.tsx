@@ -1,5 +1,6 @@
 import { DOTS, usePagination } from '@/hooks';
 import { PaginationButtonProps, PaginationProps } from '@/types';
+import { cn } from '@/utils/cn';
 import { memo } from 'react';
 
 export const Pagination = memo(
@@ -86,9 +87,10 @@ function PaginateButton({
 }: PaginationButtonProps) {
   return (
     <button
-      className={`px-3 py-1 rounded-md select-none ${
-        isActive ? activeClasses : deActiveClasses
-      }`}
+      className={cn(
+        'px-3 py-1 rounded-md select-none',
+        isActive ? activeClasses : deActiveClasses,
+      )}
       disabled={isActive}
       {...(!isActive && {
         onClick: onButtonClick,
