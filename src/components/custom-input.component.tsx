@@ -1,9 +1,8 @@
 import { SvgLoader } from '@/components/svg-loader.component';
-import { DIRECTIONS } from '@/constants';
+import { useI18n } from '@/hooks';
 import { CustomInputProps } from '@/types';
 import { cn } from '@/utils/cn';
 import { FocusEvent, memo, useId, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 const DEFAULT_ERROR_TEXT = 'This field is required';
 const baseInputClasses =
@@ -35,13 +34,13 @@ export const CustomInput = memo(
     onFocus,
     onBlur,
   }: CustomInputProps) => {
-    const { i18n } = useTranslation();
     const randomId = useId();
     const inputId = id || randomId;
     const errorId = `${inputId}-error`;
     const [isFocused, setIsFocused] = useState(false);
 
-    const direction = i18n.dir();
+    const { isRTL } = useI18n();
+
     const showLabel = label && inputStyle !== 'floatingLabel';
     const ariaLabel = !showLabel ? label || placeholder : undefined;
 
@@ -118,9 +117,7 @@ export const CustomInput = memo(
                 isFocused || value || placeholder
                   ? 'scale-75 -translate-y-3'
                   : '',
-                direction === DIRECTIONS.rtl
-                  ? 'origin-top-right right-2'
-                  : 'origin-top-left left-2',
+                isRTL ? 'origin-top-right right-2' : 'origin-top-left left-2',
                 icon ? 'left-10' : '',
               )}
             >

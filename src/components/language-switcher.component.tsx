@@ -1,4 +1,5 @@
 import { LANGUAGES } from '@/constants';
+import { useI18n } from '@/hooks';
 import { cn } from '@/utils/cn';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -17,9 +18,8 @@ const AVAILABLE_LANGS = [
 
 export function LanguageSwitcher() {
   const { i18n, t } = useTranslation('common');
+  const { language, isEnglish } = useI18n();
 
-  const language = i18n.resolvedLanguage || i18n.language || LANGUAGES.en;
-  const isLanguageEn = language === LANGUAGES.en;
   const options = useMemo(() => AVAILABLE_LANGS, []);
 
   const handleChange = (lng: string) => {
@@ -35,14 +35,14 @@ export function LanguageSwitcher() {
         </div>
       }
       ListClassName="w-full"
-      align={isLanguageEn ? 'left' : 'right'}
+      align={isEnglish ? 'left' : 'right'}
     >
       {options.map((option) => (
         <DropdownItem
           key={option.code}
           onClick={() => handleChange(option.code)}
           className={cn(
-            isLanguageEn ? 'text-left' : 'text-right',
+            isEnglish ? 'text-left' : 'text-right',
             language === option.code
               ? 'bg-neutral-200 dark:bg-neutral-700'
               : '',

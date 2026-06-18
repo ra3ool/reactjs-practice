@@ -1,12 +1,13 @@
 import { SvgLoader } from '@/components/svg-loader.component';
-import { baseRoutes, LANGUAGES } from '@/constants';
+import { baseRoutes } from '@/constants';
+import { useI18n } from '@/hooks';
 import { cn } from '@/utils/cn';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 export default function HomeView() {
-  const { i18n, t } = useTranslation('home');
-  const language = i18n.resolvedLanguage || i18n.language || LANGUAGES.en;
+  const { t } = useTranslation('home');
+  const { isEnglish } = useI18n();
 
   return (
     <div className="flex items-center justify-center h-full">
@@ -14,7 +15,7 @@ export default function HomeView() {
         <h1
           className={cn(
             'text-5xl text-gray-900 dark:text-white mb-4',
-            language === LANGUAGES.en ? 'font-extrabold' : 'font-bold',
+            isEnglish ? 'font-extrabold' : 'font-bold',
           )}
         >
           {t('title')}
