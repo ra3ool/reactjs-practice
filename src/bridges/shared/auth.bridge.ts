@@ -9,7 +9,7 @@ export function useAuthBridge() {
   const { confirm } = useConfirm();
   const { t } = useTranslation('auth');
 
-  const logoutWithToast = useCallback(async () => {
+  const logoutWithConfirm = useCallback(async () => {
     await confirm({
       title: t('logout.confirmTitle'),
       message: t('logout.confirmMessage'),
@@ -24,5 +24,5 @@ export function useAuthBridge() {
     });
   }, [confirm, logout, t]);
 
-  return { logoutWithToast };
+  return { logoutWithConfirm };
 }

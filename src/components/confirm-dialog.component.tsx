@@ -1,6 +1,7 @@
 import { useConfirmDialogStore } from '@/stores';
 import { cn } from '@/utils/cn';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { CustomButton } from './custom-button.component';
 import Portal from './portal';
 import { SvgLoader } from './svg-loader.component';
 
@@ -18,6 +19,16 @@ export function ConfirmDialog() {
   const cancelByEscape = useConfirmDialogStore((s) => s.cancelByEscape);
   const closeOnClickOutside = useConfirmDialogStore(
     (s) => s.closeOnClickOutside,
+  );
+  SvgLoader.preload('spinner');
+
+  const handleBackdropClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.target === e.currentTarget && closeOnClickOutside) {
+        cancel();
+      }
+    },
+    [closeOnClickOutside, cancel],
   );
 
   useEffect(() => {
@@ -43,42 +54,41 @@ export function ConfirmDialog() {
   return (
     <Portal>
       <div
-        className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50"
-        onClick={(e) =>
-          e.target === e.currentTarget && closeOnClickOutside && cancel()
-        }
+        className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+        onClick={handleBackdropClick}
       >
         <div
-          className="w-[min(400px,90vw)] rounded-lg bg-white p-6"
+          className="w-[min(400px,90vw)] rounded-lg bg-bg-primary text-text-primary p-6 shadow-2xl"
           role="alertdialog"
           aria-modal="true"
           aria-label={title}
         >
-          <h2 className="mb-2 text-lg font-semibold text-gray-900">{title}</h2>
-          <p className="text-gray-600">{message}</p>
+          <h2
+            className={cn(
+              'mb-2 text-lg font-semibold',
+              variant === 'danger'
+                ? 'text-red-600 dark:text-red-500'
+                : 'text-gray-900 dark:text-white',
+            )}
+          >
+            {title}
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">{message}</p>
           <div className="mt-5 flex justify-end gap-2">
-            <button
-              type="button"
+            <CustomButton
+              variant="secondary"
               disabled={isLoading}
-              className="rounded-md border border-gray-300 px-4 py-2 font-medium hover:bg-gray-50 disabled:opacity-50"
               onClick={cancel}
             >
               {cancelText}
-            </button>
-            <button
-              type="button"
-              disabled={isLoading}
-              className={cn(
-                'inline-flex items-center gap-2 rounded-md px-4 py-2 font-medium text-white disabled:opacity-70',
-                variant === 'danger'
-                  ? 'bg-red-500 hover:bg-red-600'
-                  : 'bg-blue-500 hover:bg-blue-600',
-              )}
+            </CustomButton>
+            <CustomButton
+              variant={variant}
+              loading={isLoading}
               onClick={confirm}
             >
-              {isLoading && <SvgLoader width={24} height={24} name="spinner" />}
               {confirmText}
-            </button>
+            </CustomButton>
           </div>
         </div>
       </div>

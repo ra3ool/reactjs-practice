@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 export interface CustomButtonProps {
   children: string | ReactNode;
   onClick?: () => void;
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   prependIcon?: string;
   appendIcon?: string;

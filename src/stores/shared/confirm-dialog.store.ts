@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type ConfirmVariant = 'default' | 'danger';
+export type ConfirmVariant = 'primary' | 'danger';
 
 export interface ConfirmOptions {
   title?: string;
@@ -31,7 +31,7 @@ const DEFAULTS: Required<Omit<ConfirmOptions, 'onConfirm'>> = {
   message: '',
   confirmText: 'Confirm',
   cancelText: 'Cancel',
-  variant: 'default',
+  variant: 'primary',
   confirmOnEnter: true,
   cancelByEscape: true,
   closeOnClickOutside: true,

@@ -12,11 +12,11 @@ export default function DemoView() {
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const updateUser = useAuthStore((s) => s.updateUser);
-  const { logoutWithToast } = useAuthBridge();
+  const { logoutWithConfirm } = useAuthBridge();
 
   const handleLogin = () => navigateTo('login');
   const handleLogout = async () => {
-    await logoutWithToast();
+    await logoutWithConfirm();
     // navigateTo('home', { replace: true });
   };
   const handleAdminRoute = () => navigateTo('invoices-list');

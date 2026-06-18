@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 export function useSidebarItems(): SidebarItem[] {
   const { isDarkMode, toggleTheme } = useTheme();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const { logoutWithToast } = useAuthBridge();
+  const { logoutWithConfirm } = useAuthBridge();
   const { canAccessRoute } = useAcl();
   const { t } = useTranslation('common');
 
@@ -132,7 +132,7 @@ export function useSidebarItems(): SidebarItem[] {
         className:
           'cursor-pointer text-red-500 hover:bg-red-200 dark:hover:bg-red-950',
         actions: {
-          onClick: logoutWithToast,
+          onClick: logoutWithConfirm,
         },
       });
     }
@@ -140,7 +140,7 @@ export function useSidebarItems(): SidebarItem[] {
     return items;
   }, [
     canAccessRoute,
-    logoutWithToast,
+    logoutWithConfirm,
     isAuthenticated,
     isDarkMode,
     toggleTheme,
