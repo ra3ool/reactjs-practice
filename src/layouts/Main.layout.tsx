@@ -3,6 +3,7 @@ import { useSidebarItems } from '@/components/config/sidebar-items.components';
 import { CustomButton } from '@/components/custom-button.component';
 import { TheHeader } from '@/components/the-header.component';
 import { TheSidebar } from '@/components/the-sidebar.component';
+import { DIRECTIONS } from '@/constants';
 import { HeaderContext } from '@/contexts';
 import { useRouteNavigation, useTheme } from '@/hooks';
 import { cn } from '@/utils/cn';
@@ -17,7 +18,8 @@ export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [headerTitle, setHeaderTitle] = useState<string>('');
   const { currentRoute } = useRouteNavigation();
-  const { t } = useTranslation(['common', 'panel']);
+  const { t, i18n } = useTranslation(['common', 'panel']);
+  const direction = i18n.dir();
 
   useEffect(() => {
     setHeaderTitle(
@@ -74,7 +76,13 @@ export default function Layout() {
         <div
           className={cn(
             'fixed md:sticky md:top-6 md:shrink-0 h-[calc(100vh-theme(space.12))] w-56 z-30 md:z-auto duration-300 md:translate-x-0',
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full left-0',
+            direction === DIRECTIONS.rtl
+              ? sidebarOpen
+                ? 'translate-x-0'
+                : 'translate-x-full right-0'
+              : sidebarOpen
+                ? 'translate-x-0'
+                : '-translate-x-full left-0',
           )}
         >
           <TheSidebar

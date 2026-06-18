@@ -1,5 +1,5 @@
 import { SvgLoader } from '@/components/svg-loader.component';
-import { LANGUAGES } from '@/constants';
+import { DIRECTIONS } from '@/constants';
 import { CustomInputProps } from '@/types';
 import { cn } from '@/utils/cn';
 import { FocusEvent, memo, useId, useState } from 'react';
@@ -41,7 +41,7 @@ export const CustomInput = memo(
     const errorId = `${inputId}-error`;
     const [isFocused, setIsFocused] = useState(false);
 
-    const language = i18n.resolvedLanguage || i18n.language || LANGUAGES.en;
+    const direction = i18n.dir();
     const showLabel = label && inputStyle !== 'floatingLabel';
     const ariaLabel = !showLabel ? label || placeholder : undefined;
 
@@ -118,9 +118,9 @@ export const CustomInput = memo(
                 isFocused || value || placeholder
                   ? 'scale-75 -translate-y-3'
                   : '',
-                language === LANGUAGES.en
-                  ? 'origin-top-left left-2'
-                  : 'origin-top-right right-2',
+                direction === DIRECTIONS.rtl
+                  ? 'origin-top-right right-2'
+                  : 'origin-top-left left-2',
                 icon ? 'left-10' : '',
               )}
             >

@@ -1,4 +1,4 @@
-import { LANGUAGES } from '@/constants';
+import { DIRECTIONS, LANGUAGES } from '@/constants';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
@@ -20,8 +20,8 @@ const detectionOptions = {
   caches: ['localStorage'],
 };
 const directionsMap: Record<keyof typeof LANGUAGES, string> = {
-  [LANGUAGES.fa]: 'rtl',
-  [LANGUAGES.en]: 'ltr',
+  [LANGUAGES.fa]: DIRECTIONS.rtl,
+  [LANGUAGES.en]: DIRECTIONS.ltr,
 };
 
 const applyDirection = (lng?: string) => {
