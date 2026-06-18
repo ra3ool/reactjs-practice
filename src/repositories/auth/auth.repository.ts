@@ -1,7 +1,9 @@
 import { authClient } from '@/clients/auth';
-import {
+import type {
   LoginRequestPayload,
   LoginResponse,
+  LogoutResponse,
+  RefreshTokenResponse,
   registerRequestPayload,
   User,
 } from '@/types';
@@ -22,14 +24,14 @@ const authRepository = {
     return response?.data;
   },
 
-  logout: async () => {
+  logout: async (): Promise<LogoutResponse> => {
     const response = await authClient.post('/auth/logout');
     return response?.data;
   },
 
-  refreshToken: async (refreshToken: string) => {
-    //TODO implement this later
-    return { accessToken: '', refreshToken };
+  refreshToken: async (): Promise<RefreshTokenResponse> => {
+    const response = await authClient.post('/auth/refresh');
+    return response?.data;
   },
 };
 

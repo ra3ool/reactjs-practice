@@ -31,7 +31,17 @@ export const authService = {
   },
 
   logout: async () => {
-    const result = await authRepository.logout();
-    return result as LogoutResponse;
+    try {
+      const result = await authRepository.logout();
+      return result as LogoutResponse;
+    } catch (error) {
+      console.error('Logout API error:', error);
+    }
+    return { message: '', user: {} } as LogoutResponse;
+  },
+
+  refreshToken: async () => {
+    const response = await authRepository.refreshToken();
+    return response;
   },
 };

@@ -1,7 +1,7 @@
 import { tokenNames } from '@/constants';
 import { cryptoStorage } from '@/libs';
 import { authService, cookieStorage } from '@/services';
-import { AuthStore, LoginResponse } from '@/types';
+import type { AuthStore } from '@/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -25,13 +25,13 @@ export const useAuthStore = create<AuthStore>()(
         isAuthenticated: false,
 
         login: async (credentials) => {
-          const data: LoginResponse = await authService.login(credentials);
+          const data = await authService.login(credentials);
           get().setLoginData(data);
           return data;
         },
 
         register: async (credentials) => {
-          const data: LoginResponse = await authService.register(credentials);
+          const data = await authService.register(credentials);
           get().setLoginData(data);
           return data;
         },

@@ -21,3 +21,7 @@ export interface LogoutResponse {
   message: string;
   user: User;
 }
+export interface RefreshTokenResponse {
+  accessToken: string;
+  refreshToken?: string;
+}
