@@ -1,6 +1,5 @@
 import { CustomButton } from '@/components/custom-button.component';
 import { CustomInput } from '@/components/custom-input.component';
-import { SvgLoader } from '@/components/svg-loader.component';
 import { authRoutes } from '@/constants';
 import { authSchema } from '@/schemas';
 import { useAuthStore } from '@/stores';
@@ -9,13 +8,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { memo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
 
 function LoginView() {
-  SvgLoader.preload('spinner');
-
   const { t } = useTranslation('auth');
 
   const {
@@ -119,10 +116,7 @@ function LoginView() {
                     );
                   }}
                 />
-                <label
-                  htmlFor="remember-me"
-                  className=" "
-                >
+                <label htmlFor="remember-me" className=" ">
                   {t('login.rememberMe')}
                 </label>
               </div>

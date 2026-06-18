@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import { memo } from 'react';
 
 const baseButtonClasses =
-  'flex items-center justify-center gap-2 rounded-md font-medium focus:outline-none focus:ring-2 transition-colors duration-200 disabled:cursor-not-allowed cursor-pointer';
+  'flex items-center justify-center gap-2 rounded-md font-medium focus:outline-none focus:ring-2 transition-colors duration-200 disabled:cursor-not-allowed cursor-pointer relative';
 const variantStyles = {
   primary:
     'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500 disabled:bg-indigo-400',
@@ -13,7 +13,7 @@ const variantStyles = {
   outline:
     'border border-indigo-600 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-neutral-800 focus:ring-indigo-500 disabled:border-indigo-300 disabled:text-indigo-300',
   danger:
-    'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-400 dark:bg-red-600 dark:hover:bg-red-700', // Added danger variant
+    'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-400 dark:bg-red-600 dark:hover:bg-red-700',
 };
 
 const sizeStyles = {
@@ -48,15 +48,30 @@ export const CustomButton = memo(
         type={type}
         {...otherProps}
       >
-        {loading ? (
-          <SvgLoader width={24} height={24} name="spinner" />
-        ) : (
-          <>
-            {prependIcon && <SvgLoader name={prependIcon} />}
-            {children}
-            {appendIcon && <SvgLoader name={appendIcon} />}
-          </>
-        )}
+        <span
+          className={cn(
+            'flex items-center justify-center gap-2',
+            loading ? 'opacity-0' : 'opacity-100',
+          )}
+        >
+          {prependIcon && <SvgLoader name={prependIcon} />}
+          {children}
+          {appendIcon && <SvgLoader name={appendIcon} />}
+        </span>
+
+        <span
+          className={cn(
+            'absolute inset-0 flex items-center justify-center',
+            loading ? 'opacity-100' : 'opacity-0 pointer-events-none',
+          )}
+        >
+          <SvgLoader
+            width={24}
+            height={24}
+            name="spinner"
+            className="animate-spin"
+          />
+        </span>
       </button>
     );
   },

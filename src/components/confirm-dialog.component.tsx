@@ -3,7 +3,6 @@ import { cn } from '@/utils/cn';
 import { useCallback, useEffect } from 'react';
 import { CustomButton } from './custom-button.component';
 import Portal from './portal';
-import { SvgLoader } from './svg-loader.component';
 
 export function ConfirmDialog() {
   const isOpen = useConfirmDialogStore((s) => s.isOpen);
@@ -20,7 +19,6 @@ export function ConfirmDialog() {
   const closeOnClickOutside = useConfirmDialogStore(
     (s) => s.closeOnClickOutside,
   );
-  SvgLoader.preload('spinner');
 
   const handleBackdropClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
