@@ -14,4 +14,5 @@ export interface AuthStore {
   getCurrentUser: () => Promise<User | undefined>;
   logout: () => Promise<LogoutResponse>;
   restoreAuth: () => void;
+  clearAuth: () => void;
 }

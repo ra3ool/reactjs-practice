@@ -1,6 +1,6 @@
-import { tokenNames } from '@/constants';
 import { cryptoStorage } from '@/libs';
-import { authService, cookieStorage } from '@/services';
+import { authService } from '@/services';
+import { tokenService } from '@/services/auth/token.service';
 import type { AuthStore } from '@/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -9,20 +9,20 @@ export const useAuthStore = create<AuthStore>()(
   persist(
     (set, get) => {
       const clearAuth = () => {
-        cookieStorage.remove(tokenNames.accessToken);
-        cookieStorage.remove(tokenNames.refreshToken);
-        set({ user: null, isAuthenticated: false });
+        tokenService.clearTokens();
+
+        set({
+          user: null,
+          isAuthenticated: false,
+        });
       };
 
-      const checkIsAuthenticated = (): boolean => {
-        const token = cookieStorage.get(tokenNames.accessToken);
-        // TODO: use jwt-decode checker later
-        return !(!token || token.split('.').length !== 3);
-      };
+      const checkIsAuthenticated = () => tokenService.hasValidAccessToken();
 
       return {
         user: null,
         isAuthenticated: false,
+        clearAuth,
 
         login: async (credentials) => {
           const data = await authService.login(credentials);
@@ -37,19 +37,12 @@ export const useAuthStore = create<AuthStore>()(
         },
 
         setLoginData: (data) => {
-          set({ isAuthenticated: true, user: data.user });
-          cookieStorage.set(tokenNames.accessToken, data.accessToken, {
-            expires: 1,
-            secure: true,
-            sameSite: 'strict',
+          set({
+            user: data.user,
+            isAuthenticated: true,
           });
-          if (data.refreshToken) {
-            cookieStorage.set(tokenNames.refreshToken, data.refreshToken, {
-              expires: 7,
-              secure: true,
-              sameSite: 'strict',
-            });
-          }
+
+          tokenService.setTokens(data.accessToken, data.refreshToken);
         },
 
         updateUser: (user) => set({ user }),
@@ -61,7 +54,7 @@ export const useAuthStore = create<AuthStore>()(
         },
 
         logout: async () => {
-          const refreshToken = cookieStorage.get(tokenNames.refreshToken);
+          const refreshToken = tokenService.getRefreshToken();
           const result = await authService.logout(refreshToken || undefined);
           clearAuth();
           return result;

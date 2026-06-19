@@ -1,12 +1,9 @@
-import { tokenNames } from '@/constants';
 import { authMappers } from '@/mappers';
 import { authRepository } from '@/repositories';
 import { authSchema } from '@/schemas';
-import { cookieStorage } from '@/services';
 import type {
   LoginFormData,
   LoginResponse,
-  LogoutResponse,
   RefreshTokenResponse,
   RegisterFormData,
   User,
@@ -43,21 +40,15 @@ export const authService = {
   },
 
   getCurrentUser: async (): Promise<User> => {
-    try {
-      return await authRepository.getCurrentUser();
-    } catch (error) {
-      console.error('Failed to fetch current user:', error);
-      throw error;
-    }
+    return authRepository.getCurrentUser();
   },
 
-  logout: async (refreshToken?: string): Promise<LogoutResponse> => {
+  logout: async (refreshToken?: string) => {
     try {
-      const token = refreshToken || cookieStorage.get(tokenNames.refreshToken);
-      if (token) {
-        const result = await authRepository.logout(token);
-        return result;
+      if (refreshToken) {
+        return await authRepository.logout(refreshToken);
       }
+
       return {
         message: 'Logged out successfully',
       };
@@ -70,12 +61,6 @@ export const authService = {
   },
 
   refreshToken: async (refreshToken: string): Promise<RefreshTokenResponse> => {
-    try {
-      const response = await authRepository.refreshToken(refreshToken);
-      return response;
-    } catch (error) {
-      console.error('Token refresh failed:', error);
-      throw error;
-    }
+    return authRepository.refreshToken(refreshToken);
   },
 };
