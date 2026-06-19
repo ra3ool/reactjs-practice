@@ -1,6 +1,8 @@
 import { tokenNames } from '@/constants';
-import { authRepository } from '@/repositories/auth';
+import { useRouteNavigation } from '@/hooks';
 import { cookieStorage } from '@/repositories/shared';
+import { authService } from '@/services';
+import { useAuthStore } from '@/stores';
 import { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios';
 import {
   onTokenRefreshed,
@@ -33,7 +35,19 @@ export function setupInterceptors(api: AxiosInstance) {
       const originalRequest = error.config as CustomAxiosRequestConfig;
 
       // Handle 401 Unauthorized
-      if (error.response?.status === 401 && !originalRequest?._retry) {
+      const url = originalRequest.url ?? '';
+
+      const isAuthRequest =
+        url.includes('/auth/signin') ||
+        url.includes('/auth/signup') ||
+        url.includes('/auth/logout') ||
+        url.includes('/auth/refresh');
+
+      if (
+        error.response?.status === 401 &&
+        !originalRequest?._retry &&
+        !isAuthRequest
+      ) {
         const refreshToken = cookieStorage.get(tokenNames.refreshToken);
         if (!refreshToken) {
           // TODO: handle logout
@@ -56,7 +70,7 @@ export function setupInterceptors(api: AxiosInstance) {
 
         try {
           const { accessToken, refreshToken: newRefreshToken } =
-            await authRepository.refreshToken(refreshToken);
+            await authService.refreshToken(refreshToken);
 
           cookieStorage.set(tokenNames.accessToken, accessToken, {
             expires: 1,
@@ -80,7 +94,11 @@ export function setupInterceptors(api: AxiosInstance) {
 
           return api(originalRequest);
         } catch (refreshError) {
-          // TODO: handle logout
+          useAuthStore.getState().clearAuth();
+
+          const { navigateTo } = useRouteNavigation();
+          navigateTo('login');
+
           return Promise.reject(refreshError);
         } finally {
           tokenQueue.isRefreshing = false;
